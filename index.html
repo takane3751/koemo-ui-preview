@@ -94,6 +94,18 @@ a.plain{color:var(--purple-d)}
 .qh{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;background:var(--lav);color:var(--purple-d);font-size:10px;font-weight:700;line-height:1;cursor:pointer;border:0.5px solid #cfc9f3;vertical-align:middle;margin-left:4px;flex:none;font-family:system-ui}
 .qh:hover{background:var(--purple);color:#fff;border-color:var(--purple)}
 #qpop{position:fixed;z-index:9999;max-width:240px;background:#2c2942;color:#fff;font-size:11.5px;line-height:1.65;padding:9px 12px;border-radius:9px;box-shadow:0 8px 26px rgba(40,36,70,.28);display:none;pointer-events:none}
+/* 一覧の絞り込みバー（メディア/書類でグループ化＋右寄せの部位タグ・日付） */
+.fbar{padding-top:7px;padding-bottom:7px;align-items:flex-start;gap:9px;flex-wrap:nowrap;overflow-x:auto}
+.fgrp{display:flex;flex-direction:column;gap:5px;flex:none}
+.ftitle{font-size:9.5px;font-weight:700;color:var(--purple-d);letter-spacing:.04em;padding-left:2px}
+.frow{display:flex;gap:5px;flex-wrap:nowrap}
+.fsep{width:1px;align-self:stretch;background:#cfc9f3;flex:none;margin:0 1px}
+/* 歯式ピッカー（部位選択・picmoR風） */
+.tootharch{display:flex;gap:3px;flex-wrap:nowrap;justify-content:center}
+.tnum{width:24px;height:28px;border:0.5px solid var(--border2);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px;cursor:pointer;background:#fff;color:var(--text);flex:none}
+.tnum.sel{background:var(--purple);color:#fff;border-color:var(--purple)}
+.tnum.mid{margin-right:7px}
+.tagcat-title{font-size:11px;font-weight:600;color:var(--purple-d);margin:10px 0 5px}
 /* 役割スイッチ */
 .roleswitch{display:flex;gap:3px;background:var(--lav2);border-radius:999px;padding:3px;margin:4px 8px 2px}
 .roleswitch .r{flex:1;text-align:center;font-size:11.5px;padding:6px 4px;border-radius:999px;color:var(--muted);cursor:pointer}
@@ -479,7 +491,13 @@ body.role-staff .owner-only{display:none!important}
           <!-- EXPLAIN: 全メディア一覧 -->
           <section class="screen" data-id="explain">
             <div class="bar" style="flex-wrap:nowrap;overflow-x:auto;gap:6px"><span class="muted" style="font-size:13px;cursor:pointer;flex:none" onclick="go('hub')"><i class="ti ti-chevron-left"></i> 戻る</span><span class="logo" style="flex:none">KOEMO</span><span class="field" style="min-height:0;padding:3px 10px;font-size:12px;flex:none">カルテ 001 ・ 田中 様</span><span class="rec" style="flex:none"><i class="ti ti-circle-filled"></i> 録音中</span><span class="spacer"></span><span class="chip lav selcount" style="display:none;flex:none">0件 選択中</span><button class="btn sm selact" style="display:none;flex:none" onclick="openDate()"><i class="ti ti-calendar"></i> 日付変更</button><button class="btn sm selact" style="display:none;flex:none" onclick="openLink()"><i class="ti ti-arrows-move"></i> 紐付け</button><button class="btn sm selact" style="display:none;flex:none;color:var(--red);border-color:#f0c5b5" onclick="clearMediaSel()"><i class="ti ti-trash"></i> 削除</button><button class="btn sm selact" style="display:none;flex:none" onclick="clearMediaSel()">選択解除</button><button class="btn sm" style="flex:none"><i class="ti ti-upload"></i> 取込</button><button class="btn sm" style="flex:none"><i class="ti ti-download"></i> 保存</button><i class="ti ti-device-tv muted" title="大画面にミラー" style="flex:none"></i></div>
-            <div class="bar" style="background:var(--lav2);gap:6px"><span class="pill on">すべて</span><span class="pill">静止画</span><span class="pill">動画</span><span class="pill">口腔内写真</span><span class="pill">レントゲン</span><span class="pill">書類</span><span class="pill">レポート</span><span class="pill lav"><i class="ti ti-tag" style="font-size:12px"></i> 部位・タグ</span><span class="pill lav"><i class="ti ti-calendar" style="font-size:12px"></i> 日付 <span style="opacity:.7">年/月/日〜年/月/日</span></span><span class="spacer"></span><span class="chip green"><i class="ti ti-cloud-check" style="font-size:12px"></i> NAS連携中</span></div>
+            <div class="bar fbar" style="background:var(--lav2)">
+              <div class="fgrp"><div class="ftitle">メディア</div><div class="frow"><span class="pill multi">静止画</span><span class="pill multi">動画</span><span class="pill multi">口腔内写真</span><span class="pill multi">パノラマ</span><span class="pill multi">セファロ</span><span class="pill multi">デンタル</span></div></div>
+              <div class="fsep"></div>
+              <div class="fgrp"><div class="ftitle">書類</div><div class="frow"><span class="pill multi">歯科疾患管理料</span><span class="pill multi">衛生実地指導書</span><span class="pill multi">問診票</span><span class="pill multi">サブカルテ</span></div></div>
+              <span class="spacer"></span>
+              <div class="fgrp" style="align-items:flex-end"><div class="ftitle">絞り込み</div><div class="frow"><span class="pill lav" onclick="openTagFilter()"><i class="ti ti-tag" style="font-size:12px"></i> 部位・タグ</span><span class="pill lav"><i class="ti ti-calendar" style="font-size:12px"></i> 日付</span></div></div>
+            </div>
             <!-- 絞り込み中の表示 -->
             <div class="bar" style="padding:6px 14px"><span class="hint">絞り込み中:</span><span class="chip lav">口腔内写真 <i class="ti ti-x" style="font-size:10px;cursor:pointer"></i></span><span class="chip lav"><i class="ti ti-tag" style="font-size:10px"></i> 歯周病 <i class="ti ti-x" style="font-size:10px;cursor:pointer"></i></span><span class="chip lav">2026/04/09〜06/21 <i class="ti ti-x" style="font-size:10px;cursor:pointer"></i></span><span class="muted" style="font-size:12px;cursor:pointer">すべて解除</span><span class="spacer"></span><span class="hint">28件中 12件</span></div>
             <div class="body" style="padding:14px">
@@ -501,7 +519,7 @@ body.role-staff .owner-only{display:none!important}
                 <div class="tile" style="aspect-ratio:4/3;cursor:pointer" onclick="toggleMediaSel(this)" ondblclick="go('docview')"><i class="ti ti-report" style="font-size:24px"></i><span class="badge">レポート</span><span class="cap">サブカルテ</span></div>
               </div>
             </div>
-            <div class="bar barfoot" style="gap:8px"><button class="btn sm needsel dis" onclick="go('explain2')"><i class="ti ti-columns-2"></i> 比較</button><button class="btn sm needsel dis" onclick="go('layout')"><i class="ti ti-layout-grid"></i> 5・9枚法</button><button class="btn primary sm needsel dis" onclick="go('radiograph')"><i class="ti ti-radioactive"></i> レントゲン並べ</button><span class="spacer"></span><span class="qh" onclick="showHelp(event,this)" data-help="メディアは 1タップ＝選択/解除、ダブルタップ＝詳細を開く、で操作します。">?</span></div>
+            <div class="bar barfoot" style="gap:8px"><button class="btn sm needsel dis" onclick="openTag()"><i class="ti ti-tag"></i> 部位・タグを付ける</button><button class="btn sm needsel dis" onclick="go('explain2')"><i class="ti ti-columns-2"></i> 比較</button><button class="btn sm needsel dis" onclick="go('layout')"><i class="ti ti-layout-grid"></i> 5・9枚法</button><button class="btn primary sm needsel dis" onclick="go('radiograph')"><i class="ti ti-radioactive"></i> レントゲン並べ</button><span class="spacer"></span><span class="qh" onclick="showHelp(event,this)" data-help="メディアは 1タップ＝選択/解除、ダブルタップ＝詳細を開く、で操作します。選択後、左下の「部位・タグを付ける」でまとめてタグ付けできます。">?</span></div>
           </section>
 
           <!-- LAYOUT 5/9枚法 -->
@@ -758,31 +776,37 @@ body.role-staff .owner-only{display:none!important}
           <!-- LIBRARY 全患者メディア・書類一覧（患者特定情報なし） -->
           <section class="screen" data-id="library">
             <div class="bar"><span class="logo">KOEMO</span><span class="muted" style="font-size:13px;cursor:pointer" onclick="go('search')"><i class="ti ti-chevron-left"></i> 戻る</span><span style="font-weight:500;font-size:13px">全患者 メディア・書類一覧<span class="qh" onclick="showHelp(event,this)" data-help="全患者を横断した一覧です。患者氏名・カルテ番号など個人を特定する情報は表示しません。タグ・部位・日付で検索できます。">?</span></span><span class="spacer"></span><span class="chip lav selcount" style="display:none">0件 選択中</span><button class="btn sm selact" style="display:none" onclick="openDate()"><i class="ti ti-calendar"></i> 日付変更</button><button class="btn sm selact" style="display:none" onclick="openLink()"><i class="ti ti-arrows-move"></i> 紐付け（患者移動）</button><button class="btn sm selact" style="display:none" onclick="clearMediaSel()">選択解除</button><button class="btn sm"><i class="ti ti-upload"></i> 取り込み</button><button class="btn sm"><i class="ti ti-download"></i> ダウンロード</button></div>
-            <div class="bar" style="background:var(--lav2);gap:6px"><span class="pill on">すべて</span><span class="pill">口腔内写真</span><span class="pill">動画</span><span class="pill">レントゲン</span><span class="pill">書類</span><span class="pill">レポート</span><span class="pill lav"><i class="ti ti-tag" style="font-size:12px"></i> タグ</span><span class="pill lav"><i class="ti ti-calendar" style="font-size:12px"></i> 日付</span><span class="spacer"></span><span class="field" style="min-height:0;padding:4px 10px;font-size:12px"><i class="ti ti-search" style="margin-right:6px"></i> タグ・部位で横断検索</span></div>
+            <div class="bar fbar" style="background:var(--lav2)">
+              <div class="fgrp"><div class="ftitle">メディア</div><div class="frow"><span class="pill multi">静止画</span><span class="pill multi">動画</span><span class="pill multi">口腔内写真</span><span class="pill multi">パノラマ</span><span class="pill multi">セファロ</span><span class="pill multi">デンタル</span></div></div>
+              <div class="fsep"></div>
+              <div class="fgrp"><div class="ftitle">書類</div><div class="frow"><span class="pill multi">歯科疾患管理料</span><span class="pill multi">衛生実地指導書</span><span class="pill multi">問診票</span><span class="pill multi">サブカルテ</span></div></div>
+              <span class="spacer"></span>
+              <div class="fgrp" style="align-items:flex-end"><div class="ftitle">絞り込み</div><div class="frow"><span class="pill lav" onclick="openTagFilter()"><i class="ti ti-tag" style="font-size:12px"></i> 部位・タグ</span><span class="pill lav"><i class="ti ti-calendar" style="font-size:12px"></i> 日付</span></div></div>
+            </div>
             <div class="bar" style="padding:6px 14px"><span class="muted" style="font-size:12px">操作方法<span class="qh" onclick="showHelp(event,this)" data-help="1タップ＝選択/解除、ダブルタップ＝詳細表示。1枚以上選択すると上部に「日付変更」（取込日になった撮影日の補正）／「紐付け」（別患者で撮影したファイルを正しいカルテへ移動）が表示されます。">?</span></span><span class="spacer"></span><span class="hint">1,248件</span></div>
             <div class="body" style="padding:14px">
               <div id="lib-grid">
                 <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span class="chip" style="background:var(--lav);color:var(--purple-d)">2026/06/21</span><span class="hint">取り込み日でグルーピング ・ 6件</span></div>
                 <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(120px,1fr));margin-bottom:18px">
-                  <div class="tile" style="aspect-ratio:4/3"><i class="ti ti-dental" style="font-size:24px"></i><span class="badge">口腔内</span><span class="cap">#歯周病 正面</span></div>
-                  <div class="tile lbwide" style="aspect-ratio:4/3"><i class="ti ti-radioactive" style="font-size:24px"></i><span class="badge">X線</span><span class="cap">#補綴 パノラマ</span></div>
-                  <div class="tile lb169" style="aspect-ratio:4/3"><i class="ti ti-player-play" style="font-size:24px"></i><span class="badge">動画</span><span class="cap">#SRP</span></div>
-                  <div class="tile" style="aspect-ratio:4/3"><i class="ti ti-dental" style="font-size:24px"></i><span class="badge">口腔内</span><span class="cap">#矯正 側方</span></div>
-                  <div class="tile" style="aspect-ratio:4/3"><i class="ti ti-file-text" style="font-size:24px"></i><span class="badge">書類</span><span class="cap">#実地指導</span></div>
-                  <div class="tile" style="aspect-ratio:4/3"><i class="ti ti-dental" style="font-size:24px"></i><span class="badge">口腔内</span><span class="cap">#小児</span></div>
+                  <div class="tile" style="aspect-ratio:4/3;cursor:pointer" onclick="toggleMediaSel(this)"><i class="ti ti-dental" style="font-size:24px"></i><span class="badge">口腔内</span><span class="cap">#歯周病 正面</span></div>
+                  <div class="tile lbwide" style="aspect-ratio:4/3;cursor:pointer" onclick="toggleMediaSel(this)"><i class="ti ti-radioactive" style="font-size:24px"></i><span class="badge">X線</span><span class="cap">#補綴 パノラマ</span></div>
+                  <div class="tile lb169" style="aspect-ratio:4/3;cursor:pointer" onclick="toggleMediaSel(this)"><i class="ti ti-player-play" style="font-size:24px"></i><span class="badge">動画</span><span class="cap">#SRP</span></div>
+                  <div class="tile" style="aspect-ratio:4/3;cursor:pointer" onclick="toggleMediaSel(this)"><i class="ti ti-dental" style="font-size:24px"></i><span class="badge">口腔内</span><span class="cap">#矯正 側方</span></div>
+                  <div class="tile" style="aspect-ratio:4/3;cursor:pointer" onclick="toggleMediaSel(this)"><i class="ti ti-file-text" style="font-size:24px"></i><span class="badge">書類</span><span class="cap">#実地指導</span></div>
+                  <div class="tile" style="aspect-ratio:4/3;cursor:pointer" onclick="toggleMediaSel(this)"><i class="ti ti-dental" style="font-size:24px"></i><span class="badge">口腔内</span><span class="cap">#小児</span></div>
                 </div>
                 <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span class="chip" style="background:var(--lav);color:var(--purple-d)">2026/06/20</span><span class="hint">6件</span></div>
                 <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(120px,1fr))">
-                  <div class="tile lbport" style="aspect-ratio:4/3"><i class="ti ti-radioactive" style="font-size:24px"></i><span class="badge">X線</span><span class="cap">#根管</span></div>
-                  <div class="tile" style="aspect-ratio:4/3"><i class="ti ti-report" style="font-size:24px"></i><span class="badge">レポート</span><span class="cap">#ペリオ</span></div>
-                  <div class="tile" style="aspect-ratio:4/3"><i class="ti ti-dental" style="font-size:24px"></i><span class="badge">口腔内</span><span class="cap">#術前術後</span></div>
-                  <div class="tile lb169" style="aspect-ratio:4/3"><i class="ti ti-player-play" style="font-size:24px"></i><span class="badge">動画</span><span class="cap">#TBI</span></div>
-                  <div class="tile" style="aspect-ratio:4/3"><i class="ti ti-dental" style="font-size:24px"></i><span class="badge">口腔内</span><span class="cap">#比較</span></div>
-                  <div class="tile" style="aspect-ratio:4/3"><i class="ti ti-file-text" style="font-size:24px"></i><span class="badge">書類</span><span class="cap">#疾患管理</span></div>
+                  <div class="tile lbport" style="aspect-ratio:4/3;cursor:pointer" onclick="toggleMediaSel(this)"><i class="ti ti-radioactive" style="font-size:24px"></i><span class="badge">X線</span><span class="cap">#根管</span></div>
+                  <div class="tile" style="aspect-ratio:4/3;cursor:pointer" onclick="toggleMediaSel(this)"><i class="ti ti-report" style="font-size:24px"></i><span class="badge">レポート</span><span class="cap">#ペリオ</span></div>
+                  <div class="tile" style="aspect-ratio:4/3;cursor:pointer" onclick="toggleMediaSel(this)"><i class="ti ti-dental" style="font-size:24px"></i><span class="badge">口腔内</span><span class="cap">#術前術後</span></div>
+                  <div class="tile lb169" style="aspect-ratio:4/3;cursor:pointer" onclick="toggleMediaSel(this)"><i class="ti ti-player-play" style="font-size:24px"></i><span class="badge">動画</span><span class="cap">#TBI</span></div>
+                  <div class="tile" style="aspect-ratio:4/3;cursor:pointer" onclick="toggleMediaSel(this)"><i class="ti ti-dental" style="font-size:24px"></i><span class="badge">口腔内</span><span class="cap">#比較</span></div>
+                  <div class="tile" style="aspect-ratio:4/3;cursor:pointer" onclick="toggleMediaSel(this)"><i class="ti ti-file-text" style="font-size:24px"></i><span class="badge">書類</span><span class="cap">#疾患管理</span></div>
                 </div>
               </div>
             </div>
-            <div class="bar barfoot" style="gap:8px"><button class="btn sm needsel dis" onclick="go('explain2')"><i class="ti ti-columns-2"></i> 比較</button><button class="btn sm needsel dis" onclick="go('layout')"><i class="ti ti-layout-grid"></i> 5・9枚法</button><button class="btn primary sm needsel dis" onclick="go('radiograph')"><i class="ti ti-radioactive"></i> レントゲン並べ</button><span class="spacer"></span><span class="qh" onclick="showHelp(event,this)" data-help="選択した画像を、比較・5/9枚法・レントゲン並べに利用できます。">?</span></div>
+            <div class="bar barfoot" style="gap:8px"><button class="btn sm needsel dis" onclick="openTag()"><i class="ti ti-tag"></i> 部位・タグを付ける</button><button class="btn sm needsel dis" onclick="go('explain2')"><i class="ti ti-columns-2"></i> 比較</button><button class="btn sm needsel dis" onclick="go('layout')"><i class="ti ti-layout-grid"></i> 5・9枚法</button><button class="btn primary sm needsel dis" onclick="go('radiograph')"><i class="ti ti-radioactive"></i> レントゲン並べ</button><span class="spacer"></span><span class="qh" onclick="showHelp(event,this)" data-help="選択した画像・書類を、比較・5/9枚法・レントゲン並べに利用したり、「部位・タグを付ける」でまとめてタグ付けできます。">?</span></div>
           </section>
 
           <!-- DOCVIEW 書類ビューア（左ページャー・スクロール・編集へ） -->
@@ -940,7 +964,7 @@ body.role-staff .owner-only{display:none!important}
 
           <!-- SETTINGS 設定（衛生士・歯状態） -->
           <section class="screen" data-id="settings">
-            <div class="bar"><i class="ti ti-settings" style="color:var(--purple-d)"></i><span class="logo" style="font-size:16px">設定</span><span class="spacer"></span><span class="seg"><span class="pill on" id="tab-staff" onclick="setTab('staff')">衛生士・検査</span><span class="pill" id="tab-link" onclick="setTab('link')">連携</span><span class="pill owner-only" id="tab-perm" onclick="setTab('perm')">スタッフ・権限</span></span></div>
+            <div class="bar"><i class="ti ti-settings" style="color:var(--purple-d)"></i><span class="logo" style="font-size:16px">設定</span><span class="spacer"></span><span class="seg"><span class="pill on" id="tab-staff" onclick="setTab('staff')">衛生士・検査</span><span class="pill" id="tab-tags" onclick="setTab('tags')">タグ</span><span class="pill" id="tab-link" onclick="setTab('link')">連携</span><span class="pill owner-only" id="tab-perm" onclick="setTab('perm')">スタッフ・権限</span></span></div>
             <div class="body" id="set-staff" style="padding:18px">
               <div class="grid" style="grid-template-columns:1.3fr 1fr;align-items:start">
                 <div>
@@ -967,6 +991,12 @@ body.role-staff .owner-only{display:none!important}
                   <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill on">疾患管理文書</span><span class="pill on">実地指導書</span><span class="pill">問診票</span><span class="pill on">歯周検査サマリー</span><span class="pill on">口腔内写真レポート</span><span class="pill">SRP・処置記録</span><span class="pill">TBI指導</span><span class="pill">経過比較シート</span><span class="pill">次回計画メモ</span></div>
                 </div>
               </div>
+            </div>
+            <!-- タグ設定（タグカテゴリ＞タグの階層・1画面登録） -->
+            <div class="body" id="set-tags" style="padding:18px;display:none">
+              <div class="label" style="font-weight:500;margin-bottom:4px">タグ設定<span class="qh" onclick="showHelp(event,this)" data-help="「タグカテゴリ」の中に「タグ」を登録する2階層です。ここで作ったタグは、一覧画面の「部位・タグを付ける」で画像・書類に付与し、絞り込みに使えます。">?</span></div>
+              <div class="hint" style="margin-bottom:14px">カテゴリごとにタグを登録します（カテゴリ名はタップで編集／タグは＋で追加・×で削除）。</div>
+              <div id="tagset-list" style="max-width:760px"></div>
             </div>
             <!-- 連携（picmoR NAS / 提携アプリ） -->
             <div class="body" id="set-link" style="padding:18px;display:none">
@@ -1071,6 +1101,18 @@ body.role-staff .owner-only{display:none!important}
           <!-- #4 提携アプリ追加モーダル -->
           <div class="modal-ov" id="appModal" onclick="if(event.target===this)closeApp()"><div class="modal"><span class="x" onclick="closeApp()"><i class="ti ti-x"></i></span><h3 style="font-size:15px"><i class="ti ti-frame" style="color:var(--purple-d)"></i> 提携アプリを追加</h3><div class="hint" style="margin:6px 0 10px">弊社と提携済みのアプリのみ表示されます。連携すると対象データがKOEMOと同期されます。</div><div class="card" style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><div class="tile" style="width:34px;height:34px;border:none;background:var(--lav)"><i class="ti ti-dental" style="color:var(--purple-d)"></i></div><div style="flex:1"><div style="font-size:13px;font-weight:500">口腔内スキャナ連携（提携C社）</div><div class="hint">STL / 口腔内3Dデータ</div></div><button class="btn primary sm">連携</button></div><div class="card" style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><div class="tile" style="width:34px;height:34px;border:none;background:var(--lav)"><i class="ti ti-calendar" style="color:var(--purple-d)"></i></div><div style="flex:1"><div style="font-size:13px;font-weight:500">予約システム連携（提携D社）</div><div class="hint">アポイント・来院情報</div></div><button class="btn primary sm">連携</button></div><div style="display:flex;justify-content:flex-end;margin-top:8px"><button class="btn" onclick="closeApp()">閉じる</button></div></div></div>
 
+          <!-- 部位・タグ付け モーダル（選択した画像・書類にまとめて付与） -->
+          <div class="modal-ov" id="tagModal" onclick="if(event.target===this)closeTag()"><div class="modal" style="width:600px"><span class="x" onclick="closeTag()"><i class="ti ti-x"></i></span><h3 style="font-size:16px"><i class="ti ti-tag" style="color:var(--purple-d)"></i> 部位・タグを付ける</h3><div class="hint" style="margin:-8px 0 14px">選択中の <b id="tag-n">0</b> 件すべてに、部位とタグを付与します。</div>
+            <div style="font-weight:600;font-size:13px;margin-bottom:8px;display:flex;align-items:center;gap:8px">部位（歯式）<span class="seg" style="margin-left:auto"><span class="pill on" id="tagm-adult" onclick="setTeeth('tagm','adult')">永久歯</span><span class="pill" id="tagm-baby" onclick="setTeeth('tagm','baby')">乳歯</span></span></div>
+            <div style="background:var(--lav2);border-radius:10px;padding:12px;margin-bottom:6px"><div class="hint" style="text-align:center;margin-bottom:4px">上顎（右 → 左）</div><div class="tootharch" id="tagm-up"></div><div style="height:10px"></div><div class="tootharch" id="tagm-lo"></div><div class="hint" style="text-align:center;margin-top:4px">下顎（右 → 左）</div></div>
+            <div style="font-weight:600;font-size:13px;margin:14px 0 0">タグ</div><div id="tagm-tags"></div>
+            <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:16px"><button class="btn" onclick="closeTag()">キャンセル</button><button class="btn primary" onclick="applyTag()">この内容で付与</button></div></div></div>
+          <!-- 部位・タグで絞り込み モーダル（一覧の「部位・タグ」フィルタ） -->
+          <div class="modal-ov" id="tagFilterModal" onclick="if(event.target===this)closeTagFilter()"><div class="modal" style="width:600px"><span class="x" onclick="closeTagFilter()"><i class="ti ti-x"></i></span><h3 style="font-size:16px"><i class="ti ti-filter" style="color:var(--purple-d)"></i> 部位・タグで絞り込み</h3><div class="hint" style="margin:-8px 0 14px">選んだ部位・タグに一致する画像・書類だけを表示します。</div>
+            <div style="font-weight:600;font-size:13px;margin-bottom:8px;display:flex;align-items:center;gap:8px">部位（歯式）<span class="seg" style="margin-left:auto"><span class="pill on" id="tagf-adult" onclick="setTeeth('tagf','adult')">永久歯</span><span class="pill" id="tagf-baby" onclick="setTeeth('tagf','baby')">乳歯</span></span></div>
+            <div style="background:var(--lav2);border-radius:10px;padding:12px;margin-bottom:6px"><div class="hint" style="text-align:center;margin-bottom:4px">上顎（右 → 左）</div><div class="tootharch" id="tagf-up"></div><div style="height:10px"></div><div class="tootharch" id="tagf-lo"></div><div class="hint" style="text-align:center;margin-top:4px">下顎（右 → 左）</div></div>
+            <div style="font-weight:600;font-size:13px;margin:14px 0 0">タグ</div><div id="tagf-tags"></div>
+            <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:16px"><button class="btn" onclick="closeTagFilter()">キャンセル</button><button class="btn primary" onclick="applyTagFilter()">この条件で絞り込む</button></div></div></div>
           <!-- フロート録音ボタン（テコ入れ#5: 常に浮かせて区別） -->
           <button class="fabrec" id="fabrec" onclick="toggleRec()"><span class="dot"></span> 録音中 12:34 <i class="ti ti-player-stop"></i></button>
 
@@ -1114,7 +1156,7 @@ function toggleRec(){
   else{fab.classList.add("paused");fab.innerHTML='<i class="ti ti-microphone"></i> 録音開始 <i class="ti ti-player-play"></i>';}
 }
 function setTab(t){
-  ["staff","perm","link"].forEach(function(k){
+  ["staff","tags","perm","link"].forEach(function(k){
     var tab=document.getElementById("tab-"+k),pane=document.getElementById("set-"+k);
     if(tab)tab.classList.toggle("on",k===t);
     if(pane)pane.style.display=(k===t)?"":"none";
@@ -1417,6 +1459,55 @@ function showHelp(ev,el){
   var top=r.bottom+8;if(top+ph>window.innerHeight-8)top=r.top-ph-8;
   p.style.left=left+"px";p.style.top=top+"px";
 }
+/* ===== タグ（カテゴリ＞タグ）＋部位（歯式）ピッカー ===== */
+var TAG_CATS=[
+  {name:"疾患",tags:["歯周病","う蝕","根尖性歯周炎","知覚過敏","破折","インプラント周囲炎"]},
+  {name:"処置",tags:["SRP","TBI","補綴","抜歯","根管治療","矯正","ホワイトニング"]},
+  {name:"経過",tags:["術前","術後","治療中","メインテナンス","比較"]},
+  {name:"その他",tags:["要観察","患者説明用","症例提示"]}
+];
+function buildTagSettings(){
+  var c=document.getElementById("tagset-list");if(!c)return;
+  var html=TAG_CATS.map(function(cat,ci){
+    return '<div class="card" style="margin-bottom:10px">'
+      +'<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><input value="'+cat.name+'" style="font-weight:600;font-size:13px;border:0.5px solid var(--border2);border-radius:8px;padding:6px 10px;max-width:220px;color:var(--text)"><span class="spacer"></span><span class="muted" style="font-size:12px;cursor:pointer" onclick="delTagCat('+ci+')"><i class="ti ti-trash"></i> カテゴリ削除</span></div>'
+      +'<div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">'
+      + cat.tags.map(function(t,ti){return '<span class="chip lav" style="display:inline-flex;align-items:center;gap:5px">'+t+'<i class="ti ti-x" style="font-size:10px;cursor:pointer" onclick="delTag('+ci+','+ti+')"></i></span>';}).join('')
+      +'<span class="chip" style="background:#fff;border:0.5px dashed var(--purple);color:var(--purple-d);cursor:pointer" onclick="addTag('+ci+')"><i class="ti ti-plus" style="font-size:11px"></i> タグを追加</span>'
+      +'</div></div>';
+  }).join('');
+  c.innerHTML=html+'<button class="btn sm" onclick="addTagCat()"><i class="ti ti-plus"></i> カテゴリを追加</button>';
+}
+function addTagCat(){TAG_CATS.push({name:"新しいカテゴリ",tags:[]});buildTagSettings();buildTagPick("tagm");buildTagPick("tagf");}
+function delTagCat(ci){TAG_CATS.splice(ci,1);buildTagSettings();buildTagPick("tagm");buildTagPick("tagf");}
+function addTag(ci){var v=prompt("追加するタグ名");if(v){TAG_CATS[ci].tags.push(v);buildTagSettings();buildTagPick("tagm");buildTagPick("tagf");}}
+function delTag(ci,ti){TAG_CATS[ci].tags.splice(ti,1);buildTagSettings();buildTagPick("tagm");buildTagPick("tagf");}
+function buildTagPick(prefix){
+  var tc=document.getElementById(prefix+"-tags");if(!tc)return;
+  tc.innerHTML=TAG_CATS.map(function(cat){
+    return '<div class="tagcat-title">'+cat.name+'</div><div style="display:flex;gap:6px;flex-wrap:wrap">'
+      + cat.tags.map(function(t){return '<span class="pill multi">'+t+'</span>';}).join('')
+      +'</div>';
+  }).join('');
+}
+function setTeeth(prefix,mode){
+  var up=document.getElementById(prefix+"-up"),lo=document.getElementById(prefix+"-lo");if(!up||!lo)return;
+  var adult=[8,7,6,5,4,3,2,1,1,2,3,4,5,6,7,8];
+  var baby=["E","D","C","B","A","A","B","C","D","E"];
+  var seq=(mode==="baby")?baby:adult;
+  function row(seq){return seq.map(function(n,i){var mid=(i===seq.length/2-1)?" mid":"";return '<span class="tnum'+mid+'" onclick="this.classList.toggle(\'sel\')">'+n+'</span>';}).join("");}
+  up.innerHTML=row(seq);lo.innerHTML=row(seq);
+  var ab=document.getElementById(prefix+"-adult"),bb=document.getElementById(prefix+"-baby");
+  if(ab)ab.classList.toggle("on",mode!=="baby");
+  if(bb)bb.classList.toggle("on",mode==="baby");
+}
+function selCount(){var s=document.querySelector(".screen.active");return s?s.querySelectorAll(".tile.sel").length:0;}
+function openTag(){var n=document.getElementById("tag-n");if(n)n.textContent=selCount();document.getElementById("tagModal").classList.add("show");}
+function closeTag(){document.getElementById("tagModal").classList.remove("show");}
+function applyTag(){closeTag();}
+function openTagFilter(){document.getElementById("tagFilterModal").classList.add("show");}
+function closeTagFilter(){document.getElementById("tagFilterModal").classList.remove("show");}
+function applyTagFilter(){closeTagFilter();}
 document.addEventListener("click",function(e){
   /* ? ヘルプポップアップ: アイコン外クリックで閉じる */
   if(!e.target.closest(".qh")){var qp=document.getElementById("qpop");if(qp)qp.style.display="none";}
@@ -1437,6 +1528,7 @@ document.addEventListener("click",function(e){
 });
 document.querySelectorAll(".navitem").forEach(function(n){n.addEventListener("click",function(){go(n.dataset.t);});});
 renderChart();buildArch();
+buildTagSettings();setTeeth("tagm","adult");setTeeth("tagf","adult");buildTagPick("tagm");buildTagPick("tagf");
 go("login");
 </script>
 </body>
