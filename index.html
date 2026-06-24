@@ -95,11 +95,15 @@ a.plain{color:var(--purple-d)}
 .qh:hover{background:var(--purple);color:#fff;border-color:var(--purple)}
 #qpop{position:fixed;z-index:9999;max-width:240px;background:#2c2942;color:#fff;font-size:11.5px;line-height:1.65;padding:9px 12px;border-radius:9px;box-shadow:0 8px 26px rgba(40,36,70,.28);display:none;pointer-events:none}
 /* 一覧の絞り込みバー（メディア/書類でグループ化＋右寄せの部位タグ・日付） */
-.fbar{padding-top:7px;padding-bottom:7px;align-items:flex-start;gap:9px;flex-wrap:nowrap;overflow-x:auto}
+.fbar{padding-top:7px;padding-bottom:7px;align-items:flex-start;gap:8px 11px;flex-wrap:wrap}
 .fgrp{display:flex;flex-direction:column;gap:5px;flex:none}
 .ftitle{font-size:9.5px;font-weight:700;color:var(--purple-d);letter-spacing:.04em;padding-left:2px}
-.frow{display:flex;gap:5px;flex-wrap:nowrap}
+.frow{display:flex;gap:5px;flex-wrap:wrap}
+.fbar .pill{font-size:10.5px;padding:3px 9px}
 .fsep{width:1px;align-self:stretch;background:#cfc9f3;flex:none;margin:0 1px}
+/* iPad縦: グループを確実に折り返して横スクロールを防ぐ */
+.frame.r-port .fbar .fgrp{max-width:100%}
+.frame.r-port .fbar .fsep{display:none}
 /* 歯式ピッカー（部位選択・picmoR風） */
 .tootharch{display:flex;gap:3px;flex-wrap:nowrap;justify-content:center}
 .tnum{width:24px;height:28px;border:0.5px solid var(--border2);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px;cursor:pointer;background:#fff;color:var(--text);flex:none}
@@ -495,8 +499,7 @@ body.role-staff .owner-only{display:none!important}
               <div class="fgrp"><div class="ftitle">メディア</div><div class="frow"><span class="pill multi">静止画</span><span class="pill multi">動画</span><span class="pill multi">口腔内写真</span><span class="pill multi">パノラマ</span><span class="pill multi">セファロ</span><span class="pill multi">デンタル</span></div></div>
               <div class="fsep"></div>
               <div class="fgrp"><div class="ftitle">書類</div><div class="frow"><span class="pill multi">歯科疾患管理料</span><span class="pill multi">衛生実地指導書</span><span class="pill multi">問診票</span><span class="pill multi">サブカルテ</span></div></div>
-              <span class="spacer"></span>
-              <div class="fgrp" style="align-items:flex-end"><div class="ftitle">絞り込み</div><div class="frow"><span class="pill lav" onclick="openTagFilter()"><i class="ti ti-tag" style="font-size:12px"></i> 部位・タグ</span><span class="pill lav"><i class="ti ti-calendar" style="font-size:12px"></i> 日付</span></div></div>
+              <div class="fgrp" style="align-items:flex-end;margin-left:auto"><div class="ftitle">絞り込み</div><div class="frow"><span class="pill lav" onclick="openTagFilter()"><i class="ti ti-tag" style="font-size:12px"></i> 部位・タグ</span><span class="pill lav"><i class="ti ti-calendar" style="font-size:12px"></i> 日付</span></div></div>
             </div>
             <!-- 絞り込み中の表示 -->
             <div class="bar" style="padding:6px 14px"><span class="hint">絞り込み中:</span><span class="chip lav">口腔内写真 <i class="ti ti-x" style="font-size:10px;cursor:pointer"></i></span><span class="chip lav"><i class="ti ti-tag" style="font-size:10px"></i> 歯周病 <i class="ti ti-x" style="font-size:10px;cursor:pointer"></i></span><span class="chip lav">2026/04/09〜06/21 <i class="ti ti-x" style="font-size:10px;cursor:pointer"></i></span><span class="muted" style="font-size:12px;cursor:pointer">すべて解除</span><span class="spacer"></span><span class="hint">28件中 12件</span></div>
@@ -519,7 +522,7 @@ body.role-staff .owner-only{display:none!important}
                 <div class="tile" style="aspect-ratio:4/3;cursor:pointer" onclick="toggleMediaSel(this)" ondblclick="go('docview')"><i class="ti ti-report" style="font-size:24px"></i><span class="badge">レポート</span><span class="cap">サブカルテ</span></div>
               </div>
             </div>
-            <div class="bar barfoot" style="gap:8px"><button class="btn sm needsel dis" onclick="openTag()"><i class="ti ti-tag"></i> 部位・タグを付ける</button><button class="btn sm needsel dis" onclick="go('explain2')"><i class="ti ti-columns-2"></i> 比較</button><button class="btn sm needsel dis" onclick="go('layout')"><i class="ti ti-layout-grid"></i> 5・9枚法</button><button class="btn primary sm needsel dis" onclick="go('radiograph')"><i class="ti ti-radioactive"></i> レントゲン並べ</button><span class="spacer"></span><span class="qh" onclick="showHelp(event,this)" data-help="メディアは 1タップ＝選択/解除、ダブルタップ＝詳細を開く、で操作します。選択後、左下の「部位・タグを付ける」でまとめてタグ付けできます。">?</span></div>
+            <div class="bar barfoot" style="gap:8px"><button class="btn sm needsel dis" onclick="openTag()"><i class="ti ti-tag"></i> 部位・タグを付ける</button><button class="btn sm needsel dis" onclick="go('explain2')"><i class="ti ti-columns-2"></i> 比較</button><button class="btn sm needsel dis" onclick="go('layout')"><i class="ti ti-layout-grid"></i> 5・9枚法</button><button class="btn sm needsel dis" onclick="go('radiograph')"><i class="ti ti-radioactive"></i> レントゲン並べ</button><span class="spacer"></span><span class="qh" onclick="showHelp(event,this)" data-help="メディアは 1タップ＝選択/解除、ダブルタップ＝詳細を開く、で操作します。選択後、左下の「部位・タグを付ける」でまとめてタグ付けできます。">?</span></div>
           </section>
 
           <!-- LAYOUT 5/9枚法 -->
@@ -780,8 +783,7 @@ body.role-staff .owner-only{display:none!important}
               <div class="fgrp"><div class="ftitle">メディア</div><div class="frow"><span class="pill multi">静止画</span><span class="pill multi">動画</span><span class="pill multi">口腔内写真</span><span class="pill multi">パノラマ</span><span class="pill multi">セファロ</span><span class="pill multi">デンタル</span></div></div>
               <div class="fsep"></div>
               <div class="fgrp"><div class="ftitle">書類</div><div class="frow"><span class="pill multi">歯科疾患管理料</span><span class="pill multi">衛生実地指導書</span><span class="pill multi">問診票</span><span class="pill multi">サブカルテ</span></div></div>
-              <span class="spacer"></span>
-              <div class="fgrp" style="align-items:flex-end"><div class="ftitle">絞り込み</div><div class="frow"><span class="pill lav" onclick="openTagFilter()"><i class="ti ti-tag" style="font-size:12px"></i> 部位・タグ</span><span class="pill lav"><i class="ti ti-calendar" style="font-size:12px"></i> 日付</span></div></div>
+              <div class="fgrp" style="align-items:flex-end;margin-left:auto"><div class="ftitle">絞り込み</div><div class="frow"><span class="pill lav" onclick="openTagFilter()"><i class="ti ti-tag" style="font-size:12px"></i> 部位・タグ</span><span class="pill lav"><i class="ti ti-calendar" style="font-size:12px"></i> 日付</span></div></div>
             </div>
             <div class="bar" style="padding:6px 14px"><span class="muted" style="font-size:12px">操作方法<span class="qh" onclick="showHelp(event,this)" data-help="1タップ＝選択/解除、ダブルタップ＝詳細表示。1枚以上選択すると上部に「日付変更」（取込日になった撮影日の補正）／「紐付け」（別患者で撮影したファイルを正しいカルテへ移動）が表示されます。">?</span></span><span class="spacer"></span><span class="hint">1,248件</span></div>
             <div class="body" style="padding:14px">
@@ -806,7 +808,7 @@ body.role-staff .owner-only{display:none!important}
                 </div>
               </div>
             </div>
-            <div class="bar barfoot" style="gap:8px"><button class="btn sm needsel dis" onclick="openTag()"><i class="ti ti-tag"></i> 部位・タグを付ける</button><button class="btn sm needsel dis" onclick="go('explain2')"><i class="ti ti-columns-2"></i> 比較</button><button class="btn sm needsel dis" onclick="go('layout')"><i class="ti ti-layout-grid"></i> 5・9枚法</button><button class="btn primary sm needsel dis" onclick="go('radiograph')"><i class="ti ti-radioactive"></i> レントゲン並べ</button><span class="spacer"></span><span class="qh" onclick="showHelp(event,this)" data-help="選択した画像・書類を、比較・5/9枚法・レントゲン並べに利用したり、「部位・タグを付ける」でまとめてタグ付けできます。">?</span></div>
+            <div class="bar barfoot" style="gap:8px"><button class="btn sm needsel dis" onclick="openTag()"><i class="ti ti-tag"></i> 部位・タグを付ける</button><button class="btn sm needsel dis" onclick="go('explain2')"><i class="ti ti-columns-2"></i> 比較</button><button class="btn sm needsel dis" onclick="go('layout')"><i class="ti ti-layout-grid"></i> 5・9枚法</button><button class="btn sm needsel dis" onclick="go('radiograph')"><i class="ti ti-radioactive"></i> レントゲン並べ</button><span class="spacer"></span><span class="qh" onclick="showHelp(event,this)" data-help="選択した画像・書類を、比較・5/9枚法・レントゲン並べに利用したり、「部位・タグを付ける」でまとめてタグ付けできます。">?</span></div>
           </section>
 
           <!-- DOCVIEW 書類ビューア（左ページャー・スクロール・編集へ） -->
