@@ -90,6 +90,10 @@ a.plain{color:var(--purple-d)}
 /* --- 2026-06-23 テコ入れ追加分 --- */
 .tag-new{font-size:9px;font-weight:700;color:#fff;background:var(--purple);border-radius:999px;padding:1px 6px;margin-left:6px;vertical-align:middle;letter-spacing:.02em}
 .tag-chg{font-size:9px;font-weight:700;color:var(--purple-d);background:var(--lav);border:0.5px solid #cfc9f3;border-radius:999px;padding:1px 6px;margin-left:6px;vertical-align:middle}
+/* ? ヘルプアイコン＋ポップアップ（補足テキストを格納・タップで付近に表示） */
+.qh{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;background:var(--lav);color:var(--purple-d);font-size:10px;font-weight:700;line-height:1;cursor:pointer;border:0.5px solid #cfc9f3;vertical-align:middle;margin-left:4px;flex:none;font-family:system-ui}
+.qh:hover{background:var(--purple);color:#fff;border-color:var(--purple)}
+#qpop{position:fixed;z-index:9999;max-width:240px;background:#2c2942;color:#fff;font-size:11.5px;line-height:1.65;padding:9px 12px;border-radius:9px;box-shadow:0 8px 26px rgba(40,36,70,.28);display:none;pointer-events:none}
 /* 役割スイッチ */
 .roleswitch{display:flex;gap:3px;background:var(--lav2);border-radius:999px;padding:3px;margin:4px 8px 2px}
 .roleswitch .r{flex:1;text-align:center;font-size:11.5px;padding:6px 4px;border-radius:999px;color:var(--muted);cursor:pointer}
@@ -187,7 +191,7 @@ body.role-staff .owner-only{display:none!important}
 /* ===== #1 reportedit 左右パネル開閉（ボタン表示/非表示・peek） ===== */
 #re-left,#re-right{transition:width .18s ease}
 #re-left.col,#re-right.col{width:22px!important;min-width:22px;padding:0!important;overflow:hidden;cursor:pointer;background:var(--lav);position:relative}
-#re-left.col>*,#re-right.col>*{display:none}
+#re-left.col>*,#re-right.col>*{display:none!important}
 #re-left.col::after{content:"›"}
 #re-right.col::after{content:"‹"}
 #re-left.col::after,#re-right.col::after{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:var(--purple-d);font-weight:700;font-size:16px}
@@ -214,7 +218,7 @@ body.role-staff .owner-only{display:none!important}
 <div class="app">
   <nav class="side">
     <div class="brand">KOEMO<small>プロトタイプ（iPad 4:3）</small></div>
-    <div class="navgroup">役割（デモ切替）<span class="tag-new">NEW</span></div>
+    <div class="navgroup">役割（デモ切替）</div>
     <div class="roleswitch">
       <div class="r on" data-role="owner" onclick="setRole('owner')"><i class="ti ti-crown" style="font-size:13px"></i> 院長</div>
       <div class="r" data-role="staff" onclick="setRole('staff')"><i class="ti ti-user" style="font-size:13px"></i> 衛生士</div>
@@ -244,11 +248,11 @@ body.role-staff .owner-only{display:none!important}
     <div class="navitem" data-t="handout"><i class="ti ti-qrcode"></i>患者持ち帰り</div>
     <div class="navgroup">管理</div>
     <div class="navitem" data-t="market"><i class="ti ti-shopping-bag"></i>テンプレマーケット</div>
-    <div class="navitem owner-only" data-t="plan"><i class="ti ti-receipt"></i>契約プラン<span class="tag-new">NEW</span></div>
+    <div class="navitem owner-only" data-t="plan"><i class="ti ti-receipt"></i>契約プラン</div>
     <div class="navgroup">アカウント・設定</div>
-    <div class="navitem" data-t="credit"><i class="ti ti-sparkles"></i>AIクレジット<span class="tag-new">NEW</span></div>
-    <div class="navitem" data-t="storage"><i class="ti ti-database"></i>ストレージ<span class="tag-new">NEW</span></div>
-    <div class="navitem" data-t="settings"><i class="ti ti-settings"></i>設定（衛生士・歯）<span class="tag-new">NEW</span></div>
+    <div class="navitem" data-t="credit"><i class="ti ti-sparkles"></i>AIクレジット</div>
+    <div class="navitem" data-t="storage"><i class="ti ti-database"></i>ストレージ</div>
+    <div class="navitem" data-t="settings"><i class="ti ti-settings"></i>設定（衛生士・歯）</div>
   </nav>
 
   <div class="main">
@@ -288,10 +292,10 @@ body.role-staff .owner-only{display:none!important}
                   <div style="font-weight:500;margin-bottom:14px">患者を検索する</div>
                   <div class="label" style="margin-bottom:5px">カルテ番号</div><div class="field" style="margin-bottom:12px">&nbsp;</div>
                   <div class="label" style="margin-bottom:5px">患者名</div><div class="field" style="margin-bottom:12px">&nbsp;</div>
-                  <div class="label" style="margin-bottom:5px">来院日<span class="tag-chg">追加</span></div>
+                  <div class="label" style="margin-bottom:5px">来院日</div>
                   <div style="display:flex;align-items:center;gap:8px;margin-bottom:18px"><div class="field" style="flex:1;cursor:pointer" onclick="openCal(this)"><i class="ti ti-calendar" style="margin-right:6px"></i> 年/月/日</div><span class="muted">〜</span><div class="field" style="flex:1;cursor:pointer" onclick="openCal(this)"><i class="ti ti-calendar" style="margin-right:6px"></i> 年/月/日</div></div>
                   <div style="display:flex;justify-content:flex-end;gap:10px"><button class="btn">クリア</button><button class="btn primary">患者を新規作成</button></div>
-                  <div style="border-top:0.5px solid var(--border);margin-top:18px;padding-top:14px"><button class="btn" style="width:100%;background:var(--lav2);border:1.5px solid var(--purple);color:var(--purple-d);font-weight:600;padding:11px" onclick="go('library')"><i class="ti ti-photo"></i> 全患者のメディア・書類一覧</button><div class="hint" style="margin-top:6px">患者を特定する情報を除いた全患者横断の一覧（タグ・部位・日付で検索）</div></div>
+                  <div style="border-top:0.5px solid var(--border);margin-top:18px;padding-top:14px"><button class="btn" style="width:100%;background:var(--lav2);border:1.5px solid var(--purple);color:var(--purple-d);font-weight:600;padding:11px" onclick="go('library')"><i class="ti ti-photo"></i> 全患者のメディア・書類一覧 <span class="qh" onclick="showHelp(event,this)" data-help="患者を特定する情報を除いた、全患者横断の一覧です。タグ・部位・日付で検索できます。">?</span></button></div>
                 </div>
                 <div style="padding:18px">
                   <div style="font-weight:500;margin-bottom:14px">検索結果 (2件)</div>
@@ -329,13 +333,12 @@ body.role-staff .owner-only{display:none!important}
                 <div>
                   <div class="label" style="margin-bottom:6px">診療日時</div>
                   <div class="field" style="max-width:280px;margin-bottom:14px;cursor:pointer" onclick="openDateTime(this)"><i class="ti ti-calendar" style="margin-right:8px"></i> 2026/06/21 10:30</div>
-                  <div class="label" style="margin-bottom:6px">担当衛生士<span class="tag-new">追加</span></div>
+                  <div class="label" style="margin-bottom:6px">担当衛生士</div>
                   <div class="field" data-opts="衛生士A（あなた）|衛生士B|院長 高根" style="max-width:280px;margin-bottom:14px">衛生士A（あなた）<i class="ti ti-chevron-down" style="margin-left:auto"></i></div>
-                  <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);margin-bottom:6px"><span class="toggle on"><span class="knob"></span></span> 初診として扱う</label>
-                  <div class="hint" style="margin-bottom:14px">初診は問診票・録音同意の確認が入ります。</div>
+                  <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);margin-bottom:14px"><span class="toggle on"><span class="knob"></span></span> 初診として扱う<span class="qh" onclick="showHelp(event,this)" data-help="初診として扱うと、問診票・録音同意の確認ステップが入ります。">?</span></label>
                 </div>
                 <div>
-                  <div class="label" style="margin-bottom:6px">来院目的・主訴（任意・複数選択可）<span class="tag-new">追加</span></div>
+                  <div class="label" style="margin-bottom:6px">来院目的・主訴（任意・複数選択可）</div>
                   <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px"><span class="pill multi on">定期検診</span><span class="pill multi">歯周治療</span><span class="pill multi">SRP</span><span class="pill multi">TBI</span><span class="pill multi">痛み・しみる</span></div>
                   <div class="field" style="min-height:58px;align-items:flex-start;margin-bottom:14px">&nbsp;</div>
                   <div class="card" style="background:var(--lav2);border:none"><div class="hint" style="margin-bottom:6px">前回（04/09・完了）</div><div style="font-size:12px;line-height:1.6">PPD平均2.8mm / BOP 26%。右下臼歯部の冷水痛。次回SRP予定。</div></div>
@@ -348,11 +351,11 @@ body.role-staff .owner-only{display:none!important}
 
           <!-- HUB -->
           <section class="screen" data-id="hub">
-            <div class="bar"><span class="muted" style="cursor:pointer;font-size:13px" onclick="go('reporttype')"><i class="ti ti-chevron-left"></i> 戻る</span><span style="font-weight:500">001 田中 様</span><span class="chip info">初診</span><span class="spacer"></span><span class="rec"><i class="ti ti-circle-filled"></i> 録音中 12:34<span class="hint" style="margin-left:4px">（停止は右下のフロートボタン）</span></span><button class="btn primary sm" onclick="openEnd()">診療を終える <i class="ti ti-arrow-right"></i></button></div>
+            <div class="bar"><span class="muted" style="cursor:pointer;font-size:13px" onclick="go('reporttype')"><i class="ti ti-chevron-left"></i> 戻る</span><span style="font-weight:500">001 田中 様</span><span class="chip info">初診</span><span class="spacer"></span><span class="rec"><i class="ti ti-circle-filled"></i> 録音中 12:34<span class="qh" onclick="showHelp(event,this)" data-help="録音の停止は、画面右下のフロート録音ボタンから行います。">?</span></span><button class="btn primary sm" onclick="openEnd()">診療を終える <i class="ti ti-arrow-right"></i></button></div>
             <div class="bar" style="padding-top:8px;padding-bottom:8px"><div style="flex:1"><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:6px"><span>資料に必要な情報の充足度</span><span style="color:var(--text)">60%</span></div><div style="height:8px;background:var(--lav2);border-radius:999px;overflow:hidden"><div style="width:60%;height:100%;background:var(--purple)"></div></div></div></div>
-            <div class="bar" style="border-bottom:none"><div class="pill on" style="flex:1;text-align:center;padding:10px"><i class="ti ti-list-check"></i> ガイド＆記録</div><div class="pill" style="flex:1;text-align:center;padding:10px;cursor:pointer" onclick="go('probing')"><i class="ti ti-dental"></i> プロービング</div><div class="pill" style="flex:1;text-align:center;padding:10px;cursor:pointer" onclick="go('explain')"><i class="ti ti-photo"></i> 患者説明 / メディア・書類一覧</div><div class="pill" style="flex:1;text-align:center;padding:10px;cursor:pointer" onclick="go('reportedit')"><i class="ti ti-edit"></i> サブカルテ記入<span class="tag-new">手書き</span></div></div>
+            <div class="bar" style="border-bottom:none"><div class="pill on" style="flex:1;text-align:center;padding:10px"><i class="ti ti-list-check"></i> ガイド＆記録</div><div class="pill" style="flex:1;text-align:center;padding:10px;cursor:pointer" onclick="go('probing')"><i class="ti ti-dental"></i> プロービング</div><div class="pill" style="flex:1;text-align:center;padding:10px;cursor:pointer" onclick="go('explain')"><i class="ti ti-photo"></i> 患者説明 / メディア・書類一覧</div><div class="pill" style="flex:1;text-align:center;padding:10px;cursor:pointer" onclick="go('reportedit')"><i class="ti ti-edit"></i> サブカルテ記入</div></div>
             <div class="body" style="padding:0 14px 14px">
-              <div style="display:flex;align-items:center;gap:10px;margin:0 0 10px;flex-wrap:wrap"><span class="chip lav" style="cursor:pointer" onclick="go('reporttype')"><i class="ti ti-report-medical" style="font-size:12px"></i> 作成予定: ペリオ標準（サブカルテ＋書類3点） <i class="ti ti-chevron-down"></i></span><span class="muted" style="font-size:12px;cursor:pointer" onclick="go('reporttype')">変更</span><span class="tag-chg">検査中も変更可</span><span class="hint"><i class="ti ti-microphone"></i> 録音は右下のフロートボタンで開始・停止（約30秒ごとに自動文字起こし＆ガイド反映）</span><span class="spacer"></span><span class="autotog" id="ai-auto" onclick="toggleAuto()" title="この患者の書類をAIで自動生成するか（OFFで手動作成）"><i class="ti ti-sparkles"></i> 書類のAI自動生成 <b id="ai-state">ON</b></span></div>
+              <div style="display:flex;align-items:center;gap:10px;margin:0 0 10px;flex-wrap:wrap"><span class="chip lav" style="cursor:pointer" onclick="go('reporttype')"><i class="ti ti-report-medical" style="font-size:12px"></i> 作成予定: ペリオ標準（サブカルテ＋書類3点） <i class="ti ti-chevron-down"></i></span><span class="muted" style="font-size:12px;cursor:pointer" onclick="go('reporttype')">変更</span><span class="qh" onclick="showHelp(event,this)" data-help="録音は右下のフロートボタンで開始・停止します。約30秒ごとに自動で文字起こしし、ガイドに反映します。">?</span><span class="spacer"></span><span class="autotog" id="ai-auto" onclick="toggleAuto()" title="この患者の書類をAIで自動生成するか（OFFで手動作成）"><i class="ti ti-sparkles"></i> 書類のAI自動生成 <b id="ai-state">ON</b></span></div>
               <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">
                 <div class="card">
                   <div class="label" style="font-weight:500;margin-bottom:10px">聞くこと（問診）</div>
@@ -378,32 +381,29 @@ body.role-staff .owner-only{display:none!important}
           <section class="screen" data-id="probing">
             <div class="bar">
               <span class="muted" style="cursor:pointer;font-size:13px" onclick="go('hub')"><i class="ti ti-chevron-left"></i> 戻る</span>
-              <button class="btn sm" style="background:var(--green-bg);color:var(--green);border-color:#bfe6d6"><i class="ti ti-device-floppy"></i> 保存</button>
+              <span style="font-weight:500;font-size:13px;cursor:pointer" onclick="openPatient()">001 田中 様</span><i class="ti ti-dots-vertical muted" style="cursor:pointer" onclick="openPatient()" title="患者情報"></i>
               <span class="spacer"></span>
               <span class="visitnav" title="過去の診療結果に移動">
                 <span class="vn" onclick="alert('前回(04/09)の検査結果へ')"><i class="ti ti-chevron-left"></i> 04/09</span>
                 <span class="vn cur">本日 06/21</span>
                 <span class="vn dis">次回 <i class="ti ti-chevron-right"></i></span>
               </span>
-              <span class="tag-new">過去診療へ移動</span>
-              <span class="spacer"></span>
-              <span style="font-weight:500;font-size:13px;cursor:pointer" onclick="openPatient()">001 田中 様</span><i class="ti ti-dots-vertical muted" style="cursor:pointer" onclick="openPatient()" title="患者情報"></i>
-              <span class="spacer"></span>
+              <button class="btn sm" style="background:var(--green-bg);color:var(--green);border-color:#bfe6d6"><i class="ti ti-device-floppy"></i> 保存</button>
               <button class="btn primary sm"><i class="ti ti-file-text"></i> PDF作成</button>
             </div>
 
             <!-- 録音エラー例（テコ入れ: エラーアラートの出し方） -->
             <div style="padding:8px 14px 0">
-              <div class="alert"><i class="ti ti-alert-triangle" style="font-size:18px"></i><div><b>録音が一時中断しました</b>（マイク切断 / 通信断）。未送信の音声3件はローカル保持中・自動再送します。<span class="hint" style="color:var(--red)">10:42</span></div><button class="btn sm" style="background:#fff"><i class="ti ti-refresh"></i> 再接続</button><span class="tag-new">録音エラー表示</span></div>
+              <div class="alert"><i class="ti ti-alert-triangle" style="font-size:18px"></i><div><b>録音が一時中断しました</b>（マイク切断 / 通信断）。未送信の音声3件はローカル保持中・自動再送します。<span class="hint" style="color:var(--red)">10:42</span></div><button class="btn sm" style="background:#fff"><i class="ti ti-refresh"></i> 再接続</button></div>
             </div>
 
             <!-- 上段コントロール（1段・横並び: 音声ガイド/表示/部位/進む方向/項目/歯の状態） -->
             <div class="bar examctl" style="align-items:flex-start;gap:10px;flex-wrap:nowrap;overflow-x:auto;padding-top:8px;padding-bottom:8px">
               <div style="flex:1;min-width:240px">
-                <div class="hint" style="margin-bottom:4px">音声入力ガイド<span class="tag-chg">改</span></div>
+                <div class="hint" style="margin-bottom:4px">音声入力ガイド<span class="qh" onclick="showHelp(event,this)" data-help="入力した値を読み上げ、画面表示と合わせて確認する方式です（会話形式の音声操作は廃止）。">?</span></div>
                 <div class="readback" style="padding:8px 12px;gap:10px">
                   <span class="spk" style="width:30px;height:30px"><i class="ti ti-volume"></i></span>
-                  <div style="flex:1"><div style="font-size:13px;font-weight:500">右上6番 頬側近心→<span style="color:var(--purple-d)">3mm</span></div><div class="hint" style="font-size:11px">読み上げ＋表示で確認</div></div>
+                  <div style="flex:1"><div style="font-size:13px;font-weight:500">右上6番 頬側近心→<span style="color:var(--purple-d)">3mm</span></div></div>
                   <label style="display:flex;align-items:center;gap:3px;font-size:10px;color:var(--muted)"><span class="toggle on" style="transform:scale(.85)"><span class="knob"></span></span></label>
                 </div>
               </div>
@@ -455,7 +455,7 @@ body.role-staff .owner-only{display:none!important}
             <div class="body" style="padding:18px">
               <div class="grid" style="grid-template-columns:1.1fr 1fr;gap:20px;align-items:start;max-width:920px">
                 <div>
-                  <div class="label" style="font-weight:500;margin-bottom:8px">検査順（流れ）<span class="hint" style="margin-left:6px">標準3パターン＋音声フリー</span></div>
+                  <div class="label" style="font-weight:500;margin-bottom:8px">検査順（流れ）<span class="qh" onclick="showHelp(event,this)" data-help="標準3パターンに加え、音声で指示するフリー方式を選べます。">?</span></div>
                   <div class="grid" style="grid-template-columns:repeat(2,1fr);gap:8px">
                     <div class="card patcard sel" onclick="pickCard(this)"><svg viewBox="0 0 160 108" width="100%" height="62"><defs><marker id="ex1" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="var(--purple)"/></marker></defs><g fill="none" stroke="#d7d3f0" stroke-width="5" stroke-linecap="round"><path d="M22,56 C22,18 138,18 138,56"/><path d="M44,56 C44,36 116,36 116,56"/><path d="M22,62 C22,100 138,100 138,62"/><path d="M44,62 C44,80 116,80 116,62"/></g><g fill="none" stroke="var(--purple)" stroke-width="2.2"><path d="M30,54 C30,22 130,22 131,51" marker-end="url(#ex1)"/><path d="M114,54 C114,38 46,38 45,51" marker-end="url(#ex1)"/><path d="M131,62 C131,97 30,97 29,63" marker-end="url(#ex1)"/><path d="M46,62 C46,79 114,79 115,63" marker-end="url(#ex1)"/></g><g font-size="9" font-weight="700" fill="var(--purple-d)"><text x="10" y="58">1</text><text x="121" y="34">2</text><text x="143" y="64">3</text><text x="34" y="84">4</text></g></svg><div style="font-size:11.5px;font-weight:500">パターン1（頬側↔舌側 往復）</div></div>
                     <div class="card patcard" onclick="pickCard(this)"><svg viewBox="0 0 160 108" width="100%" height="62"><defs><marker id="ex2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="var(--purple)"/></marker></defs><g fill="none" stroke="#d7d3f0" stroke-width="5" stroke-linecap="round"><path d="M22,56 C22,18 138,18 138,56"/><path d="M44,56 C44,36 116,36 116,56"/><path d="M22,62 C22,100 138,100 138,62"/><path d="M44,62 C44,80 116,80 116,62"/></g><g fill="none" stroke="var(--purple)" stroke-width="2.2"><path d="M30,54 C30,22 130,22 131,51" marker-end="url(#ex2)"/><path d="M46,54 C46,38 114,38 115,51" marker-end="url(#ex2)"/><path d="M30,62 C30,97 130,97 131,63" marker-end="url(#ex2)"/><path d="M46,62 C46,79 114,79 115,63" marker-end="url(#ex2)"/></g><g font-size="9" font-weight="700" fill="var(--purple-d)"><text x="12" y="52">1</text><text x="34" y="52">2</text><text x="12" y="70">3</text><text x="34" y="70">4</text></g></svg><div style="font-size:11.5px;font-weight:500">パターン2（一方向）</div></div>
@@ -466,10 +466,10 @@ body.role-staff .owner-only{display:none!important}
                 <div>
                   <div class="label" style="font-weight:500;margin-bottom:6px">検査の種別</div>
                   <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px"><span class="pill on">6点法</span><span class="pill">4点法</span><span class="pill">1点法</span></div>
-                  <div class="label" style="font-weight:500;margin-bottom:6px">表示する検査項目<span class="hint" style="margin-left:6px">複数選択</span></div>
+                  <div class="label" style="font-weight:500;margin-bottom:6px">表示する検査項目<span class="qh" onclick="showHelp(event,this)" data-help="複数選択できます。選んだ項目が検査画面に反映されます。">?</span></div>
                   <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px"><span class="pill multi on">動揺度</span><span class="pill multi on">根分岐部</span><span class="pill multi on">プラーク</span><span class="pill multi on">ポケット</span><span class="pill multi on">退縮度</span></div>
-                  <div class="card" style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div style="flex:1"><div style="font-size:13px;font-weight:500">測定方向の自動送り</div><div class="hint">近心→中央→遠心</div></div><span class="toggle on"><span class="knob"></span></span></div>
-                  <div class="card" style="display:flex;align-items:center;gap:8px"><div style="flex:1"><div style="font-size:13px;font-weight:500">前回値を参照表示</div><div class="hint">検査表に前回値を薄く表示</div></div><span class="toggle on"><span class="knob"></span></span></div>
+                  <div class="card" style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div style="flex:1"><div style="font-size:13px;font-weight:500">測定方向の自動送り<span class="qh" onclick="showHelp(event,this)" data-help="近心→中央→遠心 の順に、入力後カーソルが自動で進みます。">?</span></div></div><span class="toggle on"><span class="knob"></span></span></div>
+                  <div class="card" style="display:flex;align-items:center;gap:8px"><div style="flex:1"><div style="font-size:13px;font-weight:500">前回値を参照表示<span class="qh" onclick="showHelp(event,this)" data-help="検査表に前回値を薄く表示し、今回値と比較できます。">?</span></div></div><span class="toggle on"><span class="knob"></span></span></div>
                 </div>
               </div>
             </div>
@@ -501,7 +501,7 @@ body.role-staff .owner-only{display:none!important}
                 <div class="tile" style="aspect-ratio:4/3;cursor:pointer" onclick="toggleMediaSel(this)" ondblclick="go('docview')"><i class="ti ti-report" style="font-size:24px"></i><span class="badge">レポート</span><span class="cap">サブカルテ</span></div>
               </div>
             </div>
-            <div class="bar barfoot" style="gap:8px"><button class="btn sm needsel dis" onclick="go('explain2')"><i class="ti ti-columns-2"></i> 比較</button><button class="btn sm needsel dis" onclick="go('layout')"><i class="ti ti-layout-grid"></i> 5・9枚法</button><button class="btn primary sm needsel dis" onclick="go('radiograph')"><i class="ti ti-radioactive"></i> レントゲン並べ</button><span class="spacer"></span><span class="hint" style="font-size:11px"><i class="ti ti-hand-finger"></i> 1タップ＝選択/解除・ダブルタップ＝詳細</span></div>
+            <div class="bar barfoot" style="gap:8px"><button class="btn sm needsel dis" onclick="go('explain2')"><i class="ti ti-columns-2"></i> 比較</button><button class="btn sm needsel dis" onclick="go('layout')"><i class="ti ti-layout-grid"></i> 5・9枚法</button><button class="btn primary sm needsel dis" onclick="go('radiograph')"><i class="ti ti-radioactive"></i> レントゲン並べ</button><span class="spacer"></span><span class="qh" onclick="showHelp(event,this)" data-help="メディアは 1タップ＝選択/解除、ダブルタップ＝詳細を開く、で操作します。">?</span></div>
           </section>
 
           <!-- LAYOUT 5/9枚法 -->
@@ -521,33 +521,33 @@ body.role-staff .owner-only{display:none!important}
               </div>
               <!-- 右: 配置する画像（一覧で選択したもの） -->
               <div style="width:128px;flex:none;border-left:0.5px solid var(--border);padding:10px 8px;overflow:auto">
-                <div class="hint" style="margin-bottom:8px">配置する画像<br>タップ→枠をタップ</div>
+                <div class="hint" style="margin-bottom:8px">配置する画像<span class="qh" onclick="showHelp(event,this)" data-help="画像をタップ→配置したい空き枠をタップ、で配置できます。">?</span></div>
                 <div class="tile sel" style="aspect-ratio:4/3;margin-bottom:8px"><i class="ti ti-dental" style="font-size:20px"></i><span class="cap">正面</span></div>
                 <div class="tile" style="aspect-ratio:4/3;margin-bottom:8px"><i class="ti ti-dental" style="font-size:20px"></i><span class="cap">上顎</span></div>
                 <div class="tile" style="aspect-ratio:4/3;margin-bottom:8px"><i class="ti ti-dental" style="font-size:20px"></i><span class="cap">右側</span></div>
                 <div class="tile" style="aspect-ratio:4/3;margin-bottom:8px"><i class="ti ti-player-play" style="font-size:20px"></i><span class="cap">動画コマ</span></div>
               </div>
             </div>
-            <div class="bar barfoot"><span class="hint">右の画像をタップ→空き枠をタップで配置／説明に使った素材は録音とともに自動でレポート化</span><span class="spacer"></span><button class="btn primary sm"><i class="ti ti-capture"></i> スクショして静止画保存</button></div>
+            <div class="bar barfoot"><span class="qh" onclick="showHelp(event,this)" data-help="右の画像をタップ→空き枠をタップで配置します。説明に使った素材は録音とともに自動でレポート化されます。">?</span><span class="spacer"></span><button class="btn primary sm"><i class="ti ti-capture"></i> スクショして静止画保存</button></div>
           </section>
 
           <!-- COMPARE 2〜4枚 -->
           <section class="screen" data-id="explain2">
-            <div class="bar"><span class="logo">KOEMO</span><span class="muted" style="font-size:12px;cursor:pointer" onclick="go('explain')"><i class="ti ti-chevron-left"></i> 戻る</span><span class="hint">一覧で選択した2枚を比較（枚数は選択で決定）</span><span class="spacer"></span><button class="pill on"><i class="ti ti-arrows-left-right" style="font-size:12px"></i> 同期 ON</button></div>
+            <div class="bar"><span class="logo">KOEMO</span><span class="muted" style="font-size:12px;cursor:pointer" onclick="go('explain')"><i class="ti ti-chevron-left"></i> 戻る</span><span class="logo" style="font-size:16px">比較<span class="qh" onclick="showHelp(event,this)" data-help="一覧で選択した画像を並べて比較します。比較する枚数は選択した数で決まります（2〜4枚）。">?</span></span><span class="spacer"></span><button class="pill on"><i class="ti ti-arrows-left-right" style="font-size:12px"></i> 同期 ON</button></div>
             <div class="body" style="display:flex;flex-direction:column">
               <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;gap:8px;background:var(--lav2);padding:14px;min-height:0">
-                <div style="display:flex;flex-direction:column;justify-content:center;min-height:0"><div class="photo" style="aspect-ratio:16/9;width:100%;height:auto"><i class="ti ti-dental" style="font-size:46px"></i><span class="cap">治療前 2026/01</span></div><div style="display:flex;align-items:center;gap:10px;margin-top:8px;color:var(--muted)"><i class="ti ti-zoom-in"></i><i class="ti ti-zoom-out"></i><i class="ti ti-rotate"></i><span class="hint" style="margin-left:4px">ピンチアウトで高さいっぱいに拡大（16:9維持）</span></div></div>
+                <div style="display:flex;flex-direction:column;justify-content:center;min-height:0"><div class="photo" style="aspect-ratio:16/9;width:100%;height:auto"><i class="ti ti-dental" style="font-size:46px"></i><span class="cap">治療前 2026/01</span></div><div style="display:flex;align-items:center;gap:10px;margin-top:8px;color:var(--muted)"><i class="ti ti-zoom-in"></i><i class="ti ti-zoom-out"></i><i class="ti ti-rotate"></i><span class="qh" onclick="showHelp(event,this)" data-help="ピンチアウトで高さいっぱいに拡大できます（16:9の比率を維持）。">?</span></div></div>
                 <div style="display:flex;flex-direction:column;justify-content:center;min-height:0"><div class="photo" style="aspect-ratio:16/9;width:100%;height:auto;background:#e3e1ef;color:#9a93c9"><i class="ti ti-player-play" style="font-size:46px"></i><span class="cap" style="color:var(--muted)">今回 動画 2026/06</span></div><div style="display:flex;align-items:center;gap:8px;margin-top:8px;color:var(--muted)"><span class="hint">動画:</span><span class="seg" style="padding:3px"><span class="pill on">横フィット</span><span class="pill">縦フィット</span></span></div></div>
               </div>
             </div>
-            <div class="bar barfoot"><span class="hint">「同期」ONで左右のピンチ/ズームが連動。説明に使った素材は録音とともに自動でレポート化</span><span class="spacer"></span><button class="btn primary sm"><i class="ti ti-capture"></i> スクショして静止画保存</button></div>
+            <div class="bar barfoot"><span class="qh" onclick="showHelp(event,this)" data-help="「同期」ONで左右のピンチ/ズームが連動します。説明に使った素材は録音とともに自動でレポート化されます。">?</span><span class="spacer"></span><button class="btn primary sm"><i class="ti ti-capture"></i> スクショして静止画保存</button></div>
           </section>
 
           <!-- STILL detail: 操作/編集 切替 -->
           <section class="screen" data-id="still">
             <div class="bar"><span class="logo">KOEMO</span><span class="muted" style="font-size:12px;cursor:pointer" onclick="go('explain')"><i class="ti ti-chevron-left"></i> 戻る</span><span class="muted" style="font-size:12px">正面観 ・ 06/21 10:34</span><span class="spacer"></span><span class="seg" style="padding:4px"><span class="pill on" id="sm-op" onclick="setStillMode('op')"><i class="ti ti-hand-finger" style="font-size:13px"></i> 操作</span><span class="pill" id="sm-edit" onclick="setStillMode('edit')"><i class="ti ti-edit" style="font-size:13px"></i> 編集</span></span></div>
             <!-- 操作モード: 指操作のため表記は最小 -->
-            <div class="bar" id="still-ophint" style="padding:6px 14px"><span class="hint"><i class="ti ti-hand-move"></i> 指でピンチ/ズーム・回転・移動できます</span><span class="spacer"></span><button class="btn primary sm" title="拡大・トリミングした状態で別画像として保存"><i class="ti ti-crop"></i> 別画像で保存</button></div>
+            <div class="bar" id="still-ophint" style="padding:6px 14px"><span class="muted" style="font-size:12px">操作モード<span class="qh" onclick="showHelp(event,this)" data-help="指でピンチ/ズーム・回転・移動ができます。">?</span></span><span class="spacer"></span><button class="btn primary sm" title="拡大・トリミングした状態で別画像として保存"><i class="ti ti-crop"></i> 別画像で保存</button></div>
             <!-- 編集モード: ツールバー（既定は非表示） -->
             <div class="bar" id="still-edittools" style="display:none;gap:8px"><button class="btn sm" onclick="toggleEditPop('paint')"><i class="ti ti-brush"></i> ペイント</button><button class="btn sm"><i class="ti ti-flip-horizontal"></i> 左右反転</button><button class="btn sm"><i class="ti ti-flip-vertical"></i> 上下反転</button><button class="btn sm"><i class="ti ti-rotate"></i> 回転</button><button class="btn sm" onclick="toggleEditPop('bright')"><i class="ti ti-sun"></i> 明暗</button><span class="spacer"></span><button class="btn primary sm">別画像で保存</button></div>
             <div class="body" style="display:flex;position:relative">
@@ -601,7 +601,7 @@ body.role-staff .owner-only{display:none!important}
                 <div class="tile" style="aspect-ratio:4/3;cursor:pointer" onclick="go('docview')"><i class="ti ti-file-text" style="font-size:18px"></i><span class="cap">指導書</span></div>
               </div>
             </div>
-            <div class="bar barfoot"><span class="hint" style="align-self:center">チャプター<br><span style="font-size:10px">1タップ=移動 / 2タップ=静止画詳細</span></span><div class="card" style="padding:0;overflow:hidden;width:84px;cursor:pointer" ondblclick="go('still')"><div class="tile" style="height:42px;border:none"><i class="ti ti-dental" style="font-size:16px"></i></div><div class="hint" style="padding:2px 5px">00:21</div></div><div class="card" style="padding:0;overflow:hidden;width:84px;cursor:pointer" ondblclick="go('still')"><div class="tile" style="height:42px;border:none"><i class="ti ti-dental" style="font-size:16px"></i></div><div class="hint" style="padding:2px 5px">00:39</div></div><span class="spacer"></span><button class="btn sm"><i class="ti ti-download"></i> 書き出し</button></div>
+            <div class="bar barfoot"><span class="hint" style="align-self:center">チャプター<span class="qh" onclick="showHelp(event,this)" data-help="1タップ=その位置へ移動 / 2タップ=静止画の詳細を開く">?</span></span><div class="card" style="padding:0;overflow:hidden;width:84px;cursor:pointer" ondblclick="go('still')"><div class="tile" style="height:42px;border:none"><i class="ti ti-dental" style="font-size:16px"></i></div><div class="hint" style="padding:2px 5px">00:21</div></div><div class="card" style="padding:0;overflow:hidden;width:84px;cursor:pointer" ondblclick="go('still')"><div class="tile" style="height:42px;border:none"><i class="ti ti-dental" style="font-size:16px"></i></div><div class="hint" style="padding:2px 5px">00:39</div></div><span class="spacer"></span><button class="btn sm"><i class="ti ti-download"></i> 書き出し</button></div>
           </section>
 
           <!-- REPORT: 生成対象の指定（書類トグル＋使用メディア選択） -->
@@ -609,12 +609,11 @@ body.role-staff .owner-only{display:none!important}
             <div class="bar"><span class="muted" style="cursor:pointer;font-size:13px" onclick="go('hub')"><i class="ti ti-chevron-left"></i> 戻る</span><span class="logo" style="font-size:16px">レポート生成</span><span class="chip lav"><i class="ti ti-template" style="font-size:11px"></i> ペリオ</span><span class="spacer"></span><span class="muted" id="report-auto" style="font-size:12px"><i class="ti ti-sparkles"></i> AI下書き済み</span></div>
             <div class="body" style="display:grid;grid-template-columns:1fr 1.3fr">
               <div style="border-right:0.5px solid var(--border);padding:14px;overflow:auto">
-                <div class="label" style="font-weight:500;margin-bottom:8px">生成する書類<span class="hint" style="margin-left:6px">「作成する書類を選ぶ」で指定した内容</span></div>
+                <div class="label" style="font-weight:500;margin-bottom:8px">生成する書類<span class="qh" onclick="showHelp(event,this)" data-help="「作成する書類を選ぶ」で指定した内容です。ここでトグルして増減できます。">?</span></div>
                 <div class="hint" style="margin-bottom:6px">必須書類</div>
                 <div class="card" style="margin-bottom:6px;display:flex;align-items:center;gap:8px;padding:9px 10px"><i class="ti ti-file-text" style="font-size:16px;color:var(--muted)"></i><div style="flex:1;font-size:12.5px;font-weight:500">歯科疾患管理に関する文書</div><span class="toggle on"><span class="knob"></span></span></div>
                 <div class="card" style="margin-bottom:6px;display:flex;align-items:center;gap:8px;padding:9px 10px"><i class="ti ti-file-text" style="font-size:16px;color:var(--muted)"></i><div style="flex:1;font-size:12.5px;font-weight:500">歯科衛生実地指導書</div><span class="toggle on"><span class="knob"></span></span></div>
-                <div class="hint" style="margin:10px 0 6px">サブカルテ書類</div>
-                <div class="hint" style="margin-bottom:6px;color:var(--warn)"><i class="ti ti-lock" style="font-size:11px"></i> 診療中に手書きした書類は<b>手動ロック</b>。ここでの自動生成（再生成）の対象外で、手書きは保持されます。</div>
+                <div class="hint" style="margin:10px 0 6px">サブカルテ書類<span class="qh" onclick="showHelp(event,this)" data-help="診療中に手書きした書類は「手動ロック」となり、ここでの自動生成（再生成）の対象外です。手書き内容は保持されます。">?</span></div>
                 <div class="card" style="margin-bottom:6px;display:flex;align-items:center;gap:8px;padding:9px 10px"><i class="ti ti-report-medical" style="font-size:16px;color:var(--purple-d)"></i><div style="flex:1;font-size:12.5px;font-weight:500">歯周検査サマリー</div><span class="toggle on"><span class="knob"></span></span></div>
                 <div class="card" style="margin-bottom:6px;display:flex;align-items:center;gap:8px;padding:9px 10px;border-color:#f0d9b5"><i class="ti ti-edit" style="font-size:16px;color:var(--warn)"></i><div style="flex:1;font-size:12.5px;font-weight:500">手書き指導メモ <span class="chip" style="background:#FDF0E1;color:var(--warn);font-size:9px">手動ロック</span></div><span class="hint" style="font-size:11px">再生成しない</span></div>
                 <div class="card" style="margin-bottom:6px;display:flex;align-items:center;gap:8px;padding:9px 10px"><i class="ti ti-dental" style="font-size:16px;color:var(--purple-d)"></i><div style="flex:1;font-size:12.5px;font-weight:500">口腔内写真レポート</div><span class="toggle on"><span class="knob"></span></span></div>
@@ -622,7 +621,7 @@ body.role-staff .owner-only{display:none!important}
                 <div class="card" style="display:flex;align-items:center;gap:8px;padding:9px 10px"><i class="ti ti-brush" style="font-size:16px;color:var(--muted)"></i><div style="flex:1;font-size:12.5px;font-weight:500">TBIセルフケア指導</div><span class="toggle on"><span class="knob"></span></span></div>
               </div>
               <div style="padding:14px;overflow:auto">
-                <div class="label" style="font-weight:500;margin-bottom:8px">説明に使用したメディア<span class="hint" style="margin-left:6px">資料に利用するものを選択</span></div>
+                <div class="label" style="font-weight:500;margin-bottom:8px">説明に使用したメディア<span class="qh" onclick="showHelp(event,this)" data-help="資料に利用するものを選択します。選んだメディアと、録音から要約した内容が、次の編集画面でパーツとして並びます。">?</span></div>
                 <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(110px,1fr))">
                   <div class="tile sel" style="aspect-ratio:4/3"><i class="ti ti-dental" style="font-size:22px"></i><i class="ti ti-circle-check-filled ck"></i><span class="cap">正面</span></div>
                   <div class="tile sel" style="aspect-ratio:4/3"><i class="ti ti-player-play" style="font-size:22px"></i><i class="ti ti-circle-check-filled ck"></i><span class="cap">説明動画</span></div>
@@ -631,7 +630,6 @@ body.role-staff .owner-only{display:none!important}
                   <div class="tile" style="aspect-ratio:4/3"><i class="ti ti-columns-2" style="font-size:22px"></i><span class="cap">比較</span></div>
                   <div class="tile" style="aspect-ratio:4/3"><i class="ti ti-layout-grid" style="font-size:22px"></i><span class="cap">5枚法</span></div>
                 </div>
-                <div class="hint" style="margin-top:10px">選択したメディアと、録音から要約した内容が、次の編集画面でパーツとして並びます。</div>
               </div>
             </div>
             <div class="bar barfoot" style="justify-content:center;gap:10px"><button class="btn" onclick="go('hub')">戻る</button><button class="btn primary sm" onclick="go('reportedit')">次へ：書類を編集する <i class="ti ti-arrow-right"></i></button></div>
@@ -639,7 +637,7 @@ body.role-staff .owner-only{display:none!important}
 
           <!-- REPORT EDIT: 書類の編集（左=書類一覧 / 中=編集 / 右=パーツ） -->
           <section class="screen" data-id="reportedit">
-            <div class="bar"><span class="muted" style="cursor:pointer;font-size:13px" onclick="go('report')"><i class="ti ti-chevron-left"></i> 戻る</span><span class="logo" style="font-size:16px">書類を編集</span><span class="chip lav" id="re-auto"><i class="ti ti-sparkles" style="font-size:11px"></i> プロンプトで自動生成済み</span><button class="panelbtn" id="btn-left" onclick="toggleReCol('left')"><i class="ti ti-list"></i> 書類一覧</button><button class="panelbtn" id="btn-right" onclick="toggleReCol('right')"><i class="ti ti-layout-grid"></i> パーツ/ページ</button><span class="spacer"></span><span class="hint">左右パネルは畳んで記入領域を広げられます（縦画面でのペン記入向け）</span></div>
+            <div class="bar"><span class="muted" style="cursor:pointer;font-size:13px" onclick="go('report')"><i class="ti ti-chevron-left"></i> 戻る</span><span class="logo" style="font-size:16px">書類を編集</span><span class="chip lav" id="re-auto"><i class="ti ti-sparkles" style="font-size:11px"></i> プロンプトで自動生成済み</span><span class="spacer"></span></div>
             <div class="bar" id="re-handbanner" style="background:#FDF7EE;padding:4px 14px;display:none"><span class="chip" style="background:#FDF0E1;color:var(--warn);font-size:10px"><i class="ti ti-edit" style="font-size:10px"></i> 手書きテンプレ</span><span class="hint" style="font-size:11px">ペンは手書き領域・画像内のみ／文字はテキスト挿入／余白は自動生成。手編集で再生成対象外（手動ロック）。</span><span class="spacer"></span><span class="autotog" id="lockchip" onclick="toggleLock()" style="padding:2px 9px;font-size:11px" title="AI再生成の対象外にする"><i class="ti ti-lock"></i> 手動ロック <b>ON</b></span></div>
             <div class="body" style="display:flex;position:relative">
               <div id="re-left" onclick="if(this.classList.contains('col'))toggleReCol('left')" style="width:128px;flex:none;border-right:0.5px solid var(--border);padding:10px 8px;overflow:auto">
@@ -657,18 +655,17 @@ body.role-staff .owner-only{display:none!important}
                     <div style="font-weight:700;font-size:14px;margin-bottom:8px;color:var(--purple-d)">歯周検査サマリー</div>
                     <div style="border:1.5px dashed var(--purple);border-radius:6px;padding:8px;margin-bottom:8px;background:var(--lav2);position:relative;cursor:pointer" onclick="openPartPop('text')"><span style="position:absolute;right:4px;top:4px;color:var(--red);cursor:pointer" onclick="event.stopPropagation()" title="削除"><i class="ti ti-circle-x"></i></span><div class="hint" style="margin-bottom:4px"><i class="ti ti-grip-vertical"></i> 要約テキスト（タップで全文編集）</div>PPD平均2.6mm、BOP22%。右下臼歯部に4mm以上のポケットが残存…</div>
                     <div style="display:flex;gap:8px"><div class="photo" style="width:46%;height:80px;cursor:pointer;position:relative" onclick="openPartPop('still')"><i class="ti ti-dental" style="font-size:24px"></i><span style="position:absolute;right:3px;top:3px;color:#fff;background:rgba(0,0,0,.3);border-radius:50%" onclick="event.stopPropagation()"><i class="ti ti-circle-x"></i></span></div><div class="photo" style="width:46%;height:80px;background:#e3e1ef;color:#9a93c9;cursor:pointer;position:relative" onclick="openPartPop('video')"><i class="ti ti-qrcode" style="font-size:24px"></i><span class="cap" style="color:var(--muted)">動画QR</span><span style="position:absolute;right:3px;top:3px;color:#fff;background:rgba(0,0,0,.3);border-radius:50%" onclick="event.stopPropagation()"><i class="ti ti-circle-x"></i></span></div></div>
-                    <div onclick="openPartPop('still')" style="cursor:pointer;border:1.5px dashed var(--warn);border-radius:6px;padding:8px;margin-top:8px;background:repeating-linear-gradient(45deg,#FDF7EE,#FDF7EE 6px,#fbeede 6px,#fbeede 7px)"><div class="hint" style="margin-bottom:4px;color:var(--warn)"><i class="ti ti-brush"></i> 手書き領域（歯列下地）— この枠内のみペン記入可（タップで拡大）</div><div style="display:flex;gap:1px;justify-content:center;color:#c9b48a;font-size:15px"><i class="ti ti-dental"></i><i class="ti ti-dental"></i><i class="ti ti-dental"></i><i class="ti ti-dental"></i><i class="ti ti-dental"></i><i class="ti ti-dental"></i><i class="ti ti-dental"></i><i class="ti ti-dental"></i></div></div>
+                    <div onclick="openPartPop('still')" style="cursor:pointer;border:1.5px dashed var(--warn);border-radius:6px;padding:8px;margin-top:8px;background:repeating-linear-gradient(45deg,#FDF7EE,#FDF7EE 6px,#fbeede 6px,#fbeede 7px)"><div class="hint" style="margin-bottom:4px;color:var(--warn)"><i class="ti ti-brush"></i> 手書き領域（歯列下地）<span class="qh" onclick="showHelp(event,this)" data-help="この枠内のみペン記入できます。タップで拡大します。">?</span></div><div style="display:flex;gap:1px;justify-content:center;color:#c9b48a;font-size:15px"><i class="ti ti-dental"></i><i class="ti ti-dental"></i><i class="ti ti-dental"></i><i class="ti ti-dental"></i><i class="ti ti-dental"></i><i class="ti ti-dental"></i><i class="ti ti-dental"></i><i class="ti ti-dental"></i></div></div>
                     <div style="position:absolute;right:10px;bottom:10px" class="hint"><i class="ti ti-arrows-move"></i> ドラッグ配置</div>
                   </div>
                 </div>
                 <div class="bar" style="background:#fff;padding:6px 12px"><span id="pen-tools" style="display:none;align-items:center;gap:6px"><span class="chip" style="background:#FDF0E1;color:var(--warn);font-size:10px"><i class="ti ti-brush" style="font-size:11px"></i> 手書きレイヤー</span><button class="btn sm"><i class="ti ti-brush"></i> ペン</button><button class="btn sm"><i class="ti ti-backspace"></i> 消しゴム</button><span style="width:1px;height:18px;background:var(--border);margin:0 2px"></span></span><span class="hint">パーツ:</span><button class="btn sm"><i class="ti ti-letter-case"></i> フォント</button><button class="btn sm"><i class="ti ti-frame"></i> 枠</button><button class="btn sm"><i class="ti ti-photo"></i> 写真</button><span class="spacer"></span><button class="btn sm"><i class="ti ti-arrow-back-up"></i> 元に戻す</button><button class="btn sm" style="color:var(--red);border-color:#f0c5b5"><i class="ti ti-trash"></i> 削除</button></div>
               </div>
               <div id="re-right" onclick="if(this.classList.contains('col'))toggleReCol('right')" style="width:158px;flex:none;border-left:0.5px solid var(--border);padding:10px 8px;overflow:auto">
-                <div style="display:flex;align-items:center;margin-bottom:8px"><span class="hint">パーツ / ページ</span><span class="spacer"></span><span class="panelbtn" style="padding:2px 6px" onclick="event.stopPropagation();toggleReCol('right')" title="このパネルを隠す"><i class="ti ti-chevron-right"></i></span></div>
+                <div style="display:flex;align-items:center;margin-bottom:8px"><span class="hint">パーツ / ページ<span class="qh" onclick="showHelp(event,this)" data-help="パーツはタップで内容を確認・編集、ドラッグで誌面に配置できます。">?</span></span><span class="spacer"></span><span class="panelbtn" style="padding:2px 6px" onclick="event.stopPropagation();toggleReCol('right')" title="このパネルを隠す"><i class="ti ti-chevron-right"></i></span></div>
                 <div class="seg" style="display:flex;margin-bottom:10px"><span class="pill on" id="ep-parts" onclick="setEditPane('parts')" style="flex:1;text-align:center">パーツ</span><span class="pill" id="ep-pages" onclick="setEditPane('pages')" style="flex:1;text-align:center">ページ</span></div>
                 <div id="edit-parts">
-                  <div class="hint" style="margin-bottom:8px">タップで確認／ドラッグで配置</div>
-                  <div class="hint" style="margin:0 0 4px;color:var(--warn)">手書きパーツ（この内側のみペン可）</div>
+                  <div class="hint" style="margin:0 0 4px;color:var(--warn)">手書きパーツ<span class="qh" onclick="showHelp(event,this)" data-help="この内側のみペン記入できます。">?</span></div>
                   <div class="card" style="padding:6px;margin-bottom:6px;cursor:pointer;border-color:#f0d9b5;background:#FDF7EE" onclick="openPartPop('still')"><div class="tile" style="height:40px;border:none;background:transparent;color:#c9b48a"><i class="ti ti-dental" style="font-size:16px"></i><i class="ti ti-brush" style="font-size:13px;margin-left:3px;color:var(--warn)"></i></div><div class="hint" style="margin-top:3px">手書き領域（歯列下地）</div></div>
                   <div class="card" style="padding:6px;margin-bottom:8px;cursor:pointer;border-color:#f0d9b5;background:#FDF7EE" onclick="openPartPop('still')"><div class="tile" style="height:40px;border:none;background:transparent"><i class="ti ti-photo" style="font-size:16px"></i><i class="ti ti-brush" style="font-size:13px;margin-left:3px;color:var(--warn)"></i></div><div class="hint" style="margin-top:3px">画像＋手書き</div></div>
                   <div class="hint" style="margin:2px 0 6px">自動生成・素材パーツ</div>
@@ -688,7 +685,7 @@ body.role-staff .owner-only{display:none!important}
               <!-- パーツ確認/編集 ポップアップ -->
               <div class="modal-ov" id="part-text" onclick="if(event.target===this)closePartPop()"><div class="modal"><span class="x" onclick="closePartPop()"><i class="ti ti-x"></i></span><h3 style="font-size:15px">要約テキスト（全文編集）</h3><div class="field" style="min-height:160px;align-items:flex-start;font-size:13px;line-height:1.7;white-space:normal">主訴は右下臼歯部の冷水痛・歯肉出血。喫煙なし。歯周基本検査の結果、PPD平均2.6mm・BOP22%・PCR35%。右下6番に4mm以上のポケットが残存し、SRPを実施。セルフケアはフロス併用を指導…</div><div style="display:flex;justify-content:flex-end;gap:10px;margin-top:14px"><button class="btn" onclick="closePartPop()">キャンセル</button><button class="btn primary" onclick="closePartPop()">保存</button></div></div></div>
               <div class="modal-ov" id="part-still" onclick="if(event.target===this)closePartPop()"><div class="modal"><span class="x" onclick="closePartPop()"><i class="ti ti-x"></i></span><h3 style="font-size:15px">正面観（拡大確認）</h3><div class="photo" style="width:100%;aspect-ratio:4/3"><i class="ti ti-dental" style="font-size:72px"></i></div><div style="display:flex;justify-content:flex-end;gap:10px;margin-top:14px"><button class="btn" onclick="closePartPop()">閉じる</button><button class="btn primary" onclick="go('still')">編集画面で開く</button></div></div></div>
-              <div class="modal-ov" id="part-video" onclick="if(event.target===this)closePartPop()"><div class="modal"><span class="x" onclick="closePartPop()"><i class="ti ti-x"></i></span><h3 style="font-size:15px">説明動画（再生プレビュー）</h3><div class="photo" style="width:100%;aspect-ratio:16/9;background:#e3e1ef;color:#9a93c9"><i class="ti ti-player-play-filled" style="font-size:56px;color:var(--purple)"></i></div><div class="hint" style="margin-top:8px">資料化すると動画はQRになり、患者さんはスマホで再生できます。</div><div style="display:flex;justify-content:flex-end;gap:10px;margin-top:14px"><button class="btn" onclick="closePartPop()">閉じる</button></div></div></div>
+              <div class="modal-ov" id="part-video" onclick="if(event.target===this)closePartPop()"><div class="modal"><span class="x" onclick="closePartPop()"><i class="ti ti-x"></i></span><h3 style="font-size:15px">説明動画（再生プレビュー）<span class="qh" onclick="showHelp(event,this)" data-help="資料化すると動画はQRコードになり、患者さんはスマホで再生できます。">?</span></h3><div class="photo" style="width:100%;aspect-ratio:16/9;background:#e3e1ef;color:#9a93c9"><i class="ti ti-player-play-filled" style="font-size:56px;color:var(--purple)"></i></div><div style="display:flex;justify-content:flex-end;gap:10px;margin-top:14px"><button class="btn" onclick="closePartPop()">閉じる</button></div></div></div>
             </div>
             <div class="bar barfoot" style="justify-content:center;gap:10px"><button class="btn" onclick="go('report')">戻る</button><button class="btn primary sm" onclick="go('handout')">確定して患者持ち帰りへ <i class="ti ti-arrow-right"></i></button></div>
           </section>
@@ -698,7 +695,7 @@ body.role-staff .owner-only{display:none!important}
             <div class="bar"><span class="muted" style="cursor:pointer;font-size:13px" onclick="go('reportedit')"><i class="ti ti-chevron-left"></i> 戻る</span><span class="logo" style="font-size:16px">患者さんへ渡す</span><span class="spacer"></span><button class="btn sm" onclick="go('hub')"><i class="ti ti-list-check"></i> 診療中ハブ</button><span class="muted" style="font-size:13px">001 田中 様</span></div>
             <div class="body" style="display:grid;grid-template-columns:1.1fr 1fr">
               <div style="border-right:0.5px solid var(--border);padding:16px;overflow:auto">
-                <div class="label" style="font-weight:500;margin-bottom:10px">作成した書類（初期は全てチェック・外せます）</div>
+                <div class="label" style="font-weight:500;margin-bottom:10px">作成した書類<span class="qh" onclick="showHelp(event,this)" data-help="初期は全てチェック済みです。渡したくない書類はチェックを外せます。">?</span></div>
                 <div class="card" style="display:flex;align-items:center;gap:10px;padding:9px 10px;margin-bottom:8px"><i class="ti ti-checkbox" style="font-size:18px;color:var(--purple)"></i><div class="tile" style="width:30px;height:40px;flex:none"><i class="ti ti-report-medical" style="font-size:14px"></i></div><div style="flex:1;font-size:13px;font-weight:500">歯周検査サマリー</div><button class="btn sm" onclick="openDocPrev('歯周検査サマリー')"><i class="ti ti-photo"></i> プレビュー</button><button class="btn sm"><i class="ti ti-printer"></i> 印刷</button></div>
                 <div class="card" style="display:flex;align-items:center;gap:10px;padding:9px 10px;margin-bottom:8px"><i class="ti ti-checkbox" style="font-size:18px;color:var(--purple)"></i><div class="tile" style="width:30px;height:40px;flex:none"><i class="ti ti-dental" style="font-size:14px"></i></div><div style="flex:1;font-size:13px;font-weight:500">口腔内写真レポート</div><button class="btn sm" onclick="openDocPrev('口腔内写真レポート')"><i class="ti ti-photo"></i> プレビュー</button><button class="btn sm"><i class="ti ti-printer"></i> 印刷</button></div>
                 <div class="card" style="display:flex;align-items:center;gap:10px;padding:9px 10px;margin-bottom:8px"><i class="ti ti-checkbox" style="font-size:18px;color:var(--purple)"></i><div class="tile" style="width:30px;height:40px;flex:none"><i class="ti ti-brush" style="font-size:14px"></i></div><div style="flex:1;font-size:13px;font-weight:500">TBIセルフケア指導</div><button class="btn sm" onclick="openDocPrev('TBIセルフケア指導')"><i class="ti ti-photo"></i> プレビュー</button><button class="btn sm"><i class="ti ti-printer"></i> 印刷</button></div>
@@ -713,9 +710,9 @@ body.role-staff .owner-only{display:none!important}
               </div>
               <!-- 右: QR台紙（画面提示でもそのまま印刷でも同じ台紙） -->
               <div style="padding:16px;display:flex;flex-direction:column">
-                <div class="label" style="font-weight:500;margin-bottom:12px">渡し方<span class="hint" style="margin-left:6px">この台紙はそのまま画面提示・印刷どちらでもOK</span></div>
+                <div class="label" style="font-weight:500;margin-bottom:12px">渡し方<span class="qh" onclick="showHelp(event,this)" data-help="この台紙はそのまま画面提示・印刷のどちらでも使えます。">?</span></div>
                 <div class="card" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--lav2);border:none">
-                  <div class="hint" style="margin-bottom:8px">渡す台紙のプレビュー（QR読み取り／印刷 共通）</div>
+                  <div class="hint" style="margin-bottom:8px">渡す台紙のプレビュー<span class="qh" onclick="showHelp(event,this)" data-help="QR読み取り・印刷で共通の台紙です。">?</span></div>
                   <div style="width:200px;background:#fff;border:0.5px solid var(--border2);border-radius:6px;padding:14px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.08)">
                     <div style="font-weight:600;font-size:12px;margin-bottom:8px">田中 様｜2026/06/21 のご説明</div>
                     <div class="center" style="width:110px;height:110px;border:0.5px solid var(--border2);border-radius:8px;margin:0 auto 8px;color:var(--muted)"><i class="ti ti-qrcode" style="font-size:64px"></i></div>
@@ -748,23 +745,22 @@ body.role-staff .owner-only{display:none!important}
                 </div>
               </div>
               <div style="width:128px;flex:none;border-left:0.5px solid var(--border);padding:10px 8px;overflow:auto">
-                <div class="hint" style="margin-bottom:8px">配置する画像<br>タップ→空き枠をタップ</div>
+                <div class="hint" style="margin-bottom:8px">配置する画像<span class="qh" onclick="showHelp(event,this)" data-help="画像をタップ→配置したい空き枠をタップ、で配置できます。">?</span></div>
                 <div class="tile sel" style="aspect-ratio:3/4;margin-bottom:8px"><i class="ti ti-radioactive" style="font-size:18px"></i><i class="ti ti-circle-check-filled ck"></i><span class="cap">デンタル</span></div>
                 <div class="tile" style="aspect-ratio:3/4;margin-bottom:8px"><i class="ti ti-radioactive" style="font-size:18px"></i><span class="cap">BW</span></div>
                 <div class="tile" style="aspect-ratio:3/4;margin-bottom:8px"><i class="ti ti-radioactive" style="font-size:18px"></i><span class="cap">臼歯部</span></div>
                 <div class="tile" style="aspect-ratio:4/3;margin-bottom:8px"><i class="ti ti-radioactive" style="font-size:18px"></i><span class="cap">パノラマ</span></div>
               </div>
             </div>
-            <div class="bar barfoot"><span class="hint">標準FMXマウント：上顎を上段・バイトウィングを中段・下顎を下段に配置。空き枠に右の一覧から差し込み</span><span class="spacer"></span><button class="btn primary sm"><i class="ti ti-capture"></i> スクショして静止画保存</button></div>
+            <div class="bar barfoot"><span class="muted" style="font-size:12px">標準FMXマウント<span class="qh" onclick="showHelp(event,this)" data-help="上顎を上段・バイトウィングを中段・下顎を下段に配置します。空き枠に右の一覧から差し込めます。">?</span></span><span class="spacer"></span><button class="btn primary sm"><i class="ti ti-capture"></i> スクショして静止画保存</button></div>
           </section>
 
           <!-- LIBRARY 全患者メディア・書類一覧（患者特定情報なし） -->
           <section class="screen" data-id="library">
-            <div class="bar"><span class="logo">KOEMO</span><span class="muted" style="font-size:13px;cursor:pointer" onclick="go('search')"><i class="ti ti-chevron-left"></i> 戻る</span><span style="font-weight:500;font-size:13px">全患者 メディア・書類一覧</span><span class="spacer"></span><span class="chip lav selcount" style="display:none">0件 選択中</span><button class="btn sm selact" style="display:none" onclick="openDate()"><i class="ti ti-calendar"></i> 日付変更</button><button class="btn sm selact" style="display:none" onclick="openLink()"><i class="ti ti-arrows-move"></i> 紐付け（患者移動）</button><button class="btn sm selact" style="display:none" onclick="clearMediaSel()">選択解除</button><button class="btn sm"><i class="ti ti-upload"></i> 取り込み</button><button class="btn sm"><i class="ti ti-download"></i> ダウンロード</button></div>
+            <div class="bar"><span class="logo">KOEMO</span><span class="muted" style="font-size:13px;cursor:pointer" onclick="go('search')"><i class="ti ti-chevron-left"></i> 戻る</span><span style="font-weight:500;font-size:13px">全患者 メディア・書類一覧<span class="qh" onclick="showHelp(event,this)" data-help="全患者を横断した一覧です。患者氏名・カルテ番号など個人を特定する情報は表示しません。タグ・部位・日付で検索できます。">?</span></span><span class="spacer"></span><span class="chip lav selcount" style="display:none">0件 選択中</span><button class="btn sm selact" style="display:none" onclick="openDate()"><i class="ti ti-calendar"></i> 日付変更</button><button class="btn sm selact" style="display:none" onclick="openLink()"><i class="ti ti-arrows-move"></i> 紐付け（患者移動）</button><button class="btn sm selact" style="display:none" onclick="clearMediaSel()">選択解除</button><button class="btn sm"><i class="ti ti-upload"></i> 取り込み</button><button class="btn sm"><i class="ti ti-download"></i> ダウンロード</button></div>
             <div class="bar" style="background:var(--lav2);gap:6px"><span class="pill on">すべて</span><span class="pill">口腔内写真</span><span class="pill">動画</span><span class="pill">レントゲン</span><span class="pill">書類</span><span class="pill">レポート</span><span class="pill lav"><i class="ti ti-tag" style="font-size:12px"></i> タグ</span><span class="pill lav"><i class="ti ti-calendar" style="font-size:12px"></i> 日付</span><span class="spacer"></span><span class="field" style="min-height:0;padding:4px 10px;font-size:12px"><i class="ti ti-search" style="margin-right:6px"></i> タグ・部位で横断検索</span></div>
-            <div class="bar" style="padding:6px 14px"><span class="hint"><i class="ti ti-info-circle"></i> 全患者を横断した一覧です。患者氏名・カルテ番号など個人を特定する情報は表示しません（タグ・部位・日付で検索）。</span><span class="spacer"></span><span class="hint">1,248件</span></div>
+            <div class="bar" style="padding:6px 14px"><span class="muted" style="font-size:12px">操作方法<span class="qh" onclick="showHelp(event,this)" data-help="1タップ＝選択/解除、ダブルタップ＝詳細表示。1枚以上選択すると上部に「日付変更」（取込日になった撮影日の補正）／「紐付け」（別患者で撮影したファイルを正しいカルテへ移動）が表示されます。">?</span></span><span class="spacer"></span><span class="hint">1,248件</span></div>
             <div class="body" style="padding:14px">
-              <div class="hint" style="margin-bottom:10px"><i class="ti ti-hand-finger"></i> <b>1タップ＝選択／解除、ダブルタップ＝詳細表示</b>。1枚以上選択すると上部に「日付変更」（metaが無く取込日になった撮影日の補正）／「紐付け」（誤って別患者で撮影したファイルを正しいカルテへ移動）が出ます。</div>
               <div id="lib-grid">
                 <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span class="chip" style="background:var(--lav);color:var(--purple-d)">2026/06/21</span><span class="hint">取り込み日でグルーピング ・ 6件</span></div>
                 <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(120px,1fr));margin-bottom:18px">
@@ -786,7 +782,7 @@ body.role-staff .owner-only{display:none!important}
                 </div>
               </div>
             </div>
-            <div class="bar barfoot" style="gap:8px"><button class="btn sm needsel dis" onclick="go('explain2')"><i class="ti ti-columns-2"></i> 比較</button><button class="btn sm needsel dis" onclick="go('layout')"><i class="ti ti-layout-grid"></i> 5・9枚法</button><button class="btn primary sm needsel dis" onclick="go('radiograph')"><i class="ti ti-radioactive"></i> レントゲン並べ</button><span class="spacer"></span><span class="hint" style="font-size:11px">選択した画像を比較・5/9枚法・レントゲン並べに利用</span></div>
+            <div class="bar barfoot" style="gap:8px"><button class="btn sm needsel dis" onclick="go('explain2')"><i class="ti ti-columns-2"></i> 比較</button><button class="btn sm needsel dis" onclick="go('layout')"><i class="ti ti-layout-grid"></i> 5・9枚法</button><button class="btn primary sm needsel dis" onclick="go('radiograph')"><i class="ti ti-radioactive"></i> レントゲン並べ</button><span class="spacer"></span><span class="qh" onclick="showHelp(event,this)" data-help="選択した画像を、比較・5/9枚法・レントゲン並べに利用できます。">?</span></div>
           </section>
 
           <!-- DOCVIEW 書類ビューア（左ページャー・スクロール・編集へ） -->
@@ -833,7 +829,7 @@ body.role-staff .owner-only{display:none!important}
 
           <!-- REPORT TYPE 事前選択（テコ入れ#6） -->
           <section class="screen" data-id="reporttype">
-            <div class="bar"><span class="muted" style="cursor:pointer;font-size:13px" onclick="go('newsession')"><i class="ti ti-chevron-left"></i> 戻る</span><span class="logo" style="font-size:16px">作成する書類を選ぶ</span><span class="tag-new">開始時に選択</span><span class="spacer"></span><span class="muted" style="font-size:12px">001 田中 様</span></div>
+            <div class="bar"><span class="muted" style="cursor:pointer;font-size:13px" onclick="go('newsession')"><i class="ti ti-chevron-left"></i> 戻る</span><span class="logo" style="font-size:16px">作成する書類を選ぶ</span><span class="spacer"></span><span class="muted" style="font-size:12px">001 田中 様</span></div>
             <div class="body" style="padding:18px">
               <div style="max-width:820px;padding:10px 14px;border-radius:10px;background:var(--lav2);font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:16px"><i class="ti ti-info-circle"></i> ここで作成する書類を決めると、<b>AIガイドの「聞く/話す」チェック対象</b>が最初から決まります。<b>検査中・レポート生成時にも変更可能</b>（二重に確認できます）。録音は診療中画面の<b>フロート録音ボタン</b>で開始します。</div>
               <div style="display:flex;flex-direction:column;gap:16px;max-width:840px">
@@ -842,16 +838,15 @@ body.role-staff .owner-only{display:none!important}
                   <div class="grid" style="grid-template-columns:repeat(3,1fr);gap:8px">
                   <div class="card" style="display:flex;align-items:center;gap:10px;padding:9px 10px"><div class="tile" style="width:34px;height:46px;flex:none"><i class="ti ti-file-text" style="font-size:15px"></i></div><div style="flex:1;font-size:12.5px;font-weight:500">歯科疾患管理に関する文書</div><span class="toggle on"><span class="knob"></span></span></div>
                   <div class="card" style="display:flex;align-items:center;gap:10px;padding:9px 10px"><div class="tile" style="width:34px;height:46px;flex:none"><i class="ti ti-file-text" style="font-size:15px"></i></div><div style="flex:1;font-size:12.5px;font-weight:500">歯科衛生実地指導書</div><span class="toggle on"><span class="knob"></span></span></div>
-                  <div class="card" style="display:flex;align-items:center;gap:10px;padding:9px 10px"><div class="tile" style="width:34px;height:46px;flex:none"><i class="ti ti-clipboard-text" style="font-size:15px"></i></div><div style="flex:1"><div style="font-size:12.5px;font-weight:500">問診票</div><div class="hint">初診のみ</div></div><span class="toggle on"><span class="knob"></span></span></div>
+                  <div class="card" style="display:flex;align-items:center;gap:10px;padding:9px 10px"><div class="tile" style="width:34px;height:46px;flex:none"><i class="ti ti-clipboard-text" style="font-size:15px"></i></div><div style="flex:1"><div style="font-size:12.5px;font-weight:500">問診票<span class="qh" onclick="showHelp(event,this)" data-help="初診のみ作成します。">?</span></div></div><span class="toggle on"><span class="knob"></span></span></div>
                   </div>
                 </div>
                 <div>
-                  <div class="label" style="font-weight:500;margin-bottom:8px">サブカルテジャンル<span class="hint" style="margin-left:6px">選んだジャンルで下のサブカルテ書類が切り替わります</span></div>
+                  <div class="label" style="font-weight:500;margin-bottom:8px">サブカルテジャンル<span class="qh" onclick="showHelp(event,this)" data-help="選んだジャンルに応じて、下のサブカルテ書類の候補が切り替わります。">?</span></div>
                   <div id="subgenre" style="display:flex;gap:8px;flex-wrap:wrap"><span class="pill on" onclick="setSubGenre(this,'perio')">ペリオ（歯周）</span><span class="pill" onclick="setSubGenre(this,'endo')">エンド</span><span class="pill" onclick="setSubGenre(this,'ortho')">矯正</span><span class="pill" onclick="setSubGenre(this,'pedo')">小児</span><span class="pill lav" onclick="go('market')" style="cursor:pointer"><i class="ti ti-shopping-bag" style="font-size:12px"></i> マーケットから追加</span></div>
                 </div>
                 <div>
-                  <div class="label" style="font-weight:500;margin-bottom:4px">サブカルテ書類（任意・複数選択）<span class="hint">※ジャンルに応じた候補</span></div>
-                  <div class="hint" style="margin-bottom:8px">※ <span class="chip" style="background:#FDF0E1;color:var(--warn);font-size:9px">✎手書き</span> は診療中にApple Pencil等でペン記入する手書きテンプレ。<b>AI自動生成OFF・手動ロック</b>で保持されます（#7）。</div>
+                  <div class="label" style="font-weight:500;margin-bottom:8px">サブカルテ書類（任意・複数選択）<span class="qh" onclick="showHelp(event,this)" data-help="選んだジャンルに応じた候補です。「✎手書き」は診療中にApple Pencil等でペン記入する手書きテンプレで、AI自動生成OFF・手動ロックのまま保持されます。">?</span></div>
                   <div class="grid" id="subdoc-grid" style="grid-template-columns:repeat(3,1fr);gap:8px">
                     <div class="card" style="display:flex;align-items:center;gap:9px;padding:9px 10px"><div class="tile" style="width:30px;height:40px;flex:none"><i class="ti ti-report-medical" style="font-size:14px"></i></div><div style="flex:1;font-size:12.5px;font-weight:500">歯周検査サマリー</div><span class="toggle on"><span class="knob"></span></span></div>
                     <div class="card" style="display:flex;align-items:center;gap:9px;padding:9px 10px"><div class="tile" style="width:30px;height:40px;flex:none"><i class="ti ti-dental" style="font-size:14px"></i></div><div style="flex:1;font-size:12.5px;font-weight:500">口腔内写真レポート</div><span class="toggle on"><span class="knob"></span></span></div>
@@ -859,7 +854,7 @@ body.role-staff .owner-only{display:none!important}
                     <div class="card" style="display:flex;align-items:center;gap:9px;padding:9px 10px"><div class="tile" style="width:30px;height:40px;flex:none"><i class="ti ti-brush" style="font-size:14px"></i></div><div style="flex:1;font-size:12.5px;font-weight:500">TBIセルフケア指導</div><span class="toggle on"><span class="knob"></span></span></div>
                     <div class="card" style="display:flex;align-items:center;gap:9px;padding:9px 10px;opacity:.7"><div class="tile" style="width:30px;height:40px;flex:none"><i class="ti ti-columns-2" style="font-size:14px"></i></div><div style="flex:1;font-size:12.5px;font-weight:500">経過比較シート</div><span class="toggle off"><span class="knob"></span></span></div>
                     <div class="card" style="display:flex;align-items:center;gap:9px;padding:9px 10px;opacity:.7"><div class="tile" style="width:30px;height:40px;flex:none"><i class="ti ti-calendar" style="font-size:14px"></i></div><div style="flex:1;font-size:12.5px;font-weight:500">次回計画メモ</div><span class="toggle off"><span class="knob"></span></span></div>
-                    <div class="card" style="display:flex;align-items:center;gap:9px;padding:9px 10px;border-color:#f0d9b5"><div class="tile" style="width:30px;height:40px;flex:none;background:#FDF0E1"><i class="ti ti-edit" style="font-size:14px;color:var(--warn)"></i></div><div style="flex:1"><div style="font-size:12.5px;font-weight:500">手書き指導メモ <span class="chip" style="background:#FDF0E1;color:var(--warn);font-size:9px">✎手書き</span></div><div class="hint">診療中にペン記入・自動生成OFF</div></div><span class="toggle on"><span class="knob"></span></span></div>
+                    <div class="card" style="display:flex;align-items:center;gap:9px;padding:9px 10px;border-color:#f0d9b5"><div class="tile" style="width:30px;height:40px;flex:none;background:#FDF0E1"><i class="ti ti-edit" style="font-size:14px;color:var(--warn)"></i></div><div style="flex:1"><div style="font-size:12.5px;font-weight:500">手書き指導メモ <span class="chip" style="background:#FDF0E1;color:var(--warn);font-size:9px">✎手書き</span><span class="qh" onclick="showHelp(event,this)" data-help="診療中にApple Pencil等でペン記入します。AI自動生成OFF・手動ロックで保持されます。">?</span></div></div><span class="toggle on"><span class="knob"></span></span></div>
                   </div>
                 </div>
               </div>
@@ -891,12 +886,11 @@ body.role-staff .owner-only{display:none!important}
                     <div style="font-size:13px;line-height:1.9"><div class="hint">医院名</div>gtech歯科クリニック<div class="hint" style="margin-top:6px">住所</div>東京都〇〇区…<div class="hint" style="margin-top:6px">代表者</div>高根 弘二</div>
                     <button class="btn sm" style="width:100%;margin-top:10px"><i class="ti ti-edit"></i> 医院情報を変更</button>
                   </div>
-                  <div class="card" style="margin-bottom:12px"><div class="label" style="font-weight:500;margin-bottom:6px">プラン変更</div>
-                    <div class="hint" style="margin-bottom:10px">プランは<b>ストレージ容量ベース</b>（例: 200GB→500GB）。picmoR連携メディアは容量に含みません。</div>
+                  <div class="card" style="margin-bottom:12px"><div class="label" style="font-weight:500;margin-bottom:10px">プラン変更<span class="qh" onclick="showHelp(event,this)" data-help="プランはストレージ容量ベースです（例: 200GB→500GB）。picmoR連携メディアは容量に含みません。">?</span></div>
                     <button class="btn primary sm" style="width:100%;margin-bottom:6px">プレミアム（500GB）にアップグレード</button>
                     <button class="btn sm" style="width:100%">支払い方法を変更</button>
                   </div>
-                  <div class="card" style="border-color:#f0c5b5"><div class="label" style="font-weight:500;margin-bottom:6px;color:var(--red)">解約</div><div class="hint" style="margin-bottom:10px">解約すると次回更新日以降データは閲覧のみ・新規記録不可になります。</div><button class="btn sm" style="width:100%;color:var(--red);border-color:#f0c5b5">解約手続きへ</button></div>
+                  <div class="card" style="border-color:#f0c5b5"><div class="label" style="font-weight:500;margin-bottom:10px;color:var(--red)">解約<span class="qh" onclick="showHelp(event,this)" data-help="解約すると、次回更新日以降はデータの閲覧のみ可能となり、新規記録はできなくなります。">?</span></div><button class="btn sm" style="width:100%;color:var(--red);border-color:#f0c5b5">解約手続きへ</button></div>
                 </div>
               </div>
             </div>
@@ -904,14 +898,14 @@ body.role-staff .owner-only{display:none!important}
 
           <!-- CREDIT AIクレジット -->
           <section class="screen" data-id="credit">
-            <div class="bar"><i class="ti ti-sparkles" style="color:var(--purple-d)"></i><span class="logo" style="font-size:16px">AIクレジット</span><span class="spacer"></span><span class="hint">文字起こし・レポート生成・音声操作で消費</span></div>
+            <div class="bar"><i class="ti ti-sparkles" style="color:var(--purple-d)"></i><span class="logo" style="font-size:16px">AIクレジット<span class="qh" onclick="showHelp(event,this)" data-help="文字起こし・レポート生成・音声操作で消費します。">?</span></span><span class="spacer"></span></div>
             <div class="body" style="padding:18px">
               <div class="grid" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:6px">
                 <div class="card"><div class="hint">現在の残高</div><div class="kpi">3,240<span style="font-size:13px;color:var(--muted)"> pt</span></div><div class="usebar" style="margin-top:8px"><span style="width:65%"></span></div><div class="hint" style="margin-top:4px">月付与 5,000pt の 65% 残</div></div>
                 <div class="card"><div class="hint">今月の消費</div><div class="kpi" style="color:var(--text)">1,760<span style="font-size:13px;color:var(--muted)"> pt</span></div><div class="hint" style="margin-top:8px">先月 2,310pt / 平均 約60pt/診療</div></div>
                 <div class="card owner-only" style="border:1.5px solid var(--purple);display:flex;flex-direction:column"><div class="hint">クレジットをチャージ<span class="lockchip" style="margin-left:6px"><i class="ti ti-crown" style="font-size:10px"></i> オーナー</span></div><div style="display:flex;gap:6px;margin:10px 0"><span class="pill on">+1,000</span><span class="pill">+3,000</span><span class="pill">+10,000</span></div><button class="btn primary sm" style="margin-top:auto"><i class="ti ti-plus"></i> ¥1,000 でチャージ</button></div>
               </div>
-              <div class="card" style="display:flex;align-items:center;gap:12px;margin:8px 0 12px;border:1px dashed var(--purple);background:var(--lav2)"><i class="ti ti-tag" style="font-size:20px;color:var(--purple-d)"></i><div style="flex:1"><div style="font-size:13px;font-weight:500">クーポンコードをお持ちですか？</div><div class="hint">展示会・スタディグループ等で配布されたコードでAIクレジットを追加できます。</div></div><button class="btn primary sm" onclick="openCoupon()"><i class="ti ti-plus"></i> クーポンを適用</button></div>
+              <div class="card" style="display:flex;align-items:center;gap:12px;margin:8px 0 12px;border:1px dashed var(--purple);background:var(--lav2)"><i class="ti ti-tag" style="font-size:20px;color:var(--purple-d)"></i><div style="flex:1"><div style="font-size:13px;font-weight:500">クーポンコードをお持ちですか？<span class="qh" onclick="showHelp(event,this)" data-help="展示会・スタディグループ等で配布されたコードで、AIクレジットを追加できます。">?</span></div></div><button class="btn primary sm" onclick="openCoupon()"><i class="ti ti-plus"></i> クーポンを適用</button></div>
               <div style="padding:10px 14px;border-radius:10px;background:var(--yellow-bg);font-size:12px;color:var(--warn);margin:8px 0 16px"><i class="ti ti-alert-circle"></i> 残高が500ptを下回ると、文字起こし・自動生成が一時停止します（オーナーへ通知）。</div>
               <div class="label" style="font-weight:500;margin-bottom:8px">利用状況の履歴</div>
               <div class="card" style="padding:0;overflow:hidden">
@@ -926,10 +920,10 @@ body.role-staff .owner-only{display:none!important}
           <!-- STORAGE ストレージ -->
           <section class="screen" data-id="storage">
             <div class="bar"><i class="ti ti-database" style="color:var(--purple-d)"></i><span class="logo" style="font-size:16px">ストレージ</span><span class="spacer"></span><span class="chip green"><i class="ti ti-cloud-check" style="font-size:12px"></i> NAS・クラウド連携中</span></div>
-            <div class="bar" style="background:var(--lav2);align-items:center"><div style="flex:1;max-width:520px"><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:6px"><span>使用量（スタンダード: 200GB）</span><span><b style="color:var(--text)">128.4 GB</b> / 200 GB（64%）</span></div><div class="usebar"><span style="width:64%"></span></div><div class="hint" style="margin-top:5px">画像 86GB ・ 動画 31GB ・ 音声 9GB ・ 書類 2.4GB ／ <b>picmoR連携メディアは容量にカウントしません</b>（picmoR側NASで買い切り済みのため）</div></div><span class="spacer"></span><button class="btn primary sm owner-only" onclick="go('plan')"><i class="ti ti-arrow-up"></i> 容量を増やす（プラン変更）</button></div>
+            <div class="bar" style="background:var(--lav2);align-items:center"><div style="flex:1;max-width:520px"><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:6px"><span>使用量（スタンダード: 200GB）</span><span><b style="color:var(--text)">128.4 GB</b> / 200 GB（64%）</span></div><div class="usebar"><span style="width:64%"></span></div><div class="hint" style="margin-top:5px">画像 86GB ・ 動画 31GB ・ 音声 9GB ・ 書類 2.4GB<span class="qh" onclick="showHelp(event,this)" data-help="picmoR連携メディアは容量にカウントしません（picmoR側NASで買い切り済みのため）。">?</span></div></div><span class="spacer"></span><button class="btn primary sm owner-only" onclick="go('plan')"><i class="ti ti-arrow-up"></i> 容量を増やす（プラン変更）</button></div>
             <div class="bar" style="background:#fff"><span class="hint">種別</span><span class="pill on">すべて</span><span class="pill">口腔内写真</span><span class="pill">動画</span><span class="pill">レントゲン</span><span class="pill"><i class="ti ti-microphone" style="font-size:12px"></i> 全録音声</span><span class="pill">書類/レポート</span><span class="spacer"></span><span class="field" style="min-height:0;padding:4px 10px;font-size:12px"><i class="ti ti-search" style="margin-right:6px"></i> 患者名・日付で検索</span></div>
             <div class="body" style="padding:14px">
-              <div class="hint" style="margin-bottom:10px">生成・保存ファイルを横断表示（静止画・画像・全録音声を混在）。全録音声は文字起こしデータと一緒にダウンロードできます。<span class="tag-new">音声＋文字起こしDL</span></div>
+              <div class="hint" style="margin-bottom:10px">保存ファイル一覧<span class="qh" onclick="showHelp(event,this)" data-help="生成・保存ファイルを横断表示します（静止画・画像・全録音声を混在）。全録音声は文字起こしデータと一緒にダウンロードできます。">?</span></div>
               <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">
                 <div class="tile" style="aspect-ratio:4/3;cursor:pointer"><i class="ti ti-microphone" style="font-size:24px;color:var(--purple)"></i><span class="badge">全録音声</span><span class="cap">田中様 06/21 ・ 31分</span></div>
                 <div class="tile" style="aspect-ratio:4/3"><i class="ti ti-dental" style="font-size:24px"></i><span class="badge">口腔内</span><span class="cap">田中様 正面 06/21</span></div>
@@ -940,7 +934,7 @@ body.role-staff .owner-only{display:none!important}
                 <div class="tile" style="aspect-ratio:4/3"><i class="ti ti-dental" style="font-size:24px"></i><span class="badge">口腔内</span><span class="cap">田中様 上顎 06/21</span></div>
                 <div class="tile" style="aspect-ratio:4/3"><i class="ti ti-file-text" style="font-size:24px"></i><span class="badge">書類</span><span class="cap">実地指導書 06/21</span></div>
               </div>
-              <div class="card" style="margin-top:12px;display:flex;align-items:center;gap:12px;background:var(--lav2)"><i class="ti ti-microphone" style="font-size:22px;color:var(--purple)"></i><div style="flex:1"><div style="font-weight:500;font-size:13px">全録音声を選択中：田中様 06/21（31分）</div><div class="hint">音声(.m4a) と 文字起こし(.txt / .json) をまとめて取得できます</div></div><button class="btn sm"><i class="ti ti-download"></i> 音声DL</button><button class="btn sm"><i class="ti ti-download"></i> 文字起こしDL</button><button class="btn primary sm"><i class="ti ti-download"></i> 一括DL</button></div>
+              <div class="card" style="margin-top:12px;display:flex;align-items:center;gap:12px;background:var(--lav2)"><i class="ti ti-microphone" style="font-size:22px;color:var(--purple)"></i><div style="flex:1"><div style="font-weight:500;font-size:13px">全録音声を選択中：田中様 06/21（31分）<span class="qh" onclick="showHelp(event,this)" data-help="音声(.m4a) と 文字起こし(.txt / .json) をまとめて取得できます。">?</span></div></div><button class="btn sm"><i class="ti ti-download"></i> 音声DL</button><button class="btn sm"><i class="ti ti-download"></i> 文字起こしDL</button><button class="btn primary sm"><i class="ti ti-download"></i> 一括DL</button></div>
             </div>
           </section>
 
@@ -950,8 +944,7 @@ body.role-staff .owner-only{display:none!important}
             <div class="body" id="set-staff" style="padding:18px">
               <div class="grid" style="grid-template-columns:1.3fr 1fr;align-items:start">
                 <div>
-                  <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div style="width:28px;height:28px;border-radius:50%;background:var(--lav);color:var(--purple-d);display:flex;align-items:center;justify-content:center;font-size:12px">A</div><span class="label" style="font-weight:500">プロービング検査順（衛生士A）</span><span class="hint">前回の設定を引継ぎ</span></div>
-                  <div class="hint" style="margin-bottom:8px">検査の流れ（矢印）から選択。<span class="tag-new">NEW</span></div>
+                  <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div style="width:28px;height:28px;border-radius:50%;background:var(--lav);color:var(--purple-d);display:flex;align-items:center;justify-content:center;font-size:12px">A</div><span class="label" style="font-weight:500">プロービング検査順（衛生士A）<span class="qh" onclick="showHelp(event,this)" data-help="前回の設定を引き継いでいます。検査の流れ（矢印）から選択できます。">?</span></span></div>
                   <div class="grid" style="grid-template-columns:repeat(4,1fr);gap:8px">
                     <div class="card patcard sel" onclick="pickCard(this)"><svg viewBox="0 0 160 108" width="100%" height="50"><defs><marker id="sx1" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="var(--purple)"/></marker></defs><g fill="none" stroke="#d7d3f0" stroke-width="5" stroke-linecap="round"><path d="M22,56 C22,18 138,18 138,56"/><path d="M44,56 C44,36 116,36 116,56"/><path d="M22,62 C22,100 138,100 138,62"/><path d="M44,62 C44,80 116,80 116,62"/></g><g fill="none" stroke="var(--purple)" stroke-width="2.2"><path d="M30,54 C30,22 130,22 131,51" marker-end="url(#sx1)"/><path d="M114,54 C114,38 46,38 45,51" marker-end="url(#sx1)"/><path d="M131,62 C131,97 30,97 29,63" marker-end="url(#sx1)"/><path d="M46,62 C46,79 114,79 115,63" marker-end="url(#sx1)"/></g><g font-size="9" font-weight="700" fill="var(--purple-d)"><text x="10" y="58">1</text><text x="121" y="34">2</text><text x="143" y="64">3</text><text x="34" y="84">4</text></g></svg><div style="font-size:11px;font-weight:500">パターン1</div></div>
                     <div class="card patcard" onclick="pickCard(this)"><svg viewBox="0 0 160 108" width="100%" height="50"><defs><marker id="sx2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="var(--purple)"/></marker></defs><g fill="none" stroke="#d7d3f0" stroke-width="5" stroke-linecap="round"><path d="M22,56 C22,18 138,18 138,56"/><path d="M44,56 C44,36 116,36 116,56"/><path d="M22,62 C22,100 138,100 138,62"/><path d="M44,62 C44,80 116,80 116,62"/></g><g fill="none" stroke="var(--purple)" stroke-width="2.2"><path d="M30,54 C30,22 130,22 131,51" marker-end="url(#sx2)"/><path d="M46,54 C46,38 114,38 115,51" marker-end="url(#sx2)"/><path d="M30,62 C30,97 130,97 131,63" marker-end="url(#sx2)"/><path d="M46,62 C46,79 114,79 115,63" marker-end="url(#sx2)"/></g><g font-size="9" font-weight="700" fill="var(--purple-d)"><text x="12" y="52">1</text><text x="34" y="52">2</text><text x="12" y="70">3</text><text x="34" y="70">4</text></g></svg><div style="font-size:11px;font-weight:500">パターン2</div></div>
@@ -960,18 +953,17 @@ body.role-staff .owner-only{display:none!important}
                   </div>
                   <div class="label" style="font-weight:500;margin:12px 0 6px">検査の種別</div>
                   <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill on">6点法</span><span class="pill">4点法</span><span class="pill">1点法</span></div>
-                  <div class="label" style="font-weight:500;margin:12px 0 6px">表示する検査項目<span class="hint" style="margin-left:6px">複数選択・検査画面に反映</span></div>
+                  <div class="label" style="font-weight:500;margin:12px 0 6px">表示する検査項目<span class="qh" onclick="showHelp(event,this)" data-help="複数選択できます。選んだ項目が検査画面に反映されます。">?</span></div>
                   <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill multi on">動揺度</span><span class="pill multi on">根分岐部</span><span class="pill multi on">プラーク</span><span class="pill multi on">ポケット</span><span class="pill multi on">退縮度</span></div>
-                  <div class="card" style="display:flex;align-items:center;gap:8px;margin-top:10px"><div style="flex:1"><div style="font-size:13px;font-weight:500">測定方向（6点法）</div><div class="hint">近心→中央→遠心 の自動送り</div></div><span class="toggle on"><span class="knob"></span></span></div>
-                  <div class="card" style="display:flex;align-items:center;gap:8px;margin-top:8px"><div style="flex:1"><div style="font-size:13px;font-weight:500">前回検査時の数値を参照表示<span class="tag-new">NEW</span></div><div class="hint">検査表に前回値を薄く表示し比較できる</div></div><span class="toggle on"><span class="knob"></span></span></div>
+                  <div class="card" style="display:flex;align-items:center;gap:8px;margin-top:10px"><div style="flex:1"><div style="font-size:13px;font-weight:500">測定方向（6点法）<span class="qh" onclick="showHelp(event,this)" data-help="近心→中央→遠心 の順に、入力後カーソルが自動で進みます。">?</span></div></div><span class="toggle on"><span class="knob"></span></span></div>
+                  <div class="card" style="display:flex;align-items:center;gap:8px;margin-top:8px"><div style="flex:1"><div style="font-size:13px;font-weight:500">前回検査時の数値を参照表示<span class="qh" onclick="showHelp(event,this)" data-help="検査表に前回値を薄く表示し、今回値と比較できます。">?</span></div></div><span class="toggle on"><span class="knob"></span></span></div>
                 </div>
                 <div>
                   <div class="label" style="font-weight:500;margin-bottom:8px">読み上げ・音声</div>
                   <div class="card" style="margin-bottom:14px;display:flex;align-items:center;gap:8px"><div style="flex:1;font-size:13px">入力値を音声で読み上げて確認</div><span class="toggle on"><span class="knob"></span></span></div>
-                  <div class="label" style="font-weight:500;margin-bottom:6px">書類の自動生成<span class="tag-new">NEW</span></div>
+                  <div class="label" style="font-weight:500;margin-bottom:6px">書類の自動生成</div>
                   <div class="card" style="margin-bottom:14px;display:flex;align-items:center;gap:8px"><div style="flex:1"><div style="font-size:13px;font-weight:500">サブカルテ・書類をAIで自動生成（既定）</div><div class="hint">OFFにすると初期状態は手動作成。録音画面で患者ごとに切替できます。</div></div><span class="toggle on"><span class="knob"></span></span></div>
-                  <div class="label" style="font-weight:500;margin-bottom:6px">新規セッション時の初期選択</div>
-                  <div class="hint" style="margin-bottom:8px">タップでON/OFF（次回の既定になります）</div>
+                  <div class="label" style="font-weight:500;margin-bottom:8px">新規セッション時の初期選択<span class="qh" onclick="showHelp(event,this)" data-help="タップでON/OFFを切り替えます。ここでの選択が次回の既定になります。">?</span></div>
                   <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill on">疾患管理文書</span><span class="pill on">実地指導書</span><span class="pill">問診票</span><span class="pill on">歯周検査サマリー</span><span class="pill on">口腔内写真レポート</span><span class="pill">SRP・処置記録</span><span class="pill">TBI指導</span><span class="pill">経過比較シート</span><span class="pill">次回計画メモ</span></div>
                 </div>
               </div>
@@ -986,28 +978,26 @@ body.role-staff .owner-only{display:none!important}
                   <div><div class="hint">NASホスト / IP</div><div class="field" style="min-height:0;padding:6px 10px">192.168.1.50</div></div>
                   <div><div class="hint">共有フォルダ</div><div class="field" style="min-height:0;padding:6px 10px">/picmoR/photos</div></div>
                 </div>
-                <div class="card" style="display:flex;align-items:center;gap:8px;margin-top:10px;background:var(--lav2)"><div style="flex:1"><div style="font-size:12.5px;font-weight:500">自社クラウドへ自動バックアップ同期</div><div class="hint">NASの新規ファイルを自動取り込み（容量ノーカウント）</div></div><span class="toggle on"><span class="knob"></span></span></div>
+                <div class="card" style="display:flex;align-items:center;gap:8px;margin-top:10px;background:var(--lav2)"><div style="flex:1"><div style="font-size:12.5px;font-weight:500">自社クラウドへ自動バックアップ同期<span class="qh" onclick="showHelp(event,this)" data-help="NASの新規ファイルを自動取り込みします（容量ノーカウント）。">?</span></div></div><span class="toggle on"><span class="knob"></span></span></div>
                 <div style="display:flex;gap:8px;margin-top:10px"><button class="btn sm"><i class="ti ti-refresh"></i> 今すぐ同期</button><button class="btn sm">接続設定を編集</button></div>
               </div>
-              <div class="label" style="font-weight:500;margin-bottom:8px"><i class="ti ti-frame"></i> 連携アプリ（提携企業のみ）</div>
+              <div class="label" style="font-weight:500;margin-bottom:8px"><i class="ti ti-frame"></i> 連携アプリ（提携企業のみ）<span class="qh" onclick="showHelp(event,this)" data-help="連携できるのは弊社と提携した企業のアプリのみです（Claude の MCP 接続のように、許可済みアプリを選んで接続します）。">?</span></div>
               <div class="card" style="padding:0;overflow:hidden;max-width:680px;margin-bottom:12px">
                 <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:0.5px solid var(--border)"><div class="tile" style="width:34px;height:34px;border:none;background:var(--lav)"><i class="ti ti-photo" style="color:var(--purple-d)"></i></div><div style="flex:1"><div style="font-size:13px;font-weight:500">picmoR（口腔内カメラ）</div><div class="hint">画像取り込み・NAS連携</div></div><span class="toggle on"><span class="knob"></span></span></div>
                 <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:0.5px solid var(--border)"><div class="tile" style="width:34px;height:34px;border:none;background:var(--lav)"><i class="ti ti-radioactive" style="color:var(--purple-d)"></i></div><div style="flex:1"><div style="font-size:13px;font-weight:500">デンタルX線連携（提携A社）</div><div class="hint">レントゲン画像の取り込み</div></div><span class="toggle off"><span class="knob"></span></span></div>
                 <div style="display:flex;align-items:center;gap:10px;padding:10px 14px"><div class="tile" style="width:34px;height:34px;border:none;background:var(--lav)"><i class="ti ti-receipt" style="color:var(--purple-d)"></i></div><div style="flex:1"><div style="font-size:13px;font-weight:500">レセコン連携（提携B社）</div><div class="hint">患者・カルテ番号の同期</div></div><span class="toggle off"><span class="knob"></span></span></div>
               </div>
               <button class="btn sm" onclick="openApp()"><i class="ti ti-plus"></i> 提携アプリを追加</button>
-              <div class="hint" style="margin-top:10px">※ 連携できるのは弊社と提携した企業のアプリのみです（Claude の MCP 接続のように、許可済みアプリを選んで接続します）。</div>
             </div>
             <!-- スタッフ・権限（オーナー） -->
             <div class="body owner-only" id="set-perm" style="padding:18px;display:none">
-              <div class="label" style="font-weight:500;margin-bottom:8px">スタッフと権限<span class="lockchip" style="margin-left:6px"><i class="ti ti-crown" style="font-size:10px"></i> オーナー権限</span></div>
+              <div class="label" style="font-weight:500;margin-bottom:8px">スタッフと権限<span class="lockchip" style="margin-left:6px"><i class="ti ti-crown" style="font-size:10px"></i> オーナー権限</span><span class="qh" onclick="showHelp(event,this)" data-help="オーナーのみが契約・支払い・AIクレジットのチャージ・上限変更を行えます。">?</span></div>
               <div class="card" style="padding:0;overflow:hidden;max-width:680px">
                 <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:0.5px solid var(--border)"><div style="width:30px;height:30px;border-radius:50%;background:var(--lav);color:var(--purple-d);display:flex;align-items:center;justify-content:center;font-size:12px">院</div><div style="flex:1"><div style="font-size:13px;font-weight:500">高根 弘二</div><div class="hint">院長</div></div><span class="chip lav"><i class="ti ti-crown" style="font-size:11px"></i> オーナー</span></div>
                 <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:0.5px solid var(--border)"><div style="width:30px;height:30px;border-radius:50%;background:var(--lav);color:var(--purple-d);display:flex;align-items:center;justify-content:center;font-size:12px">A</div><div style="flex:1"><div style="font-size:13px;font-weight:500">衛生士A</div><div class="hint">歯科衛生士</div></div><span class="chip" style="background:var(--lav2);color:var(--muted)">スタッフ</span></div>
                 <div style="display:flex;align-items:center;gap:10px;padding:10px 14px"><div style="width:30px;height:30px;border-radius:50%;background:var(--lav);color:var(--purple-d);display:flex;align-items:center;justify-content:center;font-size:12px">B</div><div style="flex:1"><div style="font-size:13px;font-weight:500">衛生士B</div><div class="hint">歯科衛生士</div></div><span class="chip" style="background:var(--lav2);color:var(--muted)">スタッフ</span></div>
               </div>
               <button class="btn sm" style="margin-top:12px"><i class="ti ti-plus"></i> スタッフを追加</button>
-              <div class="hint" style="margin-top:10px">オーナーのみが契約・支払い・AIクレジットのチャージ・上限変更を行えます。</div>
             </div>
           </section>
 
@@ -1017,11 +1007,10 @@ body.role-staff .owner-only{display:none!important}
             <div class="body" style="padding:18px">
               <div style="max-width:760px;padding:10px 14px;border-radius:10px;background:var(--lav2);font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:16px"><i class="ti ti-info-circle"></i> 乳歯・欠損・補綴などを<b>患者ごと</b>に設定。検査表・5/9枚法・レポートに自動反映します（検査表の歯番号≡からも個別に変更可）。</div>
               <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;font-size:12px"><span class="chip lav">健全</span><span class="chip" style="background:#ececf1;color:var(--muted)">欠損 ✕</span><span class="chip" style="background:#FDF0E1;color:var(--warn)">乳歯</span><span class="chip info">補綴</span><span class="chip" style="background:var(--green-bg);color:var(--green)">インプラント</span></div>
-              <div class="label" style="font-weight:500;margin-bottom:8px">上顎（右8 → 左8）</div>
+              <div class="label" style="font-weight:500;margin-bottom:8px">上顎（右8 → 左8）<span class="qh" onclick="showHelp(event,this)" data-help="歯をタップ→状態を選択します（デモ）。例: 右上8・左下6 を欠損、下顎前歯は乳歯として表示。">?</span></div>
               <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:16px" id="arch-upper"></div>
               <div class="label" style="font-weight:500;margin-bottom:8px">下顎（右8 → 左8）</div>
               <div style="display:flex;gap:4px;flex-wrap:wrap" id="arch-lower"></div>
-              <div class="hint" style="margin-top:12px">歯をタップ→状態を選択（デモ）。例: 右上8・左下6 を欠損、下顎前歯は乳歯として表示。</div>
             </div>
             <div class="bar barfoot" style="justify-content:center;gap:10px"><button class="btn" onclick="go('probing')">検査に戻る</button><button class="btn primary sm" onclick="go('probing')">保存して戻る</button></div>
           </section>
@@ -1279,9 +1268,7 @@ function setRatio(r){
 /* ===== #1 reportedit パネル開閉 ===== */
 function toggleReCol(side){
   var el=document.getElementById(side==="left"?"re-left":"re-right");
-  var btn=document.getElementById(side==="left"?"btn-left":"btn-right");
-  if(!el)return;var col=el.classList.toggle("col");
-  if(btn)btn.classList.toggle("off",col);
+  if(!el)return;el.classList.toggle("col");
 }
 /* ===== #2 AI自動生成トグル（患者ごと・録音画面） ===== */
 var autoGen=true;
@@ -1409,7 +1396,7 @@ function subdocCard(d){
   var icon=d[0],name=d[1],on=d[2],hand=d[3];
   var border=hand?";border-color:#f0d9b5":(on?"":";opacity:.7");
   var tile=hand?'<div class="tile" style="width:30px;height:40px;flex:none;background:#FDF0E1"><i class="ti '+icon+'" style="font-size:14px;color:var(--warn)"></i></div>':'<div class="tile" style="width:30px;height:40px;flex:none"><i class="ti '+icon+'" style="font-size:14px"></i></div>';
-  var label=hand?'<div style="flex:1"><div style="font-size:12.5px;font-weight:500">'+name+' <span class="chip" style="background:#FDF0E1;color:var(--warn);font-size:9px">✎手書き</span></div><div class="hint">診療中にペン記入・自動生成OFF</div></div>':'<div style="flex:1;font-size:12.5px;font-weight:500">'+name+'</div>';
+  var label=hand?'<div style="flex:1"><div style="font-size:12.5px;font-weight:500">'+name+' <span class="chip" style="background:#FDF0E1;color:var(--warn);font-size:9px">✎手書き</span><span class="qh" onclick="showHelp(event,this)" data-help="診療中にApple Pencil等でペン記入します。AI自動生成OFF・手動ロックで保持されます。">?</span></div></div>':'<div style="flex:1;font-size:12.5px;font-weight:500">'+name+'</div>';
   return '<div class="card" style="display:flex;align-items:center;gap:9px;padding:9px 10px'+border+'">'+tile+label+'<span class="toggle '+(on?"on":"off")+'"><span class="knob"></span></span></div>';
 }
 function setSubGenre(el,g){
@@ -1418,7 +1405,21 @@ function setSubGenre(el,g){
   if(el)el.classList.add("on");
   var grid=document.getElementById("subdoc-grid");if(grid)grid.innerHTML=(SUBDOCS[g]||SUBDOCS.perio).map(subdocCard).join("");
 }
+function showHelp(ev,el){
+  ev.stopPropagation();
+  var p=document.getElementById("qpop");
+  if(!p){p=document.createElement("div");p.id="qpop";document.body.appendChild(p);}
+  var txt=el.getAttribute("data-help")||"";
+  if(p.style.display==="block"&&p.dataset.owner===txt){p.style.display="none";return;}
+  p.textContent=txt;p.dataset.owner=txt;p.style.display="block";
+  var r=el.getBoundingClientRect(),pw=p.offsetWidth,ph=p.offsetHeight;
+  var left=Math.max(8,Math.min(r.left+r.width/2-pw/2,window.innerWidth-pw-8));
+  var top=r.bottom+8;if(top+ph>window.innerHeight-8)top=r.top-ph-8;
+  p.style.left=left+"px";p.style.top=top+"px";
+}
 document.addEventListener("click",function(e){
+  /* ? ヘルプポップアップ: アイコン外クリックで閉じる */
+  if(!e.target.closest(".qh")){var qp=document.getElementById("qpop");if(qp)qp.style.display="none";}
   /* プルダウン（chevron-down付きフィールド） */
   var fld=e.target.closest(".field");
   if(fld&&!fld.hasAttribute("onclick")&&fld.querySelector(".ti-chevron-down")){openPulldown(fld);return;}
