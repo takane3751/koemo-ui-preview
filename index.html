@@ -110,6 +110,28 @@ a.plain{color:var(--purple-d)}
 .tnum.sel{background:var(--purple);color:#fff;border-color:var(--purple)}
 .tnum.mid{margin-right:7px}
 .tagcat-title{font-size:11px;font-weight:600;color:var(--purple-d);margin:10px 0 5px}
+/* 診療画面の固定切替タブ */
+.dtabs{gap:6px;padding:7px 14px;background:#fff;border-bottom:0.5px solid var(--border);flex:none}
+.dtab{flex:1;text-align:center;padding:8px 6px;border-radius:999px;font-size:12.5px;color:var(--muted);cursor:pointer;border:0.5px solid var(--border2);background:#fff;white-space:nowrap}
+.dtab.on{background:var(--purple);color:#fff;border-color:var(--purple)}
+/* 更新情報（ログイン） */
+.chglog{margin-top:18px;border-top:0.5px solid var(--border);padding-top:12px;text-align:left}
+.chgitem{display:flex;gap:8px;align-items:baseline;font-size:12px;padding:5px 6px;border-radius:8px;cursor:pointer}
+.chgitem:hover{background:var(--lav2)}
+.chgitem .d{color:var(--hint);flex:none;font-variant-numeric:tabular-nums}
+/* テーマカラー選択 */
+.swatch{width:30px;height:30px;border-radius:50%;cursor:pointer;border:2px solid #fff;box-shadow:0 0 0 1px var(--border2)}
+.swatch.on{box-shadow:0 0 0 2px var(--purple-d)}
+/* 患者用アプリ（スマホ）の枠 */
+.pscreen{background:#e7e5f1;display:flex;align-items:center;justify-content:center;padding:12px}
+.phone{width:304px;max-width:100%;height:100%;max-height:580px;background:#fff;border:7px solid #14131c;border-radius:32px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 18px 50px rgba(0,0,0,.28)}
+.phead{background:var(--ptheme,#7F77DD);color:#fff;padding:16px 16px 13px;flex:none}
+.pbody{flex:1;overflow:auto;padding:14px;background:#faf9fe}
+.pcard{background:#fff;border:0.5px solid var(--border);border-radius:12px;padding:11px 13px;margin-bottom:10px;cursor:pointer}
+.pkey{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.pkey button{aspect-ratio:1.5;border:none;background:#fff;border:0.5px solid var(--border2);border-radius:12px;font-size:18px;color:var(--text);cursor:pointer}
+.pdot{width:13px;height:13px;border-radius:50%;border:1.5px solid var(--purple);display:inline-block;margin:0 4px}
+.pdot.on{background:var(--purple)}
 /* 役割スイッチ */
 .roleswitch{display:flex;gap:3px;background:var(--lav2);border-radius:999px;padding:3px;margin:4px 8px 2px}
 .roleswitch .r{flex:1;text-align:center;font-size:11.5px;padding:6px 4px;border-radius:999px;color:var(--muted);cursor:pointer}
@@ -246,8 +268,7 @@ body.role-staff .owner-only{display:none!important}
     <div class="navitem" data-t="newsession"><i class="ti ti-plus"></i>新規セッション作成</div>
     <div class="navitem" data-t="library"><i class="ti ti-photo"></i>全患者 メディア・書類一覧</div>
     <div class="navgroup">診療セッション</div>
-    <div class="navitem" data-t="reporttype"><i class="ti ti-clipboard-text"></i>作成する書類を選ぶ</div>
-    <div class="navitem" data-t="hub"><i class="ti ti-list-check"></i>診療中ハブ（ガイド＆記録）</div>
+    <div class="navitem" data-t="hub"><i class="ti ti-list-check"></i>診療中ハブ（録音・ガイド）</div>
     <div class="navitem" data-t="probing"><i class="ti ti-dental"></i>プロービング検査</div>
     <div class="navitem" data-t="examset"><i class="ti ti-settings"></i>プロービング検査の設定</div>
     <div class="navitem" data-t="toothstate"><i class="ti ti-dental"></i>歯の状態（患者ごと）</div>
@@ -269,6 +290,11 @@ body.role-staff .owner-only{display:none!important}
     <div class="navitem" data-t="credit"><i class="ti ti-sparkles"></i>AIクレジット</div>
     <div class="navitem" data-t="storage"><i class="ti ti-database"></i>ストレージ</div>
     <div class="navitem" data-t="settings"><i class="ti ti-settings"></i>設定（衛生士・歯）</div>
+    <div class="navgroup">患者用アプリ（スマホ）</div>
+    <div class="navitem" data-t="p-login"><i class="ti ti-lock"></i>患者: パスコード</div>
+    <div class="navitem" data-t="p-home"><i class="ti ti-list"></i>患者: ホーム（来院履歴）</div>
+    <div class="navitem" data-t="p-visit"><i class="ti ti-clipboard-text"></i>患者: 診療詳細</div>
+    <div class="navitem" data-t="p-doc"><i class="ti ti-file-text"></i>患者: 書類ビューア</div>
   </nav>
 
   <div class="main">
@@ -294,14 +320,20 @@ body.role-staff .owner-only{display:none!important}
                 <div class="label" style="margin-bottom:6px">ログインID</div><div class="field" style="margin-bottom:14px">gtowner</div>
                 <div class="label" style="margin-bottom:6px">パスワード</div><div class="field" style="margin-bottom:22px">••••••••</div>
                 <div style="text-align:right"><button class="btn primary" onclick="go('search')">ログイン</button></div>
-                <div style="text-align:center;color:var(--hint);font-size:11px;margin-top:18px">0.2.0</div>
+                <div style="text-align:center;color:var(--hint);font-size:11px;margin-top:18px">バージョン 0.2.0</div>
+                <div class="chglog">
+                  <div style="font-size:11px;font-weight:600;color:var(--purple-d);margin-bottom:4px"><i class="ti ti-info-circle" style="font-size:11px"></i> 更新情報</div>
+                  <div class="chgitem" onclick="openUpdates()"><span class="d">2026/06/30</span><span>患者用アプリ・タグ機能・診療画面の刷新 ほか</span><i class="ti ti-chevron-right muted" style="margin-left:auto"></i></div>
+                  <div class="chgitem" onclick="openUpdates()"><span class="d">2026/06/24</span><span>一覧の絞り込み改善・補足を「？」化 ほか</span><i class="ti ti-chevron-right muted" style="margin-left:auto"></i></div>
+                  <div class="chgitem" onclick="openUpdates()"><span class="d">2026/06/23</span><span>プロービング検査画面の刷新・共有URL公開</span><i class="ti ti-chevron-right muted" style="margin-left:auto"></i></div>
+                </div>
               </div>
             </div>
           </section>
 
           <!-- SEARCH -->
           <section class="screen" data-id="search">
-            <div class="bar" style="gap:6px;flex-wrap:wrap"><span class="logo">KOEMO</span><span class="spacer"></span><button class="btn sm" onclick="go('market')"><i class="ti ti-shopping-bag"></i> マーケット</button><button class="btn sm" onclick="go('credit')"><i class="ti ti-sparkles"></i> クレジット</button><button class="btn sm" onclick="go('storage')"><i class="ti ti-database"></i> ストレージ</button><button class="btn sm owner-only" onclick="go('plan')"><i class="ti ti-receipt"></i> 契約</button><button class="btn sm" onclick="go('settings')"><i class="ti ti-settings"></i> 設定</button><span class="navbtn">ログアウト</span></div>
+            <div class="bar" style="gap:6px;flex-wrap:wrap"><span class="logo">KOEMO</span><span class="spacer"></span><button class="btn sm" onclick="go('market')"><i class="ti ti-shopping-bag"></i> マーケット</button><button class="btn sm" onclick="go('credit')"><i class="ti ti-sparkles"></i> クレジット</button><button class="btn sm" onclick="go('storage')"><i class="ti ti-database"></i> ストレージ</button><button class="btn sm owner-only" onclick="go('plan')"><i class="ti ti-receipt"></i> 契約</button><button class="btn sm" onclick="go('settings')"><i class="ti ti-settings"></i> 設定</button><button class="btn sm" onclick="openUser()"><i class="ti ti-user"></i> ユーザー切替</button><span class="navbtn">ログアウト</span></div>
             <div class="body">
               <div style="display:grid;grid-template-columns:1fr 1.3fr;min-height:100%">
                 <div style="padding:18px;border-right:0.5px solid var(--border)">
@@ -324,7 +356,7 @@ body.role-staff .owner-only{display:none!important}
 
           <!-- HISTORY -->
           <section class="screen" data-id="history">
-            <div class="bar"><span class="muted" style="cursor:pointer;font-size:13px" onclick="go('search')"><i class="ti ti-chevron-left"></i> 戻る</span><span class="spacer"></span><span style="font-weight:500">001 田中 様</span><i class="ti ti-dots-vertical muted" style="cursor:pointer" onclick="openPatient()"></i><span class="spacer"></span><button class="btn sm" onclick="go('explain')"><i class="ti ti-photo"></i> この患者のメディア・書類一覧</button><button class="btn primary sm" onclick="go('newsession')"><i class="ti ti-plus"></i> 新規セッション</button></div>
+            <div class="bar"><span class="muted" style="cursor:pointer;font-size:13px" onclick="go('search')"><i class="ti ti-chevron-left"></i> 戻る</span><span class="spacer"></span><span style="font-weight:500">001 田中 様</span><i class="ti ti-dots-vertical muted" style="cursor:pointer" onclick="openPatient()"></i><span class="spacer"></span><button class="btn sm" onclick="go('explain')"><i class="ti ti-photo"></i> この患者のメディア・書類一覧</button><button class="btn primary sm" onclick="startSession()"><i class="ti ti-plus"></i> 新規セッション</button></div>
             <div class="body" style="padding:18px">
               <!-- 上段: 患者基本情報＋問診票 -->
               <div class="grid" style="grid-template-columns:1fr 1.4fr;margin-bottom:16px;align-items:start">
@@ -367,11 +399,11 @@ body.role-staff .owner-only{display:none!important}
 
           <!-- HUB -->
           <section class="screen" data-id="hub">
-            <div class="bar"><span class="muted" style="cursor:pointer;font-size:13px" onclick="go('reporttype')"><i class="ti ti-chevron-left"></i> 戻る</span><span style="font-weight:500">001 田中 様</span><span class="chip info">初診</span><span class="spacer"></span><span class="rec"><i class="ti ti-circle-filled"></i> 録音中 12:34<span class="qh" onclick="showHelp(event,this)" data-help="録音の停止は、画面右下のフロート録音ボタンから行います。">?</span></span><button class="btn primary sm" onclick="openEnd()">診療を終える <i class="ti ti-arrow-right"></i></button></div>
+            <div class="bar dtabs"><span class="dtab on" onclick="go('hub')"><i class="ti ti-microphone"></i> 録音・ガイド</span><span class="dtab" onclick="go('probing')"><i class="ti ti-dental"></i> プロービング</span><span class="dtab" onclick="go('explain')"><i class="ti ti-photo"></i> メディア</span><span class="dtab" onclick="go('reportedit')"><i class="ti ti-file-text"></i> 書類生成</span></div>
+            <div class="bar"><span class="muted" style="cursor:pointer;font-size:13px" onclick="go('history')"><i class="ti ti-chevron-left"></i> 戻る</span><span style="font-weight:500">001 田中 様</span><span class="chip info">初診</span><span class="spacer"></span><span class="rec"><i class="ti ti-circle-filled"></i> 録音中 12:34<span class="qh" onclick="showHelp(event,this)" data-help="録音の停止は、画面右下のフロート録音ボタンから行います。">?</span></span><button class="btn primary sm" onclick="openEnd()">診療を終える <i class="ti ti-arrow-right"></i></button></div>
             <div class="bar" style="padding-top:8px;padding-bottom:8px"><div style="flex:1"><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:6px"><span>資料に必要な情報の充足度</span><span style="color:var(--text)">60%</span></div><div style="height:8px;background:var(--lav2);border-radius:999px;overflow:hidden"><div style="width:60%;height:100%;background:var(--purple)"></div></div></div></div>
-            <div class="bar" style="border-bottom:none"><div class="pill on" style="flex:1;text-align:center;padding:10px"><i class="ti ti-list-check"></i> ガイド＆記録</div><div class="pill" style="flex:1;text-align:center;padding:10px;cursor:pointer" onclick="go('probing')"><i class="ti ti-dental"></i> プロービング</div><div class="pill" style="flex:1;text-align:center;padding:10px;cursor:pointer" onclick="go('explain')"><i class="ti ti-photo"></i> 患者説明 / メディア・書類一覧</div><div class="pill" style="flex:1;text-align:center;padding:10px;cursor:pointer" onclick="go('reportedit')"><i class="ti ti-edit"></i> サブカルテ記入</div></div>
             <div class="body" style="padding:0 14px 14px">
-              <div style="display:flex;align-items:center;gap:10px;margin:0 0 10px;flex-wrap:wrap"><span class="chip lav" style="cursor:pointer" onclick="go('reporttype')"><i class="ti ti-report-medical" style="font-size:12px"></i> 作成予定: ペリオ標準（サブカルテ＋書類3点） <i class="ti ti-chevron-down"></i></span><span class="muted" style="font-size:12px;cursor:pointer" onclick="go('reporttype')">変更</span><span class="qh" onclick="showHelp(event,this)" data-help="録音は右下のフロートボタンで開始・停止します。約30秒ごとに自動で文字起こしし、ガイドに反映します。">?</span><span class="spacer"></span><span class="autotog" id="ai-auto" onclick="toggleAuto()" title="この患者の書類をAIで自動生成するか（OFFで手動作成）"><i class="ti ti-sparkles"></i> 書類のAI自動生成 <b id="ai-state">ON</b></span></div>
+              <div style="display:flex;align-items:center;gap:10px;margin:0 0 10px;flex-wrap:wrap"><span class="chip lav" style="cursor:pointer" onclick="openSession()"><i class="ti ti-report-medical" style="font-size:12px"></i> 作成予定: ペリオ標準（サブカルテ＋書類3点） <i class="ti ti-chevron-down"></i></span><span class="muted" style="font-size:12px;cursor:pointer" onclick="openSession()">変更</span><span class="qh" onclick="showHelp(event,this)" data-help="録音は右下のフロートボタンで開始・停止します。約30秒ごとに自動で文字起こしし、ガイドに反映します。">?</span><span class="spacer"></span><span class="autotog" id="ai-auto" onclick="toggleAuto()" title="この患者の書類をAIで自動生成するか（OFFで手動作成）"><i class="ti ti-sparkles"></i> 書類のAI自動生成 <b id="ai-state">ON</b></span></div>
               <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">
                 <div class="card">
                   <div class="label" style="font-weight:500;margin-bottom:10px">聞くこと（問診）</div>
@@ -395,6 +427,7 @@ body.role-staff .owner-only{display:none!important}
 
           <!-- PROBING（実機再現＋テコ入れ） -->
           <section class="screen" data-id="probing">
+            <div class="bar dtabs"><span class="dtab" onclick="go('hub')"><i class="ti ti-microphone"></i> 録音・ガイド</span><span class="dtab on" onclick="go('probing')"><i class="ti ti-dental"></i> プロービング</span><span class="dtab" onclick="go('explain')"><i class="ti ti-photo"></i> メディア</span><span class="dtab" onclick="go('reportedit')"><i class="ti ti-file-text"></i> 書類生成</span></div>
             <div class="bar">
               <span class="muted" style="cursor:pointer;font-size:13px" onclick="go('hub')"><i class="ti ti-chevron-left"></i> 戻る</span>
               <span style="font-weight:500;font-size:13px;cursor:pointer" onclick="openPatient()">001 田中 様</span><i class="ti ti-dots-vertical muted" style="cursor:pointer" onclick="openPatient()" title="患者情報"></i>
@@ -494,6 +527,7 @@ body.role-staff .owner-only{display:none!important}
 
           <!-- EXPLAIN: 全メディア一覧 -->
           <section class="screen" data-id="explain">
+            <div class="bar dtabs"><span class="dtab" onclick="go('hub')"><i class="ti ti-microphone"></i> 録音・ガイド</span><span class="dtab" onclick="go('probing')"><i class="ti ti-dental"></i> プロービング</span><span class="dtab on" onclick="go('explain')"><i class="ti ti-photo"></i> メディア</span><span class="dtab" onclick="go('reportedit')"><i class="ti ti-file-text"></i> 書類生成</span></div>
             <div class="bar" style="flex-wrap:nowrap;overflow-x:auto;gap:6px"><span class="muted" style="font-size:13px;cursor:pointer;flex:none" onclick="go('hub')"><i class="ti ti-chevron-left"></i> 戻る</span><span class="logo" style="flex:none">KOEMO</span><span class="field" style="min-height:0;padding:3px 10px;font-size:12px;flex:none">カルテ 001 ・ 田中 様</span><span class="rec" style="flex:none"><i class="ti ti-circle-filled"></i> 録音中</span><span class="spacer"></span><span class="chip lav selcount" style="display:none;flex:none">0件 選択中</span><button class="btn sm selact" style="display:none;flex:none" onclick="openDate()"><i class="ti ti-calendar"></i> 日付変更</button><button class="btn sm selact" style="display:none;flex:none" onclick="openLink()"><i class="ti ti-arrows-move"></i> 紐付け</button><button class="btn sm selact" style="display:none;flex:none;color:var(--red);border-color:#f0c5b5" onclick="clearMediaSel()"><i class="ti ti-trash"></i> 削除</button><button class="btn sm selact" style="display:none;flex:none" onclick="clearMediaSel()">選択解除</button><button class="btn sm" style="flex:none"><i class="ti ti-upload"></i> 取込</button><button class="btn sm" style="flex:none"><i class="ti ti-download"></i> 保存</button><i class="ti ti-device-tv muted" title="大画面にミラー" style="flex:none"></i></div>
             <div class="bar fbar" style="background:var(--lav2)">
               <div class="fgrp"><div class="ftitle">メディア</div><div class="frow"><span class="pill multi">静止画</span><span class="pill multi">動画</span><span class="pill multi">口腔内写真</span><span class="pill multi">パノラマ</span><span class="pill multi">セファロ</span><span class="pill multi">デンタル</span></div></div>
@@ -658,6 +692,7 @@ body.role-staff .owner-only{display:none!important}
 
           <!-- REPORT EDIT: 書類の編集（左=書類一覧 / 中=編集 / 右=パーツ） -->
           <section class="screen" data-id="reportedit">
+            <div class="bar dtabs"><span class="dtab" onclick="go('hub')"><i class="ti ti-microphone"></i> 録音・ガイド</span><span class="dtab" onclick="go('probing')"><i class="ti ti-dental"></i> プロービング</span><span class="dtab" onclick="go('explain')"><i class="ti ti-photo"></i> メディア</span><span class="dtab on" onclick="go('reportedit')"><i class="ti ti-file-text"></i> 書類生成</span></div>
             <div class="bar"><span class="muted" style="cursor:pointer;font-size:13px" onclick="go('report')"><i class="ti ti-chevron-left"></i> 戻る</span><span class="logo" style="font-size:16px">書類を編集</span><span class="chip lav" id="re-auto"><i class="ti ti-sparkles" style="font-size:11px"></i> プロンプトで自動生成済み</span><span class="spacer"></span></div>
             <div class="bar" id="re-handbanner" style="background:#FDF7EE;padding:4px 14px;display:none"><span class="chip" style="background:#FDF0E1;color:var(--warn);font-size:10px"><i class="ti ti-edit" style="font-size:10px"></i> 手書きテンプレ</span><span class="hint" style="font-size:11px">ペンは手書き領域・画像内のみ／文字はテキスト挿入／余白は自動生成。手編集で再生成対象外（手動ロック）。</span><span class="spacer"></span><span class="autotog" id="lockchip" onclick="toggleLock()" style="padding:2px 9px;font-size:11px" title="AI再生成の対象外にする"><i class="ti ti-lock"></i> 手動ロック <b>ON</b></span></div>
             <div class="body" style="display:flex;position:relative">
@@ -966,7 +1001,7 @@ body.role-staff .owner-only{display:none!important}
 
           <!-- SETTINGS 設定（衛生士・歯状態） -->
           <section class="screen" data-id="settings">
-            <div class="bar"><i class="ti ti-settings" style="color:var(--purple-d)"></i><span class="logo" style="font-size:16px">設定</span><span class="spacer"></span><span class="seg"><span class="pill on" id="tab-staff" onclick="setTab('staff')">衛生士・検査</span><span class="pill" id="tab-tags" onclick="setTab('tags')">タグ</span><span class="pill" id="tab-link" onclick="setTab('link')">連携</span><span class="pill owner-only" id="tab-perm" onclick="setTab('perm')">スタッフ・権限</span></span></div>
+            <div class="bar" style="flex-wrap:nowrap;overflow-x:auto;gap:6px"><i class="ti ti-settings" style="color:var(--purple-d);flex:none"></i><span class="logo" style="font-size:16px;flex:none">設定</span><span class="spacer"></span><span class="seg" style="flex:none"><span class="pill on" id="tab-staff" onclick="setTab('staff')">衛生士・検査</span><span class="pill" id="tab-tags" onclick="setTab('tags')">タグ</span><span class="pill" id="tab-docs" onclick="setTab('docs')">必須書類</span><span class="pill" id="tab-patient" onclick="setTab('patient')">患者画面</span><span class="pill" id="tab-link" onclick="setTab('link')">連携</span><span class="pill owner-only" id="tab-perm" onclick="setTab('perm')">スタッフ・権限</span></span></div>
             <div class="body" id="set-staff" style="padding:18px">
               <div class="grid" style="grid-template-columns:1.3fr 1fr;align-items:start">
                 <div>
@@ -999,6 +1034,30 @@ body.role-staff .owner-only{display:none!important}
               <div class="label" style="font-weight:500;margin-bottom:4px">タグ設定<span class="qh" onclick="showHelp(event,this)" data-help="「タグカテゴリ」の中に「タグ」を登録する2階層です。ここで作ったタグは、一覧画面の「部位・タグを付ける」で画像・書類に付与し、絞り込みに使えます。">?</span></div>
               <div class="hint" style="margin-bottom:14px">カテゴリごとにタグを登録します（カテゴリ名はタップで編集／タグは＋で追加・×で削除）。</div>
               <div id="tagset-list" style="max-width:760px"></div>
+            </div>
+            <!-- 必須書類の項目設定（問診票・歯科疾患管理料・衛生実地指導／一覧からチェック選択） -->
+            <div class="body" id="set-docs" style="padding:18px;display:none">
+              <div class="label" style="font-weight:500;margin-bottom:4px">必須書類の項目設定<span class="qh" onclick="showHelp(event,this)" data-help="問診票・歯科疾患管理料・歯科衛生実地指導書は、自由フォームだとAI生成が不安定になりがちです。医院で扱う項目を一覧からチェックして固定し、その範囲でAIが記載します。">?</span></div>
+              <div class="hint" style="margin-bottom:14px">医院で扱う項目を一覧からチェックして選びます（チェックした項目だけがその書類に含まれ、AI生成の対象になります）。</div>
+              <div id="reqdoc-list" style="max-width:820px"></div>
+            </div>
+            <!-- 患者用画面の設定（ロゴ・テーマカラー） -->
+            <div class="body" id="set-patient" style="padding:18px;display:none">
+              <div class="label" style="font-weight:500;margin-bottom:4px">患者用画面の設定<span class="qh" onclick="showHelp(event,this)" data-help="患者さんがスマホで開く画面（パスコード・来院履歴・共有書類）の見た目を設定します。">?</span></div>
+              <div class="hint" style="margin-bottom:14px">患者用アプリ（スマホ）に表示される医院ロゴとテーマカラーを設定します。</div>
+              <div class="grid" style="grid-template-columns:1fr 1fr;gap:18px;max-width:760px;align-items:start">
+                <div class="card">
+                  <div class="label" style="font-weight:500;margin-bottom:10px">医院ロゴ</div>
+                  <div class="center" style="border:1.5px dashed var(--purple);border-radius:12px;background:var(--lav2);height:120px;flex-direction:column;gap:6px;color:var(--purple-d);cursor:pointer"><i class="ti ti-photo" style="font-size:30px"></i><div style="font-size:12px">ロゴ画像をアップロード</div><div class="hint">PNG / JPG（推奨 横長・透過PNG）</div></div>
+                  <button class="btn sm" style="width:100%;margin-top:10px"><i class="ti ti-upload"></i> ファイルを選択</button>
+                </div>
+                <div class="card">
+                  <div class="label" style="font-weight:500;margin-bottom:10px">テーマカラー</div>
+                  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px"><span class="swatch on" style="background:#7F77DD" onclick="pickSwatch(this)"></span><span class="swatch" style="background:#2E9E8F" onclick="pickSwatch(this)"></span><span class="swatch" style="background:#3F7BD6" onclick="pickSwatch(this)"></span><span class="swatch" style="background:#E0739B" onclick="pickSwatch(this)"></span><span class="swatch" style="background:#E0913F" onclick="pickSwatch(this)"></span><span class="swatch" style="background:#5B5B66" onclick="pickSwatch(this)"></span></div>
+                  <div class="hint" style="margin-bottom:6px">プレビュー</div>
+                  <div style="border:0.5px solid var(--border);border-radius:10px;overflow:hidden"><div id="ptheme-prev" style="background:#7F77DD;color:#fff;padding:12px 14px;font-weight:600;font-size:13px">gtech歯科クリニック</div><div style="padding:12px 14px;font-size:12px;color:var(--muted)">田中 花子 様<div class="hint" style="margin-top:4px">来院履歴・共有書類がここに表示されます</div></div></div>
+                </div>
+              </div>
             </div>
             <!-- 連携（picmoR NAS / 提携アプリ） -->
             <div class="body" id="set-link" style="padding:18px;display:none">
@@ -1045,6 +1104,78 @@ body.role-staff .owner-only{display:none!important}
               <div style="display:flex;gap:4px;flex-wrap:wrap" id="arch-lower"></div>
             </div>
             <div class="bar barfoot" style="justify-content:center;gap:10px"><button class="btn" onclick="go('probing')">検査に戻る</button><button class="btn primary sm" onclick="go('probing')">保存して戻る</button></div>
+          </section>
+
+          <!-- ============ 患者用アプリ（スマートフォン）============ -->
+          <!-- P-LOGIN パスコード入力 -->
+          <section class="screen" data-id="p-login">
+            <div class="body pscreen">
+              <div class="phone">
+                <div class="phead" style="text-align:center;padding-top:24px;padding-bottom:20px"><div style="width:46px;height:46px;border-radius:13px;background:rgba(255,255,255,.22);display:inline-flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;margin-bottom:8px">G</div><div style="font-weight:600;font-size:15px">gtech歯科クリニック</div></div>
+                <div class="pbody" style="display:flex;flex-direction:column;align-items:center">
+                  <div style="font-size:13px;color:var(--muted);margin:10px 0 16px">パスコードを入力してください</div>
+                  <div style="margin-bottom:20px"><span class="pdot on"></span><span class="pdot on"></span><span class="pdot on"></span><span class="pdot"></span></div>
+                  <div class="pkey" style="width:100%;max-width:236px"><button>1</button><button>2</button><button>3</button><button>4</button><button>5</button><button>6</button><button>7</button><button>8</button><button>9</button><button style="visibility:hidden"></button><button onclick="go('p-home')">0</button><button style="font-size:14px"><i class="ti ti-backspace"></i></button></div>
+                  <button class="btn primary" style="width:100%;max-width:236px;margin-top:18px" onclick="go('p-home')">ログイン</button>
+                  <div class="hint" style="margin-top:16px;text-align:center;cursor:pointer" onclick="go('p-home')">パスコード未設定の医院ではそのまま表示されます →</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- P-HOME 基本情報＋来院履歴 -->
+          <section class="screen" data-id="p-home">
+            <div class="body pscreen">
+              <div class="phone">
+                <div class="phead"><div style="font-size:11px;opacity:.85">gtech歯科クリニック</div><div style="font-weight:600;font-size:17px;margin-top:2px">田中 花子 様</div></div>
+                <div class="pbody">
+                  <div class="pcard" style="cursor:default;background:var(--lav2);border:none;display:flex;align-items:center;gap:10px"><i class="ti ti-calendar" style="font-size:20px;color:var(--purple-d)"></i><div><div style="font-size:11px;color:var(--muted)">次回来院予定</div><div style="font-weight:600;font-size:14px">2026/07/20 (土) 10:00</div></div><span class="spacer"></span><span class="chip lav" style="font-size:9px">予約連携</span></div>
+                  <div style="font-weight:600;font-size:13px;margin:14px 0 8px">来院履歴</div>
+                  <div class="pcard" onclick="go('p-visit')"><div style="display:flex;align-items:center;gap:8px"><div style="font-weight:600;font-size:14px">2026/06/21</div><span class="spacer"></span><i class="ti ti-chevron-right muted"></i></div><div class="hint" style="margin-top:3px">定期検診・SRP ／ 共有書類 3件</div></div>
+                  <div class="pcard" onclick="go('p-visit')"><div style="display:flex;align-items:center;gap:8px"><div style="font-weight:600;font-size:14px">2026/04/09</div><span class="spacer"></span><i class="ti ti-chevron-right muted"></i></div><div class="hint" style="margin-top:3px">歯周治療 ／ 共有書類 2件</div></div>
+                  <div class="pcard" onclick="go('p-visit')"><div style="display:flex;align-items:center;gap:8px"><div style="font-weight:600;font-size:14px">2026/01/15</div><span class="spacer"></span><i class="ti ti-chevron-right muted"></i></div><div class="hint" style="margin-top:3px">初診 ／ 共有書類 2件</div></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- P-VISIT 診療詳細（共有書類一覧） -->
+          <section class="screen" data-id="p-visit">
+            <div class="body pscreen">
+              <div class="phone">
+                <div class="phead" style="display:flex;align-items:center;gap:10px"><i class="ti ti-chevron-left" style="cursor:pointer" onclick="go('p-home')"></i><div><div style="font-size:11px;opacity:.85">2026/06/21 の診療</div><div style="font-weight:600;font-size:15px">定期検診・SRP</div></div></div>
+                <div class="pbody">
+                  <div class="pcard" style="cursor:default;background:var(--lav2);border:none"><div class="hint">担当: 衛生士A ／ gtech歯科クリニック</div><div style="font-size:12px;margin-top:5px;line-height:1.6">本日は歯周基本検査とSRPを行いました。セルフケアの継続をお願いします。</div></div>
+                  <div style="font-weight:600;font-size:13px;margin:14px 0 8px">共有された書類</div>
+                  <div class="pcard" onclick="go('p-doc')" style="display:flex;align-items:center;gap:9px"><i class="ti ti-file-text" style="color:var(--purple-d);font-size:18px"></i><div style="flex:1;font-size:13px;font-weight:500">歯科衛生実地指導書</div><i class="ti ti-chevron-right muted"></i></div>
+                  <div class="pcard" onclick="go('p-doc')" style="display:flex;align-items:center;gap:9px"><i class="ti ti-report-medical" style="color:var(--purple-d);font-size:18px"></i><div style="flex:1;font-size:13px;font-weight:500">歯周検査サマリー</div><i class="ti ti-chevron-right muted"></i></div>
+                  <div class="pcard" onclick="go('p-doc')" style="display:flex;align-items:center;gap:9px"><i class="ti ti-dental" style="color:var(--purple-d);font-size:18px"></i><div style="flex:1;font-size:13px;font-weight:500">口腔内写真レポート</div><i class="ti ti-chevron-right muted"></i></div>
+                  <div style="font-weight:600;font-size:13px;margin:14px 0 8px">共有メディア</div>
+                  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px"><div class="tile" style="aspect-ratio:1;cursor:pointer"><i class="ti ti-dental" style="font-size:20px"></i></div><div class="tile" style="aspect-ratio:1;cursor:pointer"><i class="ti ti-dental" style="font-size:20px"></i></div><div class="tile" style="aspect-ratio:1;background:#e3e1ef;color:#9a93c9;cursor:pointer"><i class="ti ti-player-play" style="font-size:20px"></i></div></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- P-DOC 書類ビューア -->
+          <section class="screen" data-id="p-doc">
+            <div class="body pscreen">
+              <div class="phone">
+                <div class="phead" style="display:flex;align-items:center;gap:10px"><i class="ti ti-chevron-left" style="cursor:pointer" onclick="go('p-visit')"></i><div style="font-weight:600;font-size:14px">歯科衛生実地指導書</div></div>
+                <div class="pbody" style="background:#e9e7f2">
+                  <div style="background:#fff;border-radius:8px;box-shadow:0 2px 10px rgba(0,0,0,.08);padding:16px;font-size:11px;line-height:1.85">
+                    <div style="font-weight:700;color:var(--purple-d);font-size:13px;margin-bottom:10px">歯科衛生実地指導書</div>
+                    <div><span class="hint">患者</span> 田中 花子 様 ／ 2026/06/21</div>
+                    <div style="margin-top:6px"><span class="hint">口腔衛生状態</span><br>PCR 35%。下顎前歯部舌側に歯石沈着。BOP 22%。</div>
+                    <div style="margin-top:6px"><span class="hint">指導内容</span><br>バス法による刷掃指導。歯間部はフロス併用を指導。</div>
+                    <div style="display:flex;gap:6px;margin:10px 0"><div class="photo" style="flex:1;height:64px"><i class="ti ti-dental" style="font-size:20px"></i></div><div class="photo" style="flex:1;height:64px"><i class="ti ti-dental" style="font-size:20px"></i></div></div>
+                    <div><span class="hint">次回計画</span><br>SRP（右下臼歯部）、再評価は1ヶ月後。</div>
+                    <div class="hint" style="text-align:right;margin-top:12px">担当衛生士: 衛生士A</div>
+                  </div>
+                  <button class="btn" style="width:100%;margin-top:12px;background:#fff"><i class="ti ti-download"></i> PDFを保存</button>
+                </div>
+              </div>
+            </div>
           </section>
 
           <!-- 患者情報モーダル（上部ボタンから） -->
@@ -1120,6 +1251,34 @@ body.role-staff .owner-only{display:none!important}
             <div style="background:var(--lav2);border-radius:10px;padding:12px;margin-bottom:6px"><div class="hint" style="text-align:center;margin-bottom:4px">上顎（右 → 左）</div><div class="tootharch" id="tagf-up"></div><div style="height:10px"></div><div class="tootharch" id="tagf-lo"></div><div class="hint" style="text-align:center;margin-top:4px">下顎（右 → 左）</div></div>
             <div style="font-weight:600;font-size:13px;margin:14px 0 0">タグ</div><div id="tagf-tags"></div>
             <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:16px"><button class="btn" onclick="closeTagFilter()">キャンセル</button><button class="btn primary" onclick="applyTagFilter()">この条件で絞り込む</button></div></div></div>
+          <!-- 診療セッション設定モーダル（新規セッション＝直接診療画面＋このポップアップ。ハブからも同じ） -->
+          <div class="modal-ov" id="sessionModal" onclick="if(event.target===this)closeSession()"><div class="modal" style="width:640px"><span class="x" onclick="closeSession()"><i class="ti ti-x"></i></span><h3 style="font-size:16px"><i class="ti ti-plus" style="color:var(--purple-d)"></i> 診療セッションの設定</h3><div class="hint" style="margin:-8px 0 14px">日時・担当・目的・作成する書類をまとめて設定します（診療中いつでも変更できます）。</div>
+            <div class="grid" style="grid-template-columns:1fr 1fr;gap:10px 16px;margin-bottom:12px"><div><div class="label" style="margin-bottom:5px">診療日時</div><div class="field" style="cursor:pointer" onclick="openDateTime(this)"><i class="ti ti-calendar" style="margin-right:8px"></i> 2026/06/21 10:30</div></div><div><div class="label" style="margin-bottom:5px">担当衛生士</div><div class="field" data-opts="衛生士A（あなた）|衛生士B|院長 高根">衛生士A（あなた）<i class="ti ti-chevron-down" style="margin-left:auto"></i></div></div></div>
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);margin-bottom:12px"><span class="toggle on"><span class="knob"></span></span> 初診として扱う（問診票・録音同意の確認）</label>
+            <div class="label" style="margin-bottom:6px">来院目的・主訴（任意・複数選択可）</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px"><span class="pill multi on">定期検診</span><span class="pill multi">歯周治療</span><span class="pill multi">SRP</span><span class="pill multi">TBI</span><span class="pill multi">痛み・しみる</span></div>
+            <div class="field" style="min-height:44px;align-items:flex-start;margin-bottom:14px;color:var(--hint)">目的・メモ（任意）</div>
+            <div style="border-top:0.5px solid var(--border);padding-top:12px">
+              <div class="label" style="font-weight:500;margin-bottom:6px">必須書類（保険算定）<span class="lockchip" style="margin-left:4px"><i class="ti ti-lock" style="font-size:10px"></i> 必須</span><span class="qh" onclick="showHelp(event,this)" data-help="各書類に含める項目は、設定＞必須書類 で医院ごとに固定できます。">?</span></div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px"><span class="pill multi on">歯科疾患管理に関する文書</span><span class="pill multi on">歯科衛生実地指導書</span><span class="pill multi on">問診票（初診）</span></div>
+              <div class="label" style="font-weight:500;margin-bottom:6px">サブカルテジャンル</div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px"><span class="pill on">ペリオ（歯周）</span><span class="pill">エンド</span><span class="pill">矯正</span><span class="pill">小児</span><span class="pill lav" onclick="go('market');closeSession()" style="cursor:pointer"><i class="ti ti-shopping-bag" style="font-size:12px"></i> マーケット</span></div>
+              <div class="label" style="font-weight:500;margin-bottom:6px">サブカルテ書類（複数選択）</div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill multi on">歯周検査サマリー</span><span class="pill multi on">口腔内写真レポート</span><span class="pill multi on">SRP・処置記録</span><span class="pill multi on">TBIセルフケア指導</span><span class="pill multi">経過比較シート</span><span class="pill multi">手書き指導メモ ✎</span></div>
+            </div>
+            <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:16px"><button class="btn" onclick="closeSession()">キャンセル</button><button class="btn primary" onclick="closeSession()">この内容で開始</button></div></div></div>
+          <!-- 更新情報モーダル（今回の更新内容を全て表示） -->
+          <div class="modal-ov" id="updatesModal" onclick="if(event.target===this)closeUpdates()"><div class="modal" style="width:560px"><span class="x" onclick="closeUpdates()"><i class="ti ti-x"></i></span><h3 style="font-size:16px"><i class="ti ti-info-circle" style="color:var(--purple-d)"></i> 更新情報</h3>
+            <div style="font-weight:600;font-size:13px;color:var(--purple-d);margin-bottom:6px">2026/06/30 — 患者用アプリ・タグ機能・診療画面の刷新</div>
+            <ul style="font-size:12.5px;line-height:1.9;color:var(--text);margin:0 0 14px;padding-left:18px"><li>患者用アプリ（スマホ）を追加：パスコード／来院履歴／共有書類の閲覧</li><li>診療画面に「録音・ガイド／プロービング／メディア／書類生成」の固定切替タブ</li><li>新規セッションを1つのポップアップに統合（日時・担当・目的・書類選択）</li><li>設定に「必須書類の項目設定」「患者用画面（ロゴ・テーマ色）」を追加</li><li>一覧の絞り込みをメディア／書類でグループ化、日付はfrom〜to指定に</li><li>画像・書類への部位・タグ付け、設定でのタグ管理</li><li>患者検索にユーザー切替を追加</li></ul>
+            <div style="font-weight:600;font-size:13px;color:var(--purple-d);margin-bottom:6px">2026/06/24 — UI調整</div>
+            <ul style="font-size:12.5px;line-height:1.9;color:var(--muted);margin:0 0 4px;padding-left:18px"><li>補足テキストを「？」ヘルプに集約／配色・レイアウト・絞り込みUIの統一</li></ul>
+            <div style="display:flex;justify-content:flex-end;margin-top:14px"><button class="btn primary" onclick="closeUpdates()">閉じる</button></div></div></div>
+          <!-- ユーザー切替モーダル -->
+          <div class="modal-ov" id="userModal" onclick="if(event.target===this)closeUser()"><div class="modal" style="width:380px"><span class="x" onclick="closeUser()"><i class="ti ti-x"></i></span><h3 style="font-size:16px"><i class="ti ti-user" style="color:var(--purple-d)"></i> ユーザーを切り替え</h3><div class="hint" style="margin:-8px 0 12px">ログインユーザーを切り替えます（役割により表示が変わります）。</div>
+            <div class="card" style="display:flex;align-items:center;gap:10px;cursor:pointer;margin-bottom:8px" onclick="setRole('owner');closeUser()"><div style="width:30px;height:30px;border-radius:50%;background:var(--lav);color:var(--purple-d);display:flex;align-items:center;justify-content:center"><i class="ti ti-crown" style="font-size:14px"></i></div><div style="flex:1"><div style="font-size:13px;font-weight:500">高根 弘二</div><div class="hint">院長（オーナー）</div></div><i class="ti ti-chevron-right muted"></i></div>
+            <div class="card" style="display:flex;align-items:center;gap:10px;cursor:pointer;margin-bottom:8px" onclick="setRole('staff');closeUser()"><div style="width:30px;height:30px;border-radius:50%;background:var(--lav);color:var(--purple-d);display:flex;align-items:center;justify-content:center;font-size:12px">A</div><div style="flex:1"><div style="font-size:13px;font-weight:500">衛生士A</div><div class="hint">歯科衛生士</div></div><i class="ti ti-chevron-right muted"></i></div>
+            <div class="card" style="display:flex;align-items:center;gap:10px;cursor:pointer" onclick="setRole('staff');closeUser()"><div style="width:30px;height:30px;border-radius:50%;background:var(--lav);color:var(--purple-d);display:flex;align-items:center;justify-content:center;font-size:12px">B</div><div style="flex:1"><div style="font-size:13px;font-weight:500">衛生士B</div><div class="hint">歯科衛生士</div></div><i class="ti ti-chevron-right muted"></i></div></div></div>
           <!-- フロート録音ボタン（テコ入れ#5: 常に浮かせて区別） -->
           <button class="fabrec" id="fabrec" onclick="toggleRec()"><span class="dot"></span> 録音中 12:34 <i class="ti ti-player-stop"></i></button>
 
@@ -1129,8 +1288,8 @@ body.role-staff .owner-only{display:none!important}
   </div>
 </div>
 <script>
-var order=["login","search","library","history","newsession","reporttype","hub","probing","examset","toothstate","explain","layout","explain2","still","video","docview","radiograph","report","reportedit","handout","market","plan","credit","storage","settings"];
-var titles={login:"ログイン",search:"患者検索",library:"全患者 メディア・書類一覧",history:"来院履歴一覧",newsession:"新規セッション作成",reporttype:"作成する書類を選ぶ",hub:"診療中ハブ（ガイド＆記録）",probing:"プロービング検査",examset:"プロービング検査の設定",explain:"患者説明（全メディア一覧）",layout:"5/9枚法レイアウト",explain2:"比較（2〜4枚）",still:"静止画 詳細（操作/編集）",video:"動画 詳細",toothstate:"歯の状態（患者ごと）",docview:"書類ビューア",radiograph:"レントゲン並べ表示",report:"レポート生成",reportedit:"書類を編集",handout:"患者持ち帰り",market:"テンプレマーケット",plan:"契約プラン（オーナー）",credit:"AIクレジット",storage:"ストレージ",settings:"設定"};
+var order=["login","search","library","history","newsession","reporttype","hub","probing","examset","toothstate","explain","layout","explain2","still","video","docview","radiograph","report","reportedit","handout","market","plan","credit","storage","settings","p-login","p-home","p-visit","p-doc"];
+var titles={login:"ログイン",search:"患者検索",library:"全患者 メディア・書類一覧",history:"来院履歴一覧",newsession:"新規セッション作成",reporttype:"作成する書類を選ぶ",hub:"診療中ハブ（ガイド＆記録）",probing:"プロービング検査",examset:"プロービング検査の設定",explain:"患者説明（全メディア一覧）",layout:"5/9枚法レイアウト",explain2:"比較（2〜4枚）",still:"静止画 詳細（操作/編集）",video:"動画 詳細",toothstate:"歯の状態（患者ごと）",docview:"書類ビューア",radiograph:"レントゲン並べ表示",report:"レポート生成",reportedit:"書類を編集",handout:"患者持ち帰り",market:"テンプレマーケット",plan:"契約プラン（オーナー）",credit:"AIクレジット",storage:"ストレージ",settings:"設定","p-login":"患者アプリ：パスコード","p-home":"患者アプリ：ホーム","p-visit":"患者アプリ：診療詳細","p-doc":"患者アプリ：書類ビューア"};
 var steps={search:"1",history:"2",newsession:"3",reporttype:"3",hub:"4・7",probing:"5・6",explain:"8",layout:"8",explain2:"8",still:"8",video:"8",radiograph:"8",report:"9",reportedit:"9",handout:"10"};
 var sessionScreens={hub:1,probing:1,examset:1,toothstate:1,explain:1,layout:1,explain2:1,still:1,video:1,docview:1,radiograph:1,reportedit:1};
 var ownerOnlyScreens={plan:1};
@@ -1163,7 +1322,7 @@ function toggleRec(){
   else{fab.classList.add("paused");fab.innerHTML='<i class="ti ti-microphone"></i> 録音開始 <i class="ti ti-player-play"></i>';}
 }
 function setTab(t){
-  ["staff","tags","perm","link"].forEach(function(k){
+  ["staff","tags","docs","patient","perm","link"].forEach(function(k){
     var tab=document.getElementById("tab-"+k),pane=document.getElementById("set-"+k);
     if(tab)tab.classList.toggle("on",k===t);
     if(pane)pane.style.display=(k===t)?"":"none";
@@ -1517,6 +1676,39 @@ function closeTagFilter(){document.getElementById("tagFilterModal").classList.re
 function applyTagFilter(){closeTagFilter();}
 function openDateRange(){document.getElementById("dateRangeModal").classList.add("show");}
 function closeDateRange(){document.getElementById("dateRangeModal").classList.remove("show");}
+/* 診療セッション（新規＝直接ハブ＋設定ポップアップ／ハブからも同じ） */
+function startSession(){go("hub");openSession();}
+function openSession(){document.getElementById("sessionModal").classList.add("show");}
+function closeSession(){document.getElementById("sessionModal").classList.remove("show");}
+/* ログイン: 更新情報 */
+function openUpdates(){document.getElementById("updatesModal").classList.add("show");}
+function closeUpdates(){document.getElementById("updatesModal").classList.remove("show");}
+/* ユーザー切替 */
+function openUser(){document.getElementById("userModal").classList.add("show");}
+function closeUser(){document.getElementById("userModal").classList.remove("show");}
+/* 患者用画面: テーマカラー選択 */
+function pickSwatch(el){
+  var p=el.parentNode;Array.prototype.forEach.call(p.querySelectorAll(".swatch"),function(s){s.classList.remove("on");});
+  el.classList.add("on");
+  var c=el.style.backgroundColor;var prev=document.getElementById("ptheme-prev");if(prev)prev.style.background=c;
+  document.documentElement.style.setProperty("--ptheme",c);
+}
+/* 設定: 必須書類の項目チェックリスト */
+var REQ_DOCS=[
+  {name:"問診票",icon:"ti-clipboard-text",items:["主訴","現病歴","既往歴","服薬状況","アレルギー","喫煙・飲酒","全身疾患","妊娠の有無","これまでの歯科治療","来院動機","録音同意"]},
+  {name:"歯科疾患管理に関する文書",icon:"ti-file-text",items:["病名・主訴","口腔内所見","検査結果（PPD/BOP/PCR）","管理計画","治療方針","セルフケア指導","次回来院予定","リスク評価"]},
+  {name:"歯科衛生実地指導書",icon:"ti-brush",items:["口腔衛生状態","プラーク付着状況","指導内容（TBI）","使用器具・補助清掃用具","生活習慣指導","食事指導","評価・経過","次回計画"]}
+];
+function buildReqDocs(){
+  var c=document.getElementById("reqdoc-list");if(!c)return;
+  c.innerHTML=REQ_DOCS.map(function(d){
+    return '<div class="card" style="margin-bottom:12px"><div class="label" style="font-weight:600;margin-bottom:8px"><i class="ti '+d.icon+'" style="margin-right:6px;color:var(--purple-d)"></i>'+d.name+'<span class="hint" style="margin-left:8px;font-weight:400">扱う項目を選択</span></div>'
+      +'<div style="display:flex;gap:6px;flex-wrap:wrap">'
+      + d.items.map(function(it,i){return '<span class="pill multi'+(i<6?' on':'')+'">'+it+'</span>';}).join('')
+      +'<span class="pill" style="border-style:dashed;color:var(--purple-d)"><i class="ti ti-plus" style="font-size:11px"></i> 項目を追加</span>'
+      +'</div></div>';
+  }).join('');
+}
 document.addEventListener("click",function(e){
   /* ? ヘルプポップアップ: アイコン外クリックで閉じる */
   if(!e.target.closest(".qh")){var qp=document.getElementById("qpop");if(qp)qp.style.display="none";}
@@ -1537,7 +1729,7 @@ document.addEventListener("click",function(e){
 });
 document.querySelectorAll(".navitem").forEach(function(n){n.addEventListener("click",function(){go(n.dataset.t);});});
 renderChart();buildArch();
-buildTagSettings();setTeeth("tagm","adult");setTeeth("tagf","adult");buildTagPick("tagm");buildTagPick("tagf");
+buildTagSettings();setTeeth("tagm","adult");setTeeth("tagf","adult");buildTagPick("tagm");buildTagPick("tagf");buildReqDocs();
 go("login");
 </script>
 </body>
