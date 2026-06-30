@@ -265,7 +265,6 @@ body.role-staff .owner-only{display:none!important}
     <div class="navitem" data-t="login"><i class="ti ti-login"></i>ログイン</div>
     <div class="navitem" data-t="search"><i class="ti ti-search"></i>患者検索</div>
     <div class="navitem" data-t="history"><i class="ti ti-list"></i>来院履歴一覧</div>
-    <div class="navitem" data-t="newsession"><i class="ti ti-plus"></i>新規セッション作成</div>
     <div class="navitem" data-t="library"><i class="ti ti-photo"></i>全患者 メディア・書類一覧</div>
     <div class="navgroup">診療セッション</div>
     <div class="navitem" data-t="hub"><i class="ti ti-list-check"></i>診療中ハブ（録音・ガイド）</div>
@@ -371,30 +370,6 @@ body.role-staff .owner-only{display:none!important}
               <div class="card" style="margin-bottom:10px;display:flex;align-items:center;gap:12px"><div><div style="font-weight:500">2026/04/09 09:50</div><div class="hint">歯周治療</div></div><span class="spacer"></span><span class="chip green">完了</span><button class="btn sm" onclick="go('explain')">記録を見る</button></div>
               <div class="card" style="display:flex;align-items:center;gap:12px"><div><div style="font-weight:500">2026/01/15 14:10</div><div class="hint">初診</div></div><span class="spacer"></span><span class="chip green">完了</span><button class="btn sm" onclick="go('explain')">記録を見る</button></div>
             </div>
-          </section>
-
-          <!-- NEW SESSION (no template) -->
-          <section class="screen" data-id="newsession">
-            <div class="bar"><span class="muted" style="cursor:pointer;font-size:13px" onclick="go('history')"><i class="ti ti-chevron-left"></i> 戻る</span><span class="logo" style="font-size:16px">新規セッションを作成</span><span class="spacer"></span><span class="muted" style="font-size:13px">001 田中 様</span></div>
-            <div class="body" style="padding:18px">
-              <div class="grid" style="grid-template-columns:1fr 1fr;max-width:780px;align-items:start">
-                <div>
-                  <div class="label" style="margin-bottom:6px">診療日時</div>
-                  <div class="field" style="max-width:280px;margin-bottom:14px;cursor:pointer" onclick="openDateTime(this)"><i class="ti ti-calendar" style="margin-right:8px"></i> 2026/06/21 10:30</div>
-                  <div class="label" style="margin-bottom:6px">担当衛生士</div>
-                  <div class="field" data-opts="衛生士A（あなた）|衛生士B|院長 高根" style="max-width:280px;margin-bottom:14px">衛生士A（あなた）<i class="ti ti-chevron-down" style="margin-left:auto"></i></div>
-                  <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);margin-bottom:14px"><span class="toggle on"><span class="knob"></span></span> 初診として扱う<span class="qh" onclick="showHelp(event,this)" data-help="初診として扱うと、問診票・録音同意の確認ステップが入ります。">?</span></label>
-                </div>
-                <div>
-                  <div class="label" style="margin-bottom:6px">来院目的・主訴（任意・複数選択可）</div>
-                  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px"><span class="pill multi on">定期検診</span><span class="pill multi">歯周治療</span><span class="pill multi">SRP</span><span class="pill multi">TBI</span><span class="pill multi">痛み・しみる</span></div>
-                  <div class="field" style="min-height:58px;align-items:flex-start;margin-bottom:14px">&nbsp;</div>
-                  <div class="card" style="background:var(--lav2);border:none"><div class="hint" style="margin-bottom:6px">前回（04/09・完了）</div><div style="font-size:12px;line-height:1.6">PPD平均2.8mm / BOP 26%。右下臼歯部の冷水痛。次回SRP予定。</div></div>
-                </div>
-              </div>
-              <div style="max-width:760px;padding:12px 14px;border-radius:10px;background:var(--lav2);font-size:12px;color:var(--muted);line-height:1.7;margin-top:14px"><i class="ti ti-info-circle"></i> 次の画面で<b>作成するレポート種別</b>を選びます（AIガイドのチェック対象になります／検査中も変更可）。録音は診療中画面の<b>フロート録音ボタン</b>で開始します。</div>
-            </div>
-            <div class="bar barfoot" style="justify-content:center;gap:10px"><button class="btn">キャンセル</button><button class="btn primary" onclick="go('reporttype')">次へ：作成レポートを選ぶ <i class="ti ti-arrow-right"></i></button></div>
           </section>
 
           <!-- HUB -->
@@ -888,41 +863,6 @@ body.role-staff .owner-only{display:none!important}
             </div>
           </section>
 
-          <!-- REPORT TYPE 事前選択（テコ入れ#6） -->
-          <section class="screen" data-id="reporttype">
-            <div class="bar"><span class="muted" style="cursor:pointer;font-size:13px" onclick="go('newsession')"><i class="ti ti-chevron-left"></i> 戻る</span><span class="logo" style="font-size:16px">作成する書類を選ぶ</span><span class="spacer"></span><span class="muted" style="font-size:12px">001 田中 様</span></div>
-            <div class="body" style="padding:18px">
-              <div style="max-width:820px;padding:10px 14px;border-radius:10px;background:var(--lav2);font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:16px"><i class="ti ti-info-circle"></i> ここで作成する書類を決めると、<b>AIガイドの「聞く/話す」チェック対象</b>が最初から決まります。<b>検査中・レポート生成時にも変更可能</b>（二重に確認できます）。録音は診療中画面の<b>フロート録音ボタン</b>で開始します。</div>
-              <div style="display:flex;flex-direction:column;gap:16px;max-width:840px">
-                <div>
-                  <div class="label" style="font-weight:500;margin-bottom:8px">必須書類（保険算定）<span class="lockchip" style="margin-left:4px"><i class="ti ti-lock" style="font-size:10px"></i> 必須</span></div>
-                  <div class="grid" style="grid-template-columns:repeat(3,1fr);gap:8px">
-                  <div class="card" style="display:flex;align-items:center;gap:10px;padding:9px 10px"><div class="tile" style="width:34px;height:46px;flex:none"><i class="ti ti-file-text" style="font-size:15px"></i></div><div style="flex:1;font-size:12.5px;font-weight:500">歯科疾患管理に関する文書</div><span class="toggle on"><span class="knob"></span></span></div>
-                  <div class="card" style="display:flex;align-items:center;gap:10px;padding:9px 10px"><div class="tile" style="width:34px;height:46px;flex:none"><i class="ti ti-file-text" style="font-size:15px"></i></div><div style="flex:1;font-size:12.5px;font-weight:500">歯科衛生実地指導書</div><span class="toggle on"><span class="knob"></span></span></div>
-                  <div class="card" style="display:flex;align-items:center;gap:10px;padding:9px 10px"><div class="tile" style="width:34px;height:46px;flex:none"><i class="ti ti-clipboard-text" style="font-size:15px"></i></div><div style="flex:1"><div style="font-size:12.5px;font-weight:500">問診票<span class="qh" onclick="showHelp(event,this)" data-help="初診のみ作成します。">?</span></div></div><span class="toggle on"><span class="knob"></span></span></div>
-                  </div>
-                </div>
-                <div>
-                  <div class="label" style="font-weight:500;margin-bottom:8px">サブカルテジャンル<span class="qh" onclick="showHelp(event,this)" data-help="選んだジャンルに応じて、下のサブカルテ書類の候補が切り替わります。">?</span></div>
-                  <div id="subgenre" style="display:flex;gap:8px;flex-wrap:wrap"><span class="pill on" onclick="setSubGenre(this,'perio')">ペリオ（歯周）</span><span class="pill" onclick="setSubGenre(this,'endo')">エンド</span><span class="pill" onclick="setSubGenre(this,'ortho')">矯正</span><span class="pill" onclick="setSubGenre(this,'pedo')">小児</span><span class="pill lav" onclick="go('market')" style="cursor:pointer"><i class="ti ti-shopping-bag" style="font-size:12px"></i> マーケットから追加</span></div>
-                </div>
-                <div>
-                  <div class="label" style="font-weight:500;margin-bottom:8px">サブカルテ書類（任意・複数選択）<span class="qh" onclick="showHelp(event,this)" data-help="選んだジャンルに応じた候補です。「✎手書き」は診療中にApple Pencil等でペン記入する手書きテンプレで、AI自動生成OFF・手動ロックのまま保持されます。">?</span></div>
-                  <div class="grid" id="subdoc-grid" style="grid-template-columns:repeat(3,1fr);gap:8px">
-                    <div class="card" style="display:flex;align-items:center;gap:9px;padding:9px 10px"><div class="tile" style="width:30px;height:40px;flex:none"><i class="ti ti-report-medical" style="font-size:14px"></i></div><div style="flex:1;font-size:12.5px;font-weight:500">歯周検査サマリー</div><span class="toggle on"><span class="knob"></span></span></div>
-                    <div class="card" style="display:flex;align-items:center;gap:9px;padding:9px 10px"><div class="tile" style="width:30px;height:40px;flex:none"><i class="ti ti-dental" style="font-size:14px"></i></div><div style="flex:1;font-size:12.5px;font-weight:500">口腔内写真レポート</div><span class="toggle on"><span class="knob"></span></span></div>
-                    <div class="card" style="display:flex;align-items:center;gap:9px;padding:9px 10px"><div class="tile" style="width:30px;height:40px;flex:none"><i class="ti ti-file-text" style="font-size:14px"></i></div><div style="flex:1;font-size:12.5px;font-weight:500">SRP・処置記録</div><span class="toggle on"><span class="knob"></span></span></div>
-                    <div class="card" style="display:flex;align-items:center;gap:9px;padding:9px 10px"><div class="tile" style="width:30px;height:40px;flex:none"><i class="ti ti-brush" style="font-size:14px"></i></div><div style="flex:1;font-size:12.5px;font-weight:500">TBIセルフケア指導</div><span class="toggle on"><span class="knob"></span></span></div>
-                    <div class="card" style="display:flex;align-items:center;gap:9px;padding:9px 10px;opacity:.7"><div class="tile" style="width:30px;height:40px;flex:none"><i class="ti ti-columns-2" style="font-size:14px"></i></div><div style="flex:1;font-size:12.5px;font-weight:500">経過比較シート</div><span class="toggle off"><span class="knob"></span></span></div>
-                    <div class="card" style="display:flex;align-items:center;gap:9px;padding:9px 10px;opacity:.7"><div class="tile" style="width:30px;height:40px;flex:none"><i class="ti ti-calendar" style="font-size:14px"></i></div><div style="flex:1;font-size:12.5px;font-weight:500">次回計画メモ</div><span class="toggle off"><span class="knob"></span></span></div>
-                    <div class="card" style="display:flex;align-items:center;gap:9px;padding:9px 10px;border-color:#f0d9b5"><div class="tile" style="width:30px;height:40px;flex:none;background:#FDF0E1"><i class="ti ti-edit" style="font-size:14px;color:var(--warn)"></i></div><div style="flex:1"><div style="font-size:12.5px;font-weight:500">手書き指導メモ <span class="chip" style="background:#FDF0E1;color:var(--warn);font-size:9px">✎手書き</span><span class="qh" onclick="showHelp(event,this)" data-help="診療中にApple Pencil等でペン記入します。AI自動生成OFF・手動ロックで保持されます。">?</span></div></div><span class="toggle on"><span class="knob"></span></span></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="bar barfoot" style="justify-content:center;gap:10px"><button class="btn" onclick="go('newsession')">戻る</button><button class="btn primary sm" onclick="go('hub')">この内容で診療を開始 <i class="ti ti-arrow-right"></i></button></div>
-          </section>
-
           <!-- PLAN 契約プラン（オーナー） -->
           <section class="screen" data-id="plan">
             <div class="bar"><i class="ti ti-receipt" style="color:var(--purple-d)"></i><span class="logo" style="font-size:16px">契約プラン</span><span class="lockchip"><i class="ti ti-crown" style="font-size:11px"></i> オーナー権限</span><span class="spacer"></span><span class="muted" style="font-size:12px">gtech歯科クリニック</span></div>
@@ -1288,9 +1228,9 @@ body.role-staff .owner-only{display:none!important}
   </div>
 </div>
 <script>
-var order=["login","search","library","history","newsession","reporttype","hub","probing","examset","toothstate","explain","layout","explain2","still","video","docview","radiograph","report","reportedit","handout","market","plan","credit","storage","settings","p-login","p-home","p-visit","p-doc"];
-var titles={login:"ログイン",search:"患者検索",library:"全患者 メディア・書類一覧",history:"来院履歴一覧",newsession:"新規セッション作成",reporttype:"作成する書類を選ぶ",hub:"診療中ハブ（ガイド＆記録）",probing:"プロービング検査",examset:"プロービング検査の設定",explain:"患者説明（全メディア一覧）",layout:"5/9枚法レイアウト",explain2:"比較（2〜4枚）",still:"静止画 詳細（操作/編集）",video:"動画 詳細",toothstate:"歯の状態（患者ごと）",docview:"書類ビューア",radiograph:"レントゲン並べ表示",report:"レポート生成",reportedit:"書類を編集",handout:"患者持ち帰り",market:"テンプレマーケット",plan:"契約プラン（オーナー）",credit:"AIクレジット",storage:"ストレージ",settings:"設定","p-login":"患者アプリ：パスコード","p-home":"患者アプリ：ホーム","p-visit":"患者アプリ：診療詳細","p-doc":"患者アプリ：書類ビューア"};
-var steps={search:"1",history:"2",newsession:"3",reporttype:"3",hub:"4・7",probing:"5・6",explain:"8",layout:"8",explain2:"8",still:"8",video:"8",radiograph:"8",report:"9",reportedit:"9",handout:"10"};
+var order=["login","search","library","history","hub","probing","examset","toothstate","explain","layout","explain2","still","video","docview","radiograph","report","reportedit","handout","market","plan","credit","storage","settings","p-login","p-home","p-visit","p-doc"];
+var titles={login:"ログイン",search:"患者検索",library:"全患者 メディア・書類一覧",history:"来院履歴一覧",hub:"診療中ハブ（ガイド＆記録）",probing:"プロービング検査",examset:"プロービング検査の設定",explain:"患者説明（全メディア一覧）",layout:"5/9枚法レイアウト",explain2:"比較（2〜4枚）",still:"静止画 詳細（操作/編集）",video:"動画 詳細",toothstate:"歯の状態（患者ごと）",docview:"書類ビューア",radiograph:"レントゲン並べ表示",report:"レポート生成",reportedit:"書類を編集",handout:"患者持ち帰り",market:"テンプレマーケット",plan:"契約プラン（オーナー）",credit:"AIクレジット",storage:"ストレージ",settings:"設定","p-login":"患者アプリ：パスコード","p-home":"患者アプリ：ホーム","p-visit":"患者アプリ：診療詳細","p-doc":"患者アプリ：書類ビューア"};
+var steps={search:"1",history:"2",hub:"4・7",probing:"5・6",explain:"8",layout:"8",explain2:"8",still:"8",video:"8",radiograph:"8",report:"9",reportedit:"9",handout:"10"};
 var sessionScreens={hub:1,probing:1,examset:1,toothstate:1,explain:1,layout:1,explain2:1,still:1,video:1,docview:1,radiograph:1,reportedit:1};
 var ownerOnlyScreens={plan:1};
 var cur="login";
@@ -1705,7 +1645,6 @@ function buildReqDocs(){
     return '<div class="card" style="margin-bottom:12px"><div class="label" style="font-weight:600;margin-bottom:8px"><i class="ti '+d.icon+'" style="margin-right:6px;color:var(--purple-d)"></i>'+d.name+'<span class="hint" style="margin-left:8px;font-weight:400">扱う項目を選択</span></div>'
       +'<div style="display:flex;gap:6px;flex-wrap:wrap">'
       + d.items.map(function(it,i){return '<span class="pill multi'+(i<6?' on':'')+'">'+it+'</span>';}).join('')
-      +'<span class="pill" style="border-style:dashed;color:var(--purple-d)"><i class="ti ti-plus" style="font-size:11px"></i> 項目を追加</span>'
       +'</div></div>';
   }).join('');
 }
