@@ -132,6 +132,18 @@ a.plain{color:var(--purple-d)}
 .pkey button{aspect-ratio:1.5;border:none;background:#fff;border:0.5px solid var(--border2);border-radius:12px;font-size:18px;color:var(--text);cursor:pointer}
 .pdot{width:13px;height:13px;border-radius:50%;border:1.5px solid var(--purple);display:inline-block;margin:0 4px}
 .pdot.on{background:var(--purple)}
+/* ===== プレゼンモード（別URL #present）: 実画面のみ全画面表示 ===== */
+body.present .side,body.present .topbar,body.present .devlabel{display:none!important}
+body.present .stage{padding:0;overflow:hidden}
+body.present .bezel{width:100%;max-width:none;background:none;border-radius:0;padding:0}
+body.present .frame{aspect-ratio:auto!important;width:100vw;height:100vh;height:100dvh;border-radius:0}
+body.present .app{min-height:auto}
+/* 画面切替用フローティングメニュー（プレゼン時のみ表示・ナビをオーバーレイ表示） */
+#presentFab{position:fixed;right:14px;bottom:14px;z-index:9998;width:46px;height:46px;border-radius:50%;background:var(--purple);color:#fff;border:none;box-shadow:0 6px 20px rgba(80,70,180,.45);font-size:20px;cursor:pointer;display:none;align-items:center;justify-content:center}
+body.present #presentFab{display:flex}
+#navBackdrop{display:none}
+body.present.nav-open .side{display:block!important;position:fixed;left:0;top:0;height:100vh;height:100dvh;z-index:9997;box-shadow:0 0 40px rgba(0,0,0,.45)}
+body.present.nav-open #navBackdrop{display:block;position:fixed;inset:0;background:rgba(20,19,30,.4);z-index:9996}
 /* 役割スイッチ */
 .roleswitch{display:flex;gap:3px;background:var(--lav2);border-radius:999px;padding:3px;margin:4px 8px 2px}
 .roleswitch .r{flex:1;text-align:center;font-size:11.5px;padding:6px 4px;border-radius:999px;color:var(--muted);cursor:pointer}
@@ -1223,6 +1235,9 @@ body.role-staff .owner-only{display:none!important}
           <button class="fabrec" id="fabrec" onclick="toggleRec()"><span class="dot"></span> 録音中 12:34 <i class="ti ti-player-stop"></i></button>
 
         </div>
+        <!-- プレゼンモード用: 画面切替メニュー（ナビをオーバーレイ表示） -->
+        <div id="navBackdrop" onclick="toggleNav()"></div>
+        <button id="presentFab" onclick="toggleNav()" title="画面を切り替え" style="font-family:system-ui">☰</button>
       </div>
     </div>
   </div>
@@ -1666,10 +1681,15 @@ document.addEventListener("click",function(e){
     return;
   }
 });
-document.querySelectorAll(".navitem").forEach(function(n){n.addEventListener("click",function(){go(n.dataset.t);});});
+document.querySelectorAll(".navitem").forEach(function(n){n.addEventListener("click",function(){go(n.dataset.t);document.body.classList.remove("nav-open");});});
+/* プレゼンモード（実画面のみ全画面）: URLに #present / ?present で有効 */
+function toggleNav(){document.body.classList.toggle("nav-open");}
+function applyPresent(){var p=(location.hash+location.search).indexOf("present")>=0;document.body.classList.toggle("present",p);if(!p)document.body.classList.remove("nav-open");}
+window.addEventListener("hashchange",applyPresent);
 renderChart();buildArch();
 buildTagSettings();setTeeth("tagm","adult");setTeeth("tagf","adult");buildTagPick("tagm");buildTagPick("tagf");buildReqDocs();
 go("login");
+applyPresent();
 </script>
 </body>
 </html>
