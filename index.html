@@ -221,23 +221,55 @@ body.role-staff .owner-only{display:none!important}
 .pill.amberline{background:#fff;color:var(--text);border:0.5px solid var(--border2)}
 /* 検査ステータスバー */
 .examstat{display:flex;align-items:center;gap:0;font-size:12px;flex-wrap:wrap}
-.examstat .seg2{padding:4px 12px;border-right:0.5px solid var(--border)}
+.examstat .seg2{padding:4px 11px;border-right:none}
+.examstat .seg2.sep{border-right:0.5px solid var(--border2)}
 .examstat b{color:var(--text);font-weight:600;margin-left:3px}
 .examstat .lab{color:var(--muted)}
 /* 歯式チャート */
 .chartwrap{overflow:auto;padding:6px 2px}
-.chart{display:grid;grid-template-columns:74px repeat(8,1fr);gap:0;min-width:740px}
+.chart{display:grid;grid-template-columns:128px repeat(8,1fr);gap:0;min-width:780px}
 .chart .rlab{display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted)}
-.chart .rlab .pillab{background:var(--lav);color:var(--purple-d);border-radius:999px;padding:7px 4px;width:58px;text-align:center;font-size:11px}
+.chart .rlab{padding:0 4px}
+.chart .rlab .pillab{background:#fff;border:0.5px solid var(--border2);color:var(--text);border-radius:999px;padding:8px 6px;width:100%;text-align:center;font-size:12px}
+.chart .rlab .nolab{font-size:12px;color:var(--muted)}
+.chart .rlab .pktlab{display:flex;flex-wrap:wrap;gap:4px;align-items:center;justify-content:center;width:100%}
+.chart .rlab .pktlab .pillab{width:auto;flex:0 1 auto;padding:8px 10px;white-space:nowrap}
 .chart .rlab .pillab.rsel{cursor:pointer}
-.chart .rlab .pillab.rsel.on{background:var(--yellow);color:#fff}
-.chart .rlab .pillab.sub{width:auto;flex:1;font-size:9px;padding:5px 2px;background:var(--lav);color:var(--purple-d);border:none}
-.chart .rlab .pillab.sub.on{background:var(--yellow);color:#fff}
+.chart .rlab .pillab.rsel.on{background:var(--purple);color:#fff;border-color:var(--purple)}
+.chart .rlab .pillab.sub{width:auto;flex:none;font-size:11px;padding:6px 8px;background:#fff;border:0.5px solid var(--border2);color:var(--text)}
+.chart .rlab .pillab.sub.on{background:var(--purple);color:#fff;border-color:var(--purple)}
 .chart .cell{border:0.5px solid var(--border2);border-left:0.5px solid var(--border);height:58px;position:relative;background:#fff}
 /* 検査画面はタップ入力前提でボタン大きめ */
 [data-id="probing"] .pill{font-size:12px;padding:5px 10px}
 [data-id="probing"] .pill.amber,[data-id="probing"] .pill.amberline{font-size:13px;padding:8px 13px}
 [data-id="probing"] .examctl .hint{white-space:nowrap}
+/* 実機 ver0.1.9 準拠の上部バー・コントロール行 */
+.btn.save{background:var(--green);border-color:var(--green);color:#fff}
+.btn.save:hover{background:#17835f}
+.examctl{align-items:flex-start;gap:20px;flex-wrap:nowrap;overflow-x:auto;padding-top:10px;padding-bottom:10px}
+.exgrp{flex:none}
+.exlab{display:flex;align-items:center;gap:5px;font-size:11.5px;color:var(--muted);margin-bottom:7px}
+.exrow{display:flex;gap:8px;margin-bottom:7px}
+.exrow:last-child{margin-bottom:0}
+.qpill{display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap}
+.qpill.ic{padding-left:15px;padding-right:15px}
+.qmk{display:inline-block;width:9px;height:8px;flex:none;opacity:.9}
+.qmk.tr{border-top:1.6px solid currentColor;border-right:1.6px solid currentColor;border-top-right-radius:3px}
+.qmk.tl{border-top:1.6px solid currentColor;border-left:1.6px solid currentColor;border-top-left-radius:3px}
+.qmk.br{border-bottom:1.6px solid currentColor;border-right:1.6px solid currentColor;border-bottom-right-radius:3px}
+.qmk.bl{border-bottom:1.6px solid currentColor;border-left:1.6px solid currentColor;border-bottom-left-radius:3px}
+.airow{display:flex;align-items:center;gap:10px;margin-bottom:7px}
+.airow:last-child{margin-bottom:0}
+.aibadge{width:32px;height:32px;border-radius:50%;background:#F1F0F5;color:var(--text);font-weight:800;font-size:12px;letter-spacing:.02em;display:flex;align-items:center;justify-content:center;flex:none;cursor:pointer}
+.aibadge:hover{background:#E7E5EE}
+.aifield{flex:1;min-height:34px;background:#F4F3F7;border-radius:9px;padding:7px 12px;font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px}
+.micoff{width:32px;flex:none;text-align:center;color:var(--hint);font-size:17px;cursor:pointer}
+.vseg{flex:1;display:flex;background:#F4F3F7;border-radius:999px;padding:3px}
+.vseg span{flex:1;text-align:center;font-size:12px;padding:6px 0;border-radius:999px;color:var(--text);cursor:pointer}
+.vseg span.on{background:#9E93F2;color:#fff}
+[data-id="probing"] .body{flex:0 0 auto;overflow:visible}
+[data-id="probing"] .exfill{flex:1;min-height:0}
+[data-id="probing"] .barfoot{padding-right:190px}
 /* フロート録音ボタンと重ならないようフッターに余白 */
 [data-id="explain"] .barfoot,[data-id="layout"] .barfoot,[data-id="explain2"] .barfoot,[data-id="video"] .barfoot,[data-id="radiograph"] .barfoot{padding-right:190px}
 /* レントゲンフィルム（FMXマウント） */
@@ -255,8 +287,8 @@ body.role-staff .owner-only{display:none!important}
 .subrow{display:flex;flex-direction:column;font-size:9px;color:var(--hint);justify-content:space-around;height:46px;padding-left:4px}
 /* テンキー */
 .numpad{display:flex;gap:8px;justify-content:center;align-items:center;padding:8px}
-.numkey{width:44px;height:44px;border-radius:50%;border:0.5px solid var(--border2);background:#fff;font-family:inherit;font-size:16px;color:var(--text);cursor:pointer}
-.numkey:hover{background:var(--lav2)}
+.numkey{width:44px;height:44px;border-radius:50%;border:none;background:#F1F0F5;font-family:inherit;font-size:16px;color:var(--muted);cursor:pointer}
+.numkey:hover{background:#E7E5EE}
 /* 読み上げ確認パネル */
 .readback{display:flex;align-items:center;gap:10px;background:var(--lav2);border-radius:10px;padding:8px 12px}
 .readback .spk{width:30px;height:30px;border-radius:50%;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;flex:none}
@@ -283,7 +315,7 @@ body.role-staff .owner-only{display:none!important}
 .toothmenu .mi:hover{background:var(--lav2)}
 .toothno .mn{cursor:pointer;padding:2px 5px;border-radius:5px}
 .toothno .mn:hover{background:var(--lav)}
-.chart.full{min-width:1180px;grid-template-columns:64px repeat(16,1fr)}
+.chart.full{min-width:1240px;grid-template-columns:112px repeat(16,1fr)}
 /* ===== #1 画面比率切替（iPad4:3 / PC16:9 / iPad縦3:4） ===== */
 .ratiosw{display:inline-flex;gap:4px;margin-left:10px;vertical-align:middle}
 .ratiosw .r{border:0.5px solid var(--border2);background:#fff;border-radius:999px;padding:3px 9px;font-size:11px;cursor:pointer;color:var(--muted);display:inline-flex;align-items:center;gap:4px}
@@ -564,6 +596,7 @@ body.role-staff .owner-only{display:none!important}
             <div class="bar"><span class="muted" style="cursor:pointer;font-size:13px" onclick="go('history')"><i class="ti ti-chevron-left"></i> 戻る</span><span style="font-weight:500">001 田中 様</span><span class="chip info">初診</span><span class="spacer"></span><span class="rec"><i class="ti ti-circle-filled"></i> 録音中 12:34<span class="qh" onclick="showHelp(event,this)" data-help="録音の停止は、画面右下のフロート録音ボタンから行います。">?</span></span><button class="btn primary sm" onclick="openEnd()">診療を終える <i class="ti ti-arrow-right"></i></button></div>
             <div class="bar" style="padding-top:8px;padding-bottom:8px"><div style="flex:1"><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:6px"><span>資料に必要な情報の充足度</span><span style="color:var(--text)">60%</span></div><div style="height:8px;background:var(--lav2);border-radius:999px;overflow:hidden"><div style="width:60%;height:100%;background:var(--purple)"></div></div></div></div>
             <div class="body" style="padding:0 14px 14px">
+              <div style="margin:0 0 10px"><div class="alert"><i class="ti ti-alert-triangle" style="font-size:18px"></i><div><b>録音が一時中断しました</b>（マイク切断 / 通信断）。未送信の音声3件はローカル保持中・自動再送します。<span class="hint" style="color:var(--red)">10:42</span></div><button class="btn sm" style="background:#fff"><i class="ti ti-refresh"></i> 再接続</button></div></div>
               <div style="display:flex;align-items:center;gap:10px;margin:0 0 10px;flex-wrap:wrap"><span class="chip lav" style="cursor:pointer" onclick="openSession()"><i class="ti ti-report-medical" style="font-size:12px"></i> 作成予定: ペリオ標準（サブカルテ＋書類3点） <i class="ti ti-chevron-down"></i></span><span class="muted" style="font-size:12px;cursor:pointer" onclick="openSession()">変更</span><span class="qh" onclick="showHelp(event,this)" data-help="録音は右下のフロートボタンで開始・停止します。約30秒ごとに自動で文字起こしし、ガイドに反映します。">?</span><span class="spacer"></span><span class="autotog" id="ai-auto" onclick="toggleAuto()" title="この患者の書類をAIで自動生成するか（OFFで手動作成）"><i class="ti ti-sparkles"></i> 書類のAI自動生成 <b id="ai-state">ON</b></span></div>
               <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">
                 <div class="card">
@@ -589,74 +622,82 @@ body.role-staff .owner-only{display:none!important}
           <!-- PROBING（実機再現＋テコ入れ） -->
           <section class="screen" data-id="probing">
             <div class="bar dtabs"><span class="dtab" onclick="go('hub')"><i class="ti ti-microphone"></i> 録音・ガイド</span><span class="dtab on" onclick="go('probing')"><i class="ti ti-dental"></i> プロービング</span><span class="dtab" onclick="go('explain')"><i class="ti ti-photo"></i> メディア</span><span class="dtab" onclick="go('reportedit')"><i class="ti ti-file-text"></i> 書類生成</span></div>
+            <!-- 上部バー（実機 ver0.1.9 準拠: 戻る/保存/患者名 … 日付移動 … 診療メモ/歯の状態/表示設定/PDF作成） -->
             <div class="bar">
               <span class="muted" style="cursor:pointer;font-size:13px" onclick="go('hub')"><i class="ti ti-chevron-left"></i> 戻る</span>
-              <span style="font-weight:500;font-size:13px;cursor:pointer" onclick="openPatient()">001 田中 様</span><i class="ti ti-dots-vertical muted" style="cursor:pointer" onclick="openPatient()" title="患者情報"></i>
+              <button class="btn sm save"><i class="ti ti-device-floppy"></i> 保存</button>
+              <span style="font-weight:600;font-size:14px;cursor:pointer" onclick="openPatient()">001 田中 <span style="font-weight:400">様</span></span>
+              <i class="ti ti-dots-vertical muted" style="cursor:pointer;font-size:15px" onclick="openPatient()" title="患者情報"></i>
               <span class="spacer"></span>
-              <span class="visitnav" title="過去の診療結果に移動">
-                <span class="vn" onclick="alert('前回(04/09)の検査結果へ')"><i class="ti ti-chevron-left"></i> 04/09</span>
-                <span class="vn cur">本日 06/21</span>
-                <span class="vn dis">次回 <i class="ti ti-chevron-right"></i></span>
+              <span class="visitnav" title="過去の検査に移動">
+                <span class="vn" onclick="alert('前回(04/09)の検査結果へ')">04/09</span>
+                <span class="vn cur">06/21</span>
+                <span class="vn dis">次回</span>
               </span>
-              <button class="btn sm" style="background:var(--green-bg);color:var(--green);border-color:#bfe6d6"><i class="ti ti-device-floppy"></i> 保存</button>
+              <span class="spacer"></span>
+              <button class="btn sm" onclick="openMemo()"><i class="ti ti-notes"></i> 診療メモ</button>
+              <button class="btn sm" onclick="go('toothstate')"><i class="ti ti-dental"></i> 歯の状態</button>
+              <button class="btn sm" onclick="go('examset')"><i class="ti ti-settings"></i> 表示設定</button>
               <button class="btn primary sm"><i class="ti ti-file-text"></i> PDF作成</button>
             </div>
 
-            <!-- 録音エラー例（テコ入れ: エラーアラートの出し方） -->
-            <div style="padding:8px 14px 0">
-              <div class="alert"><i class="ti ti-alert-triangle" style="font-size:18px"></i><div><b>録音が一時中断しました</b>（マイク切断 / 通信断）。未送信の音声3件はローカル保持中・自動再送します。<span class="hint" style="color:var(--red)">10:42</span></div><button class="btn sm" style="background:#fff"><i class="ti ti-refresh"></i> 再接続</button></div>
-            </div>
-
-            <!-- 上段コントロール（1段・横並び: 音声ガイド/表示/部位/進む方向/項目/歯の状態） -->
-            <div class="bar examctl" style="align-items:flex-start;gap:10px;flex-wrap:nowrap;overflow-x:auto;padding-top:8px;padding-bottom:8px">
-              <div style="flex:1;min-width:240px">
-                <div class="hint" style="margin-bottom:4px">音声入力ガイド<span class="qh" onclick="showHelp(event,this)" data-help="入力した値を読み上げ、画面表示と合わせて確認する方式です（会話形式の音声操作は廃止）。">?</span></div>
-                <div class="readback" style="padding:8px 12px;gap:10px">
-                  <span class="spk" style="width:30px;height:30px"><i class="ti ti-volume"></i></span>
-                  <div style="flex:1"><div style="font-size:13px;font-weight:500">右上6番 頬側近心→<span style="color:var(--purple-d)">3mm</span></div></div>
-                  <label style="display:flex;align-items:center;gap:3px;font-size:10px;color:var(--muted)"><span class="toggle on" style="transform:scale(.85)"><span class="knob"></span></span></label>
+            <!-- コントロール行（音声入力ガイド / 部位・検査方向の設定 / 前回の記録） -->
+            <div class="bar examctl">
+              <div class="exgrp" style="flex:1;min-width:300px">
+                <div class="exlab">音声入力ガイド <span class="hint">（接続中）</span><span class="spacer"></span><span class="qh" onclick="showHelp(event,this)" data-help="「AI」を押すと音声セッションが始まります。ポケットは「3, 2, 3」、歯を指定するときは「6番 3, 2, 3」、1点だけ直すときは「6番の遠心頬側に 3」。出血・排膿は「6番 近心 出血」、プラークは「6番 近心と頬側」。入力内容は下の方式（会話／読み上げ／効果音）で確認できます。検査項目の切り替えは画面で操作してください。">?</span></div>
+                <div class="airow"><span class="aibadge" title="音声セッションを開始">AI</span><div class="aifield"><i class="ti ti-volume"></i> 右上6番 頬側近心 3mm</div></div>
+                <div class="airow"><span class="micoff" style="color:var(--purple)" title="ミュートにする"><i class="ti ti-microphone"></i></span><div class="vseg"><span onclick="pickVseg(this)">会話</span><span class="on" onclick="pickVseg(this)">読み上げ</span><span onclick="pickVseg(this)">効果音</span></div></div>
+              </div>
+              <div class="exgrp">
+                <div class="exlab">部位・検査方向の設定</div>
+                <div class="exrow">
+                  <span class="pill amber qpill" id="q-ru" onclick="setQuad('ru')">右上<i class="qmk tr"></i></span>
+                  <span class="pill amberline qpill" id="q-lu" onclick="setQuad('lu')"><i class="qmk tl"></i>左上</span>
+                  <span class="pill amber qpill" onclick="exPick(this)">頬側</span>
+                  <span class="pill amber qpill ic" onclick="exPick(this)" title="左から右へ進む"><i class="ti ti-arrow-right"></i></span>
+                  <span class="pill amber qpill" onclick="exPick(this)">端まで</span>
+                </div>
+                <div class="exrow">
+                  <span class="pill amberline qpill" id="q-rl" onclick="setQuad('rl')">右下<i class="qmk br"></i></span>
+                  <span class="pill amberline qpill" id="q-ll" onclick="setQuad('ll')"><i class="qmk bl"></i>左下</span>
+                  <span class="pill amberline qpill" id="side-lin" onclick="exPick(this)">口蓋側</span>
+                  <span class="pill amberline qpill ic" onclick="exPick(this)" title="右から左へ進む"><i class="ti ti-arrow-left"></i></span>
+                  <span class="pill amberline qpill" onclick="exPick(this)">1本ずつ</span>
                 </div>
               </div>
-              <div style="flex:none">
-                <div class="hint" style="margin-bottom:4px">部位・検査方向</div>
-                <div style="display:flex;gap:4px;margin-bottom:4px"><span class="pill amber" id="q-ru" onclick="setQuad('ru')">右上</span><span class="pill amberline" id="q-lu" onclick="setQuad('lu')">左上</span><span class="pill amber">頬側</span></div>
-                <div style="display:flex;gap:4px"><span class="pill amberline" id="q-rl" onclick="setQuad('rl')">右下</span><span class="pill amberline" id="q-ll" onclick="setQuad('ll')">左下</span><span class="pill amberline">舌側</span></div>
-              </div>
-              <div style="flex:none">
-                <div class="hint" style="margin-bottom:4px">進む方向</div>
-                <div style="display:flex;gap:4px"><button class="pill amberline" style="padding:7px 11px" title="左へ進む"><i class="ti ti-arrow-left" style="font-size:13px"></i></button><button class="pill amber" style="padding:7px 11px" title="右へ進む"><i class="ti ti-arrow-right" style="font-size:13px"></i></button></div>
-              </div>
-              <div style="flex:none">
-                <div class="hint" style="margin-bottom:4px">この患者の歯・検査設定</div>
-                <div style="display:flex;flex-direction:column;gap:4px"><button class="btn sm" onclick="go('toothstate')"><i class="ti ti-dental"></i> 歯の状態</button><button class="btn sm" onclick="go('examset')"><i class="ti ti-settings"></i> 検査設定</button></div>
-              </div>
-            </div>
-
-            <!-- 統計バー -->
-            <div class="bar" style="padding:6px 14px;background:var(--lav2)">
-              <div class="examstat">
-                <span class="seg2"><span class="lab">対象歯</span><b>28本</b></span>
-                <span class="seg2"><span class="lab">PPD平均</span><b>2.6mm</b></span>
-                <span class="seg2"><span class="lab">1〜3mm</span><b>72%</b> <span class="lab" style="margin-left:6px">4〜6mm</span><b>22%</b> <span class="lab" style="margin-left:6px">7mm〜</span><b>6%</b></span>
-                <span class="seg2"><span class="lab">BOP</span><b>22%</b></span>
-                <span class="seg2"><span class="lab">PCR</span><b>35%</b></span>
-                <span class="seg2"><span class="lab">PISA</span><b>148mm²</b></span>
-                <span class="seg2" style="border-right:none"><span class="lab">PESA</span><b>402mm²</b></span>
+              <div class="exgrp">
+                <div class="exlab">前回の記録</div>
+                <div class="exrow"><span class="pill amberline qpill" onclick="exToggle(this)">前回と並べる</span></div>
+                <div class="exrow"><span class="pill amber qpill" onclick="exToggle(this)">前回値を表示</span></div>
               </div>
             </div>
 
             <!-- 歯式チャート（JS生成） -->
-            <div class="body" style="padding:8px 14px 0">
+            <div class="body" style="padding:10px 14px 0">
               <div class="chartwrap"><div class="chart" id="chart"></div></div>
             </div>
 
             <!-- テンキー -->
-            <div class="bar barfoot" style="padding:0">
-              <div class="numpad">
-                <button class="numkey">0</button><button class="numkey">1</button><button class="numkey">2</button><button class="numkey">3</button><button class="numkey">4</button><button class="numkey">5</button><button class="numkey">6</button><button class="numkey">7</button><button class="numkey">8</button><button class="numkey">9</button>
-                <button class="numkey" style="font-size:13px"><i class="ti ti-backspace"></i></button>
+            <div class="numpad" style="flex:none">
+              <button class="numkey">0</button><button class="numkey">1</button><button class="numkey">2</button><button class="numkey">3</button><button class="numkey">4</button><button class="numkey">5</button><button class="numkey">6</button><button class="numkey">7</button><button class="numkey">8</button><button class="numkey">9</button>
+              <button class="numkey" style="font-size:13px"><i class="ti ti-backspace"></i></button>
+            </div>
+
+            <!-- 集計バー（実機と同じく最下部） -->
+            <div class="bar barfoot" style="padding:8px 14px;background:var(--lav2)">
+              <div class="examstat">
+                <span class="seg2"><span class="lab">対象歯</span><b>28本</b></span>
+                <span class="seg2 sep"><span class="lab">PPD平均</span><b>2.6 mm</b></span>
+                <span class="seg2"><b>1〜3mm 72%</b></span>
+                <span class="seg2"><b>4〜6mm 22%</b></span>
+                <span class="seg2"><b>7mm以上 6%</b></span>
+                <span class="seg2"><span class="lab">BOP</span><b>22%</b></span>
+                <span class="seg2"><span class="lab">PCR</span><b>35%</b></span>
+                <span class="seg2"><span class="lab">PESA</span><b>402 mm²</b></span>
+                <span class="seg2"><span class="lab">PISA</span><b>148 mm²</b></span>
               </div>
             </div>
+            <div class="exfill"></div>
           </section>
 
           <!-- EXAMSET プロービング検査の設定（probingから遷移） -->
@@ -677,7 +718,7 @@ body.role-staff .owner-only{display:none!important}
                   <div class="label" style="font-weight:500;margin-bottom:6px">検査の種別</div>
                   <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px"><span class="pill on">6点法</span><span class="pill">4点法</span><span class="pill">1点法</span></div>
                   <div class="label" style="font-weight:500;margin-bottom:6px">表示する検査項目<span class="qh" onclick="showHelp(event,this)" data-help="複数選択できます。選んだ項目が検査画面に反映されます。">?</span></div>
-                  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px"><span class="pill multi on">動揺度</span><span class="pill multi on">根分岐部</span><span class="pill multi on">プラーク</span><span class="pill multi on">ポケット</span><span class="pill multi on">退縮度</span></div>
+                  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px"><span class="pill multi on" onclick="toggleExamRow(this,'mob')">動揺度</span><span class="pill multi" onclick="toggleExamRow(this,'fur')">根分岐部</span><span class="pill multi on" onclick="toggleExamRow(this,'pla')">プラーク</span><span class="pill multi on" onclick="toggleExamRow(this,'pkt')">ポケット</span><span class="pill multi" onclick="toggleExamRow(this,'pus')">排膿</span><span class="pill multi" onclick="toggleExamRow(this,'rec')">退縮度</span></div>
                   <div class="card" style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div style="flex:1"><div style="font-size:13px;font-weight:500">測定方向の自動送り<span class="qh" onclick="showHelp(event,this)" data-help="近心→中央→遠心 の順に、入力後カーソルが自動で進みます。">?</span></div></div><span class="toggle on"><span class="knob"></span></span></div>
                   <div class="card" style="display:flex;align-items:center;gap:8px"><div style="flex:1"><div style="font-size:13px;font-weight:500">前回値を参照表示<span class="qh" onclick="showHelp(event,this)" data-help="検査表に前回値を薄く表示し、今回値と比較できます。">?</span></div></div><span class="toggle on"><span class="knob"></span></span></div>
                 </div>
@@ -1347,6 +1388,7 @@ body.role-staff .owner-only{display:none!important}
             <div style="display:flex;align-items:flex-end;gap:10px;margin-bottom:14px"><div style="flex:1"><div class="label" style="margin-bottom:5px">開始日（from）</div><div class="field" style="cursor:pointer" onclick="openCal(this)"><i class="ti ti-calendar" style="margin-right:6px"></i> 年/月/日</div></div><span class="muted" style="padding-bottom:10px">〜</span><div style="flex:1"><div class="label" style="margin-bottom:5px">終了日（to）</div><div class="field" style="cursor:pointer" onclick="openCal(this)"><i class="ti ti-calendar" style="margin-right:6px"></i> 年/月/日</div></div></div>
             <div class="label" style="margin-bottom:6px">よく使う期間</div><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill">今日</span><span class="pill">過去7日</span><span class="pill on">過去30日</span><span class="pill">過去90日</span><span class="pill">今年</span></div>
             <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:18px"><button class="btn" onclick="closeDateRange()">クリア</button><button class="btn primary" onclick="closeDateRange()">この期間で絞り込む</button></div></div></div>
+          <div class="modal-ov" id="memoModal" onclick="if(event.target===this)closeMemo()"><div class="modal"><span class="x" onclick="closeMemo()"><i class="ti ti-x"></i></span><h3 style="font-size:15px"><i class="ti ti-notes" style="color:var(--purple-d)"></i> 診療メモ</h3><div class="hint" style="margin:6px 0 10px">この回の検査に紐づくメモです。カルテ本文とは別に保存されます。</div><div class="field" style="min-height:150px;align-items:flex-start;font-size:13px;line-height:1.8;white-space:normal">右下臼歯部に冷水痛の訴え。6番遠心頬側に4mm、出血あり。次回SRP予定。</div><div style="display:flex;justify-content:flex-end;gap:10px;margin-top:14px"><button class="btn" onclick="closeMemo()">キャンセル</button><button class="btn primary" onclick="closeMemo()">保存</button></div></div></div>
           <!-- カレンダー / 日時ピッカー モーダル -->
           <div class="modal-ov" id="calModal" onclick="if(event.target===this)closeCal()"><div class="modal"><span class="x" onclick="closeCal()"><i class="ti ti-x"></i></span><h3 style="font-size:15px"><i class="ti ti-calendar" style="color:var(--purple-d)"></i> <span id="cal-title">日付を選択</span></h3>
             <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin:10px 0"><i class="ti ti-chevron-left muted" style="cursor:pointer"></i><b>2026年 6月</b><i class="ti ti-chevron-right muted" style="cursor:pointer"></i></div>
@@ -1488,7 +1530,7 @@ function svgFur(k){
   if(k==="v")return SV+'<line x1="20" y1="6" x2="20" y2="34" stroke="#9a93e6"/></svg>';
   return "";
 }
-var XPLA=SV+'<line x1="6" y1="8" x2="34" y2="32" stroke="#c2bcf0"/><line x1="34" y1="8" x2="6" y2="32" stroke="#c2bcf0"/></svg>';
+var XPLA=SV+'<line x1="6" y1="8" x2="34" y2="32" stroke="#d3d3db"/><line x1="34" y1="8" x2="6" y2="32" stroke="#d3d3db"/></svg>';
 var MINI='<div class="mini6"><span></span><span></span><span></span><span></span><span></span><span></span></div>';
 var ROWLABEL={mob:"動揺度",fur:"根分岐部",pla:"プラーク",pkt:"ポケット",rec:"退縮度"};
 function furKind(t,lower){ if(lower)return t>=6?"h":""; return t>=6?"y":(t>=4?"v":""); }
@@ -1502,9 +1544,30 @@ function rowCell(rk,t,lower){
 }
 var inputType="pkt";
 function setInputType(t){inputType=t;renderChart();}
+/* 表示する検査項目（実機 ver0.1.9 の既定: 動揺度・プラーク・ポケット） */
+var EXAM_ROWS={mob:true,fur:false,pla:true,pkt:true,pus:false,rec:false};
+function examRowKeys(lower){
+  var ks=["mob","fur","pla","pkt","rec"].filter(function(k){return EXAM_ROWS[k];});
+  ks.push("no");
+  return lower?ks.slice().reverse():ks;
+}
+function toggleExamRow(el,k){EXAM_ROWS[k]=!EXAM_ROWS[k];el.classList.toggle("on",EXAM_ROWS[k]);renderChart();}
+/* 部位・検査方向の設定: 同じ列の上下ボタンで排他切替 */
+function exPick(el){
+  var row=el.parentNode,grp=row.parentNode,i=[].indexOf.call(row.children,el);
+  [].forEach.call(grp.children,function(r){
+    if(!r.classList||!r.classList.contains("exrow"))return;
+    var c=r.children[i];if(!c)return;
+    c.classList.toggle("amber",c===el);c.classList.toggle("amberline",c!==el);
+  });
+}
+function exToggle(el){var on=el.classList.contains("amber");el.classList.toggle("amber",!on);el.classList.toggle("amberline",on);}
+function pickVseg(el){[].forEach.call(el.parentNode.children,function(c){c.classList.toggle("on",c===el);});}
+function openMemo(){document.getElementById("memoModal").classList.add("show");}
+function closeMemo(){document.getElementById("memoModal").classList.remove("show");}
 function rlab(rk){
-  if(rk==="no")return '<div class="rlab"><span class="pillab rsel'+(inputType==="no"?" on":"")+'" onclick="setInputType(\'no\')" style="background:var(--lav2);color:var(--muted)">歯番号</span></div>';
-  if(rk==="pkt")return '<div class="rlab amber"><div style="display:flex;flex-direction:column;gap:3px;width:60px"><span class="pillab rsel'+(inputType==="pkt"?" on":"")+'" onclick="setInputType(\'pkt\')" style="width:100%">ポケット</span><div style="display:flex;gap:3px"><span class="pillab sub rsel'+(inputType==="bop"?" on":"")+'" onclick="setInputType(\'bop\')">出血</span><span class="pillab sub rsel'+(inputType==="pus"?" on":"")+'" onclick="setInputType(\'pus\')">排膿</span></div></div></div>';
+  if(rk==="no")return '<div class="rlab"><span class="nolab">歯番号</span></div>';
+  if(rk==="pkt")return '<div class="rlab"><div class="pktlab"><span class="pillab rsel'+(inputType==="pkt"?" on":"")+'" onclick="setInputType(\'pkt\')">ポケット</span><span class="pillab sub rsel'+(inputType==="bop"?" on":"")+'" onclick="setInputType(\'bop\')">出血</span>'+(EXAM_ROWS.pus?'<span class="pillab sub rsel'+(inputType==="pus"?" on":"")+'" onclick="setInputType(\'pus\')">排膿</span>':'')+'</div></div>';
   return '<div class="rlab"><span class="pillab rsel'+(inputType===rk?" on":"")+'" onclick="setInputType(\''+rk+'\')">'+ROWLABEL[rk]+'</span></div>';
 }
 function toothnoCell(t){return '<div class="toothno">'+t+' <span class="mn" onclick="openToothMenu(event,'+t+')"><i class="ti ti-menu-2 hint"></i></span></div>';}
@@ -1519,6 +1582,7 @@ function setQuad(q){
   examQuad=q;
   if(examMode!=="partial")setExamMode("partial");
   ["ru","lu","rl","ll"].forEach(function(k){var e=document.getElementById("q-"+k);if(e){e.classList.toggle("amber",k===q);e.classList.toggle("amberline",k!==q);}});
+  var sl=document.getElementById("side-lin");if(sl)sl.textContent=(q==="rl"||q==="ll")?"舌側":"口蓋側"; /* 下顎は舌側表記（実機準拠） */
   renderChart();
 }
 function renderChart(){
@@ -1527,18 +1591,18 @@ function renderChart(){
   el.className="chart"+(examMode==="full"?" full":"");
   var html="";
   if(examMode==="full"){
-    el.style.gridTemplateColumns="64px repeat(16,1fr)";
+    el.style.gridTemplateColumns="112px repeat(16,1fr)";
     var full=[8,7,6,5,4,3,2,1,1,2,3,4,5,6,7,8];
-    ["mob","fur","pla","pkt","rec","no"].forEach(function(rk){html+=rlab(rk);full.forEach(function(t){html+=(rk==="no")?toothnoCell(t):rowCell(rk,t,false);});});
-    ["no","rec","pkt","pla","fur","mob"].forEach(function(rk){html+=rlab(rk);full.forEach(function(t){html+=(rk==="no")?toothnoCell(t):rowCell(rk,t,true);});});
+    examRowKeys(false).forEach(function(rk){html+=rlab(rk);full.forEach(function(t){html+=(rk==="no")?toothnoCell(t):rowCell(rk,t,false);});});
+    examRowKeys(true).forEach(function(rk){html+=rlab(rk);full.forEach(function(t){html+=(rk==="no")?toothnoCell(t):rowCell(rk,t,true);});});
     el.innerHTML=html;return;
   }
   var lower=(examQuad==="rl"||examQuad==="ll");
   var right=(examQuad==="ru"||examQuad==="rl");
   var labelsRight=!right;
   var teeth=right?[8,7,6,5,4,3,2,1]:[1,2,3,4,5,6,7,8];
-  var rowKeys=lower?["no","rec","pkt","pla","fur","mob"]:["mob","fur","pla","pkt","rec","no"];
-  el.style.gridTemplateColumns=labelsRight?"repeat(8,1fr) 74px":"74px repeat(8,1fr)";
+  var rowKeys=examRowKeys(lower);
+  el.style.gridTemplateColumns=labelsRight?"repeat(8,1fr) 128px":"128px repeat(8,1fr)";
   rowKeys.forEach(function(rk){
     var lab=rlab(rk),cells="";
     teeth.forEach(function(t){cells+=(rk==="no")?toothnoCell(t):rowCell(rk,t,lower);});
