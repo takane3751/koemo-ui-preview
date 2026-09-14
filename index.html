@@ -205,6 +205,7 @@ body.present.nav-open #navBackdrop{display:block;position:fixed;inset:0;backgrou
 body.role-staff .owner-only{display:none!important}
 /* リリース版切替: プロービング版(p1)では完全版のみの要素を隠す */
 body.phase-p1 .full-only{display:none!important}
+body:not(.phase-p1) .p1-only{display:none!important}
 body.phase-p1 #fabrec{display:none!important}
 .lockchip{font-size:10px;color:var(--warn);background:var(--yellow-bg);border-radius:999px;padding:1px 7px;display:inline-flex;align-items:center;gap:3px}
 /* フロート録音ボタン */
@@ -290,27 +291,27 @@ body.phase-p1 #fabrec{display:none!important}
 .chart .toothno{display:flex;align-items:center;justify-content:center;gap:6px;font-size:13px;color:var(--muted);height:34px;background:var(--lav2)}
 .chart .toothno .mn{font-size:13px}
 .mini6{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr;width:100%;height:100%}
-.mini6 .m6{position:relative;border-right:0.5px solid var(--border);border-bottom:0.5px solid var(--border);font-size:12px;display:flex;align-items:center;justify-content:center;color:var(--hint)}
+.mini6 .m6{position:relative;border-right:0.5px solid var(--border);border-bottom:0.5px solid var(--border);font-size:12px;display:flex;align-items:center;justify-content:center;color:#C6C6D0}
 .mini6 .m6.nw{color:var(--text);font-weight:600}
 .mini6 .m6.bop{background:#F7B3B3}
 .mini6 .m6.bopold{background:repeating-linear-gradient(45deg,#FAD9D9,#FAD9D9 2px,transparent 2px,transparent 5px)}
 .mini6 .pus{display:inline-flex;align-items:center;justify-content:center;min-width:16px;height:16px;border:1.2px solid var(--text);border-radius:50%;line-height:1}
-.mini6 .pus.old{border-style:dotted;border-color:var(--hint);color:var(--hint)}
+.mini6 .pus.old{border-style:dashed;border-width:1px;border-color:#C6C6D0;color:#C6C6D0}
 .mini6 .mk{position:absolute;top:2px;right:2px;width:0;height:0;border-left:3.5px solid transparent;border-right:3.5px solid transparent}
 .mini6 .mk.up{border-bottom:6px solid #12A5C4}
 .mini6 .mk.dn{border-top:6px solid #D33A28}
 .chart .cell.mobc{display:flex;align-items:center;justify-content:center}
-.mobv{font-size:13px;color:var(--hint)}
+.mobv{font-size:13px;color:#C6C6D0}
 .mobv.nw{color:var(--text);font-weight:600}
-.chart .rlab .pillab.flat{color:var(--muted);border-color:var(--border);cursor:default}
+.chart .rlab .pillab.flat{color:var(--muted);background:none;border:none;cursor:default;font-size:12px}
 .impmk{display:inline-block;font-size:8px;font-weight:700;letter-spacing:.02em;background:var(--green-bg);color:var(--green);border-radius:3px;padding:1px 3px;margin-left:3px;vertical-align:middle}
 .tsleg{display:inline-block;width:12px;height:12px;border-radius:3px;border:0.5px solid var(--border2);vertical-align:-2px;margin-right:4px}
 /* 検査順の設定 */
-.ordrow{display:flex;align-items:center;gap:10px;padding:8px 10px;border:0.5px solid var(--border2);border-radius:10px;margin-bottom:6px;background:#fff}
+.ordrow{display:flex;align-items:center;gap:8px;padding:6px 9px;border:0.5px solid var(--border2);border-radius:9px;margin-bottom:5px;background:#fff}
 .ordno{width:22px;height:22px;border-radius:50%;background:var(--purple);color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;flex:none;font-weight:700}
-.ordnm{flex:1;font-size:13px}
+.ordnm{flex:1;font-size:12.5px}
 .ordmv{display:flex;gap:4px}
-.ordbtn{width:26px;height:26px;border-radius:6px;border:0.5px solid var(--border2);background:#fff;color:var(--muted);cursor:pointer;font-family:inherit;font-size:12px}
+.ordbtn{width:24px;height:24px;border-radius:6px;border:0.5px solid var(--border2);background:#fff;color:var(--muted);cursor:pointer;font-family:inherit;font-size:12px}
 .ordbtn:disabled{opacity:.3;cursor:default}
 /* ストリーム内の検査表ストリップ */
 .mstrip{margin-top:8px;border:0.5px solid var(--border);border-radius:8px;overflow:hidden;background:#fff}
@@ -321,7 +322,10 @@ body.phase-p1 #fabrec{display:none!important}
 .mst i{font-style:normal;font-size:8.5px;color:var(--hint);display:flex;align-items:center;justify-content:center;border-bottom:0.5px solid var(--border)}
 .mst i.hi{color:var(--text);font-weight:600}
 .mst i.bl{background:#F7C9C9}
+.mst .pu6{display:inline-flex;align-items:center;justify-content:center;width:11px;height:11px;border:1px solid var(--text);border-radius:50%;font-weight:400;font-size:7.5px;line-height:1}
 /* 比較の選択モード */
+.cmpbar{display:none;align-items:center;gap:7px;margin:0 0 10px;padding:9px 13px;border-radius:9px;background:var(--lav);color:var(--purple-d);font-size:12.5px}
+.ststream.cmpmode .cmpbar{display:flex}
 .stchk{width:16px;height:16px;border-radius:4px;border:1.5px solid var(--border2);display:none;flex:none;margin-right:2px;cursor:pointer;background:#fff}
 .ststream.cmpmode .stchk{display:inline-block}
 .ststream.cmpmode .stvisit{cursor:pointer}
@@ -498,7 +502,7 @@ body.phase-p1 #fabrec{display:none!important}
 
           <!-- SEARCH -->
           <section class="screen" data-id="search">
-            <div class="bar" style="gap:6px;flex-wrap:wrap"><span class="logo">KOEMO</span><span class="spacer"></span><button class="btn sm" onclick="go('market')"><i class="ti ti-shopping-bag"></i> マーケット</button><button class="btn sm" onclick="go('credit')"><i class="ti ti-sparkles"></i> クレジット</button><button class="btn sm" onclick="go('storage')"><i class="ti ti-database"></i> ストレージ</button><button class="btn sm owner-only" onclick="go('plan')"><i class="ti ti-receipt"></i> 契約</button><button class="btn sm" onclick="go('settings')"><i class="ti ti-settings"></i> 設定</button><button class="btn sm" onclick="openUser()"><i class="ti ti-user"></i> ユーザー切替</button><span class="navbtn">ログアウト</span></div>
+            <div class="bar" style="gap:6px;flex-wrap:wrap"><span class="logo">KOEMO</span><span class="spacer"></span><button class="btn sm full-only" onclick="go('market')"><i class="ti ti-shopping-bag"></i> マーケット</button><button class="btn sm" onclick="go('credit')"><i class="ti ti-sparkles"></i> AIクレジット</button><button class="btn sm full-only" onclick="go('storage')"><i class="ti ti-database"></i> ストレージ</button><button class="btn sm owner-only" onclick="go('plan')"><i class="ti ti-receipt"></i> 契約</button><button class="btn sm" onclick="go('settings')"><i class="ti ti-settings"></i> 設定</button><button class="btn sm" onclick="openUser()"><i class="ti ti-user"></i> ユーザー切替</button><span class="navbtn">ログアウト</span></div>
             <div class="body">
               <div style="display:grid;grid-template-columns:1fr 1.3fr;min-height:100%">
                 <div style="padding:18px;border-right:0.5px solid var(--border)">
@@ -508,12 +512,12 @@ body.phase-p1 #fabrec{display:none!important}
                   <div class="label" style="margin-bottom:5px">来院日</div>
                   <div style="display:flex;align-items:center;gap:8px;margin-bottom:18px"><div class="field" style="flex:1;cursor:pointer" onclick="openCal(this)"><i class="ti ti-calendar" style="margin-right:6px"></i> 年/月/日</div><span class="muted">〜</span><div class="field" style="flex:1;cursor:pointer" onclick="openCal(this)"><i class="ti ti-calendar" style="margin-right:6px"></i> 年/月/日</div></div>
                   <div style="display:flex;justify-content:flex-end;gap:10px"><button class="btn">クリア</button><button class="btn primary">患者を新規作成</button></div>
-                  <div style="border-top:0.5px solid var(--border);margin-top:18px;padding-top:14px"><button class="btn" style="width:100%;background:var(--lav2);border:1.5px solid var(--purple);color:var(--purple-d);font-weight:600;padding:11px" onclick="go('library')"><i class="ti ti-photo"></i> 全患者のメディア・書類一覧 <span class="qh" onclick="showHelp(event,this)" data-help="患者を特定する情報を除いた、全患者横断の一覧です。タグ・部位・日付で検索できます。">?</span></button></div>
+                  <div class="full-only" style="border-top:0.5px solid var(--border);margin-top:18px;padding-top:14px"><button class="btn" style="width:100%;background:var(--lav2);border:1.5px solid var(--purple);color:var(--purple-d);font-weight:600;padding:11px" onclick="go('library')"><i class="ti ti-photo"></i> 全患者のメディア・書類一覧 <span class="qh" onclick="showHelp(event,this)" data-help="患者を特定する情報を除いた、全患者横断の一覧です。タグ・部位・日付で検索できます。">?</span></button></div>
                 </div>
                 <div style="padding:18px">
                   <div style="font-weight:500;margin-bottom:14px">検索結果 (2件)</div>
-                  <div class="card" style="margin-bottom:10px;cursor:pointer;display:flex;align-items:center;gap:14px" onclick="go('history')"><div style="width:40px;height:40px;border-radius:50%;background:var(--lav);color:var(--purple-d);display:flex;align-items:center;justify-content:center;font-size:13px">田</div><div><div style="font-weight:500">田中 様</div><div class="hint">カルテ 001 ・ 45歳 女性</div></div><span class="spacer"></span><i class="ti ti-chevron-right muted"></i></div>
-                  <div class="card" style="display:flex;align-items:center;gap:14px;cursor:pointer"><div style="width:40px;height:40px;border-radius:50%;background:var(--lav);color:var(--purple-d);display:flex;align-items:center;justify-content:center;font-size:13px">佐</div><div><div style="font-weight:500">佐藤 様</div><div class="hint">カルテ 002 ・ 33歳 男性</div></div><span class="spacer"></span><i class="ti ti-chevron-right muted"></i></div>
+                  <div class="card" style="margin-bottom:10px;cursor:pointer;display:flex;align-items:center;gap:14px" onclick="go('stream')"><div style="width:40px;height:40px;border-radius:50%;background:var(--lav);color:var(--purple-d);display:flex;align-items:center;justify-content:center;font-size:13px">田</div><div><div style="font-weight:500">田中 様</div><div class="hint">カルテ 001 ・ 45歳 女性</div><div class="hint">最終診療日 2026/06/21</div></div><span class="spacer"></span><i class="ti ti-chevron-right muted"></i></div>
+                  <div class="card" style="display:flex;align-items:center;gap:14px;cursor:pointer"><div style="width:40px;height:40px;border-radius:50%;background:var(--lav);color:var(--purple-d);display:flex;align-items:center;justify-content:center;font-size:13px">佐</div><div><div style="font-weight:500">佐藤 様</div><div class="hint">カルテ 002 ・ 33歳 男性</div><div class="hint">最終診療日 2026/05/12</div></div><span class="spacer"></span><i class="ti ti-chevron-right muted"></i></div>
                 </div>
               </div>
             </div>
@@ -545,25 +549,26 @@ body.phase-p1 #fabrec{display:none!important}
               <span class="muted" style="cursor:pointer;font-size:13px" onclick="go('search')"><i class="ti ti-chevron-left"></i> 戻る</span>
               <div style="width:34px;height:34px;border-radius:50%;background:var(--lav);color:var(--purple-d);display:flex;align-items:center;justify-content:center;font-size:14px">田</div>
               <div style="line-height:1.35"><div style="font-weight:700;font-size:14.5px">田中 花子 様 <span class="hint" style="font-weight:400">001 ・ 45歳 女性</span></div><div class="hint" style="font-size:11px">初診 2026/01/15 ・ 来院 6回</div></div>
-              <span class="stwarn"><i class="ti ti-alert-circle" style="font-size:12px"></i> 高血圧・降圧薬</span>
-              <span class="chip green"><i class="ti ti-circle-check" style="font-size:11px"></i> 録音同意</span>
+              <span class="stwarn full-only"><i class="ti ti-alert-circle" style="font-size:12px"></i> 高血圧・降圧薬</span>
+              <span class="chip green full-only"><i class="ti ti-circle-check" style="font-size:11px"></i> 録音同意</span>
               <i class="ti ti-dots-vertical muted" style="cursor:pointer" onclick="openPatient()" title="患者情報"></i>
               <span class="spacer" style="flex:1"></span>
               <span class="seg full-only" style="padding:3px"><span class="pill" onclick="go('history')">リスト</span><span class="pill on">ストリーム</span></span>
               <button class="btn sm" id="cmpbtn" onclick="cmpStart()"><i class="ti ti-columns-2"></i> 比較</button>
-              <span id="cmpctl" style="display:none;align-items:center;gap:8px"><span class="hint" id="cmpmsg">比較する検査を2件選んでください</span><button class="btn sm" onclick="cmpCancel()">キャンセル</button><button class="btn primary sm" id="cmpgo" onclick="cmpGo()" disabled style="opacity:.45">比較画面へ</button></span>
+              <span id="cmpctl" style="display:none;align-items:center;gap:8px"><button class="btn sm" onclick="cmpCancel()">キャンセル</button><button class="btn primary sm" id="cmpgo" onclick="cmpGo()" disabled style="opacity:.45">比較画面へ</button></span>
               <button class="btn primary sm" onclick="startSession()"><i class="ti ti-plus"></i> 新規セッション</button>
             </div>
-            <div class="stlens full-only" id="stlens">
-              <span class="hint" style="margin-right:2px">見え方</span>
-              <span class="pill on" onclick="stLens('all',this)">すべて</span>
-              <span class="pill" onclick="stLens('probing',this)"><i class="ti ti-dental" style="font-size:12px"></i> プロービング</span>
-              <span class="pill" onclick="stLens('media',this)"><i class="ti ti-photo" style="font-size:12px"></i> メディア</span>
-              <span class="pill" onclick="stLens('docs',this)"><i class="ti ti-file-text" style="font-size:12px"></i> 書類</span>
-              <span class="pill" onclick="stLens('talk',this)"><i class="ti ti-microphone" style="font-size:12px"></i> 説明記録</span>
+            <div class="stlens" id="stlens">
+              <span class="hint full-only" style="margin-right:2px">見え方</span>
+              <span class="pill full-only on" onclick="stLens('all',this)">すべて</span>
+              <span class="pill full-only" onclick="stLens('probing',this)"><i class="ti ti-dental" style="font-size:12px"></i> プロービング</span>
+              <span class="pill full-only" onclick="stLens('media',this)"><i class="ti ti-photo" style="font-size:12px"></i> メディア</span>
+              <span class="pill full-only" onclick="stLens('docs',this)"><i class="ti ti-file-text" style="font-size:12px"></i> 書類</span>
+              <span class="pill full-only" onclick="stLens('talk',this)"><i class="ti ti-microphone" style="font-size:12px"></i> 説明記録</span>
+              <span class="hint p1-only" style="margin-right:2px">表示</span>
               <span class="spacer" style="flex:1"></span>
-              <span class="seg" id="stdens" style="padding:3px"><span class="pill on" onclick="stDensity('over',this)">俯瞰</span><span class="pill" onclick="stDensity('all',this)">すべて展開</span></span>
-              <span class="stsearch" onclick="stSearchDemo()"><i class="ti ti-search" style="font-size:12px"></i> この患者の記録を検索</span>
+              <span class="seg" id="stdens" style="padding:3px"><span class="pill on" onclick="stDensity('over',this)">概要</span><span class="pill" onclick="stDensity('all',this)">すべて展開</span></span>
+              <span class="stsearch full-only" onclick="stSearchDemo()"><i class="ti ti-search" style="font-size:12px"></i> この患者の記録を検索</span>
               <span class="qh" onclick="showHelp(event,this)" data-help="来院ごとの記録が1本につながって並びます。最新は展開、過去は要約で表示。日付をタップでその場で展開でき、左の目盛りからジャンプ、上の「見え方」で種類を絞れます。">?</span>
             </div>
             <div class="stbody">
@@ -578,9 +583,10 @@ body.phase-p1 #fabrec{display:none!important}
                 <div class="tick done" data-v="v250418" onclick="stJump('v250418')"><i></i>04/18</div>
               </div>
               <div class="ststream" id="ststream" data-lens="all">
+                <div class="cmpbar" id="cmpbar"><i class="ti ti-columns-2"></i> <span id="cmpmsg">比較する検査を2件選んでください</span></div>
                 <div class="styear">2026</div>
-              <div class="stvisit open" id="v260621">
-                <div class="stdate" onclick="stToggle(this.parentNode)"><span class="car">›</span><span class="d">2026/06/21</span><span class="pu">10:30 ・ 定期検診・SRP</span><span class="tg"><span class="chip lav">記録中</span><button class="btn sm" onclick="go('hub')" style="padding:3px 10px">続きから</button></span></div>
+              <div class="stvisit" id="v260621">
+                <div class="stdate" onclick="stToggle(this.parentNode)"><span class="car">›</span><span class="d">2026/06/21</span><span class="pu full-only">10:30 ・ 定期検診・SRP</span><span class="tg"><span class="chip lav">記録中</span><button class="btn sm" onclick="go('hub')" style="padding:3px 10px">続きから</button></span></div>
                 <div class="stsum"><span class="kv">PPD<b>2.6</b></span><span class="kv">BOP<b>22%</b></span><span class="mini"><i style="height:6px"></i><i style="height:9px"></i><i style="height:7px"></i><i style="height:11px"></i><i style="height:8px"></i><i style="height:10px"></i><i style="height:7px"></i></span><span class="cnt full-only"><span><i class="ti ti-photo" style="font-size:12px"></i> 4</span><span><i class="ti ti-file-text" style="font-size:12px"></i> 3</span></span><span class="hint" style="margin-left:auto">タップで展開</span></div>
                 <div class="stdetail">
                   <div class="stblk k-probing"><div class="lb">PROBING</div><div class="ct"><div class="ststat"><span>PPD平均<b>2.6<small style="font-size:10px">mm</small></b></span><span>BOP<b>22%</b></span><span>PCR<b>35%</b></span><span>4mm以上<b>22%</b></span></div><div style="margin-top:8px"><span class="stdoc" onclick="go('probing')"><i class="ti ti-dental" style="font-size:12px"></i>検査表を開く</span></div></div></div>
@@ -590,7 +596,7 @@ body.phase-p1 #fabrec{display:none!important}
                 </div>
               </div>
               <div class="stvisit" id="v260409">
-                <div class="stdate" onclick="stToggle(this.parentNode)"><span class="car">›</span><span class="d">2026/04/09</span><span class="pu">09:50 ・ 歯周治療（SRP）</span><span class="tg"><span class="chip green">完了</span></span></div>
+                <div class="stdate" onclick="stToggle(this.parentNode)"><span class="car">›</span><span class="d">2026/04/09</span><span class="pu full-only">09:50 ・ 歯周治療（SRP）</span><span class="tg"><span class="chip green">完了</span></span></div>
                 <div class="stsum"><span class="kv">PPD<b>2.8</b></span><span class="kv">BOP<b>26%</b></span><span class="mini"><i style="height:6px"></i><i style="height:9px"></i><i style="height:7px"></i><i style="height:11px"></i><i style="height:8px"></i><i style="height:10px"></i><i style="height:7px"></i></span><span class="cnt full-only"><span><i class="ti ti-photo" style="font-size:12px"></i> 2</span><span><i class="ti ti-file-text" style="font-size:12px"></i> 2</span></span><span class="hint" style="margin-left:auto">タップで展開</span></div>
                 <div class="stdetail">
                   <div class="stblk k-probing"><div class="lb">PROBING</div><div class="ct"><div class="ststat"><span>PPD平均<b>2.8<small style="font-size:10px">mm</small></b></span><span>BOP<b>26%</b></span><span>PCR<b>41%</b></span><span>4mm以上<b>31%</b></span></div><div style="margin-top:8px"><span class="stdoc" onclick="go('probing')"><i class="ti ti-dental" style="font-size:12px"></i>検査表を開く</span></div></div></div>
@@ -600,7 +606,7 @@ body.phase-p1 #fabrec{display:none!important}
                 </div>
               </div>
               <div class="stvisit" id="v260115">
-                <div class="stdate" onclick="stToggle(this.parentNode)"><span class="car">›</span><span class="d">2026/01/15</span><span class="pu">14:10 ・ 初診</span><span class="tg"><span class="chip green">完了</span></span></div>
+                <div class="stdate" onclick="stToggle(this.parentNode)"><span class="car">›</span><span class="d">2026/01/15</span><span class="pu full-only">14:10 ・ 初診</span><span class="tg"><span class="chip green">完了</span></span></div>
                 <div class="stsum"><span class="kv">PPD<b>3.1</b></span><span class="kv">BOP<b>34%</b></span><span class="mini"><i style="height:6px"></i><i style="height:9px"></i><i style="height:7px"></i><i style="height:11px"></i><i style="height:8px"></i><i style="height:10px"></i><i style="height:7px"></i></span><span class="cnt full-only"><span><i class="ti ti-photo" style="font-size:12px"></i> 5</span><span><i class="ti ti-file-text" style="font-size:12px"></i> 2</span></span><span class="hint" style="margin-left:auto">タップで展開</span></div>
                 <div class="stdetail">
                   <div class="stblk k-probing"><div class="lb">PROBING</div><div class="ct"><div class="ststat"><span>PPD平均<b>3.1<small style="font-size:10px">mm</small></b></span><span>BOP<b>34%</b></span><span>PCR<b>52%</b></span><span>4mm以上<b>31%</b></span></div><div style="margin-top:8px"><span class="stdoc" onclick="go('probing')"><i class="ti ti-dental" style="font-size:12px"></i>検査表を開く</span></div></div></div>
@@ -611,7 +617,7 @@ body.phase-p1 #fabrec{display:none!important}
               </div>
                 <div class="styear">2025</div>
               <div class="stvisit" id="v251003">
-                <div class="stdate" onclick="stToggle(this.parentNode)"><span class="car">›</span><span class="d">2025/10/03</span><span class="pu">11:00 ・ メインテナンス</span><span class="tg"><span class="chip green">完了</span></span></div>
+                <div class="stdate" onclick="stToggle(this.parentNode)"><span class="car">›</span><span class="d">2025/10/03</span><span class="pu full-only">11:00 ・ メインテナンス</span><span class="tg"><span class="chip green">完了</span></span></div>
                 <div class="stsum"><span class="kv">PPD<b>2.9</b></span><span class="kv">BOP<b>28%</b></span><span class="mini"><i style="height:6px"></i><i style="height:9px"></i><i style="height:7px"></i><i style="height:11px"></i><i style="height:8px"></i><i style="height:10px"></i><i style="height:7px"></i></span><span class="cnt full-only"><span><i class="ti ti-photo" style="font-size:12px"></i> 2</span><span><i class="ti ti-file-text" style="font-size:12px"></i> 1</span></span><span class="hint" style="margin-left:auto">タップで展開</span></div>
                 <div class="stdetail">
                   <div class="stblk k-probing"><div class="lb">PROBING</div><div class="ct"><div class="ststat"><span>PPD平均<b>2.9<small style="font-size:10px">mm</small></b></span><span>BOP<b>28%</b></span><span>PCR<b>39%</b></span><span>4mm以上<b>31%</b></span></div><div style="margin-top:8px"><span class="stdoc" onclick="go('probing')"><i class="ti ti-dental" style="font-size:12px"></i>検査表を開く</span></div></div></div>
@@ -621,7 +627,7 @@ body.phase-p1 #fabrec{display:none!important}
                 </div>
               </div>
               <div class="stvisit" id="v250711">
-                <div class="stdate" onclick="stToggle(this.parentNode)"><span class="car">›</span><span class="d">2025/07/11</span><span class="pu">15:20 ・ SRP（左下）</span><span class="tg"><span class="chip green">完了</span></span></div>
+                <div class="stdate" onclick="stToggle(this.parentNode)"><span class="car">›</span><span class="d">2025/07/11</span><span class="pu full-only">15:20 ・ SRP（左下）</span><span class="tg"><span class="chip green">完了</span></span></div>
                 <div class="stsum"><span class="kv">PPD<b>3.0</b></span><span class="kv">BOP<b>31%</b></span><span class="mini"><i style="height:6px"></i><i style="height:9px"></i><i style="height:7px"></i><i style="height:11px"></i><i style="height:8px"></i><i style="height:10px"></i><i style="height:7px"></i></span><span class="cnt full-only"><span><i class="ti ti-photo" style="font-size:12px"></i> 0</span><span><i class="ti ti-file-text" style="font-size:12px"></i> 1</span></span><span class="hint" style="margin-left:auto">タップで展開</span></div>
                 <div class="stdetail">
                   <div class="stblk k-probing"><div class="lb">PROBING</div><div class="ct"><div class="ststat"><span>PPD平均<b>3.0<small style="font-size:10px">mm</small></b></span><span>BOP<b>31%</b></span><span>PCR<b>44%</b></span><span>4mm以上<b>31%</b></span></div><div style="margin-top:8px"><span class="stdoc" onclick="go('probing')"><i class="ti ti-dental" style="font-size:12px"></i>検査表を開く</span></div></div></div>
@@ -631,7 +637,7 @@ body.phase-p1 #fabrec{display:none!important}
                 </div>
               </div>
               <div class="stvisit" id="v250418">
-                <div class="stdate" onclick="stToggle(this.parentNode)"><span class="car">›</span><span class="d">2025/04/18</span><span class="pu">10:00 ・ 歯周基本検査</span><span class="tg"><span class="chip green">完了</span></span></div>
+                <div class="stdate" onclick="stToggle(this.parentNode)"><span class="car">›</span><span class="d">2025/04/18</span><span class="pu full-only">10:00 ・ 歯周基本検査</span><span class="tg"><span class="chip green">完了</span></span></div>
                 <div class="stsum"><span class="kv">PPD<b>3.3</b></span><span class="kv">BOP<b>38%</b></span><span class="mini"><i style="height:6px"></i><i style="height:9px"></i><i style="height:7px"></i><i style="height:11px"></i><i style="height:8px"></i><i style="height:10px"></i><i style="height:7px"></i></span><span class="cnt full-only"><span><i class="ti ti-photo" style="font-size:12px"></i> 1</span><span><i class="ti ti-file-text" style="font-size:12px"></i> 1</span></span><span class="hint" style="margin-left:auto">タップで展開</span></div>
                 <div class="stdetail">
                   <div class="stblk k-probing"><div class="lb">PROBING</div><div class="ct"><div class="ststat"><span>PPD平均<b>3.3<small style="font-size:10px">mm</small></b></span><span>BOP<b>38%</b></span><span>PCR<b>55%</b></span><span>4mm以上<b>31%</b></span></div><div style="margin-top:8px"><span class="stdoc" onclick="go('probing')"><i class="ti ti-dental" style="font-size:12px"></i>検査表を開く</span></div></div></div>
@@ -651,8 +657,8 @@ body.phase-p1 #fabrec{display:none!important}
                   <div class="todo"><i></i><span>喫煙歴 未確認</span></div>
                   <div class="todo"><i></i><span>知覚過敏の経過を確認</span></div>
                 </div>
-                <h5>推移</h5>
-                <div class="card" style="margin-bottom:8px"><div class="hint" style="margin-bottom:6px">PPD平均（6回）</div><div style="display:flex;align-items:flex-end;gap:5px;height:34px"><i style="flex:1;background:var(--lav);height:100%;border-radius:2px"></i><i style="flex:1;background:var(--lav);height:90%;border-radius:2px"></i><i style="flex:1;background:var(--lav);height:87%;border-radius:2px"></i><i style="flex:1;background:var(--lav);height:93%;border-radius:2px"></i><i style="flex:1;background:var(--lav);height:84%;border-radius:2px"></i><i style="flex:1;background:var(--purple);height:78%;border-radius:2px"></i></div><div style="display:flex;justify-content:space-between;font-size:9.5px;color:var(--hint);margin-top:3px"><span>'25/04</span><span>'26/06</span></div><div style="font-size:11.5px;margin-top:4px;color:var(--muted)">3.3mm → <b style="color:var(--purple-d)">2.6mm</b></div></div><div class="card" style="margin-bottom:8px"><div class="hint" style="margin-bottom:6px">BOP（6回）</div><div style="display:flex;align-items:flex-end;gap:5px;height:34px"><i style="flex:1;background:var(--lav);height:100%;border-radius:2px"></i><i style="flex:1;background:var(--lav);height:81%;border-radius:2px"></i><i style="flex:1;background:var(--lav);height:73%;border-radius:2px"></i><i style="flex:1;background:var(--lav);height:89%;border-radius:2px"></i><i style="flex:1;background:var(--lav);height:68%;border-radius:2px"></i><i style="flex:1;background:var(--purple);height:57%;border-radius:2px"></i></div><div style="display:flex;justify-content:space-between;font-size:9.5px;color:var(--hint);margin-top:3px"><span>'25/04</span><span>'26/06</span></div><div style="font-size:11.5px;margin-top:4px;color:var(--muted)">38% → <b style="color:var(--purple-d)">22%</b></div></div><div class="card" style="margin-bottom:8px"><div class="hint" style="margin-bottom:6px">PCR（6回）</div><div style="display:flex;align-items:flex-end;gap:5px;height:34px"><i style="flex:1;background:var(--lav);height:100%;border-radius:2px"></i><i style="flex:1;background:var(--lav);height:80%;border-radius:2px"></i><i style="flex:1;background:var(--lav);height:70%;border-radius:2px"></i><i style="flex:1;background:var(--lav);height:76%;border-radius:2px"></i><i style="flex:1;background:var(--lav);height:69%;border-radius:2px"></i><i style="flex:1;background:var(--purple);height:63%;border-radius:2px"></i></div><div style="display:flex;justify-content:space-between;font-size:9.5px;color:var(--hint);margin-top:3px"><span>'25/04</span><span>'26/06</span></div><div style="font-size:11.5px;margin-top:4px;color:var(--muted)">55% → <b style="color:var(--purple-d)">35%</b></div></div><div class="card" style="margin-bottom:8px"><div class="hint" style="margin-bottom:6px">4mm以上（6回）</div><div style="display:flex;align-items:flex-end;gap:5px;height:34px"><i style="flex:1;background:var(--lav);height:100%;border-radius:2px"></i><i style="flex:1;background:var(--lav);height:100%;border-radius:2px"></i><i style="flex:1;background:var(--lav);height:100%;border-radius:2px"></i><i style="flex:1;background:var(--lav);height:90%;border-radius:2px"></i><i style="flex:1;background:var(--lav);height:58%;border-radius:2px"></i><i style="flex:1;background:var(--purple);height:38%;border-radius:2px"></i></div><div style="display:flex;justify-content:space-between;font-size:9.5px;color:var(--hint);margin-top:3px"><span>'25/04</span><span>'26/06</span></div><div style="font-size:11.5px;margin-top:4px;color:var(--muted)">31% → <b style="color:var(--purple-d)">12%</b></div></div>                <h5 class="full-only">書類</h5>
+                <h5>推移 <span class="hint" style="font-weight:400;letter-spacing:0">（直近6回）</span></h5>
+                <div class="card" style="margin-bottom:8px"><div class="hint" style="margin-bottom:6px">PPD平均</div><div style="display:flex;align-items:flex-end;gap:5px;height:34px"><i style="flex:1;background:var(--lav);height:100%;border-radius:2px"></i><i style="flex:1;background:var(--lav);height:90%;border-radius:2px"></i><i style="flex:1;background:var(--lav);height:87%;border-radius:2px"></i><i style="flex:1;background:var(--lav);height:93%;border-radius:2px"></i><i style="flex:1;background:var(--lav);height:84%;border-radius:2px"></i><i style="flex:1;background:var(--purple);height:78%;border-radius:2px"></i></div><div style="display:flex;justify-content:space-between;font-size:9.5px;color:var(--hint);margin-top:3px"><span>'25/04</span><span>'26/06</span></div><div style="font-size:11.5px;margin-top:4px;color:var(--muted)">3.3mm → <b style="color:var(--purple-d)">2.6mm</b></div></div><div class="card" style="margin-bottom:8px"><div class="hint" style="margin-bottom:6px">BOP</div><div style="display:flex;align-items:flex-end;gap:5px;height:34px"><i style="flex:1;background:var(--lav);height:100%;border-radius:2px"></i><i style="flex:1;background:var(--lav);height:81%;border-radius:2px"></i><i style="flex:1;background:var(--lav);height:73%;border-radius:2px"></i><i style="flex:1;background:var(--lav);height:89%;border-radius:2px"></i><i style="flex:1;background:var(--lav);height:68%;border-radius:2px"></i><i style="flex:1;background:var(--purple);height:57%;border-radius:2px"></i></div><div style="display:flex;justify-content:space-between;font-size:9.5px;color:var(--hint);margin-top:3px"><span>'25/04</span><span>'26/06</span></div><div style="font-size:11.5px;margin-top:4px;color:var(--muted)">38% → <b style="color:var(--purple-d)">22%</b></div></div><div class="card" style="margin-bottom:8px"><div class="hint" style="margin-bottom:6px">PCR</div><div style="display:flex;align-items:flex-end;gap:5px;height:34px"><i style="flex:1;background:var(--lav);height:100%;border-radius:2px"></i><i style="flex:1;background:var(--lav);height:80%;border-radius:2px"></i><i style="flex:1;background:var(--lav);height:70%;border-radius:2px"></i><i style="flex:1;background:var(--lav);height:76%;border-radius:2px"></i><i style="flex:1;background:var(--lav);height:69%;border-radius:2px"></i><i style="flex:1;background:var(--purple);height:63%;border-radius:2px"></i></div><div style="display:flex;justify-content:space-between;font-size:9.5px;color:var(--hint);margin-top:3px"><span>'25/04</span><span>'26/06</span></div><div style="font-size:11.5px;margin-top:4px;color:var(--muted)">55% → <b style="color:var(--purple-d)">35%</b></div></div><div class="card" style="margin-bottom:8px"><div class="hint" style="margin-bottom:6px">4mm以上</div><div style="display:flex;align-items:flex-end;gap:5px;height:34px"><i style="flex:1;background:var(--lav);height:100%;border-radius:2px"></i><i style="flex:1;background:var(--lav);height:100%;border-radius:2px"></i><i style="flex:1;background:var(--lav);height:100%;border-radius:2px"></i><i style="flex:1;background:var(--lav);height:90%;border-radius:2px"></i><i style="flex:1;background:var(--lav);height:58%;border-radius:2px"></i><i style="flex:1;background:var(--purple);height:38%;border-radius:2px"></i></div><div style="display:flex;justify-content:space-between;font-size:9.5px;color:var(--hint);margin-top:3px"><span>'25/04</span><span>'26/06</span></div><div style="font-size:11.5px;margin-top:4px;color:var(--muted)">31% → <b style="color:var(--purple-d)">12%</b></div></div>                <h5 class="full-only">書類</h5>
                 <div class="card full-only"><div class="hint">共有済み 9件 ／ 未共有 1件</div><div style="margin-top:6px"><span class="stdoc" onclick="go('handout')"><i class="ti ti-qrcode" style="font-size:12px"></i>患者持ち帰り</span></div></div>
               </div>
             </div>
@@ -744,16 +750,14 @@ body.phase-p1 #fabrec{display:none!important}
                 </div>
               </div>
               <div class="exgrp">
-                <div class="exlab">部位・検査方向</div>
+                <div class="exlab">検査部位<span class="qh" onclick="showHelp(event,this)" data-help="進む向きと区画をまわる順番は「表示設定・検査順」で決めます。端まで入力すると自動で次の区画へ移ります。">?</span></div>
                 <div class="exrow">
                   <span class="pill amber qpill" id="q-ru" onclick="setQuad('ru')">右上<i class="qmk tr"></i></span>
                   <span class="pill amberline qpill" id="q-lu" onclick="setQuad('lu')"><i class="qmk tl"></i>左上</span>
-                  <span class="pill amber qpill ic" onclick="exPick(this)" title="左から右へ進む"><i class="ti ti-arrow-right"></i></span>
                 </div>
                 <div class="exrow">
                   <span class="pill amberline qpill" id="q-rl" onclick="setQuad('rl')">右下<i class="qmk br"></i></span>
                   <span class="pill amberline qpill" id="q-ll" onclick="setQuad('ll')"><i class="qmk bl"></i>左下</span>
-                  <span class="pill amberline qpill ic" onclick="exPick(this)" title="右から左へ進む"><i class="ti ti-arrow-left"></i></span>
                 </div>
               </div>
               <div class="exgrp">
@@ -779,8 +783,8 @@ body.phase-p1 #fabrec{display:none!important}
                 <span class="seg2"><span class="lab">対象歯</span><b>28本</b></span>
                 <span class="seg2 sep"><span class="lab">PPD平均</span><b>2.6 mm</b></span>
                 <span class="seg2"><b class="lv1">1〜3mm 72%</b></span>
-                <span class="seg2"><b class="lv2">4〜6mm 22%</b></span>
-                <span class="seg2"><b class="lv3">7mm以上 6%</b></span>
+                <span class="seg2"><b class="lv2">4〜5mm 22%</b></span>
+                <span class="seg2"><b class="lv3">6mm以上 6%</b></span>
                 <span class="seg2"><span class="lab">BOP</span><b>22%</b></span>
                 <span class="seg2"><span class="lab">PCR</span><b>35%</b></span>
                 <span class="seg2"><span class="lab">PESA</span><b>402 mm²</b></span>
@@ -794,18 +798,22 @@ body.phase-p1 #fabrec{display:none!important}
           <section class="screen" data-id="examset">
             <div class="bar"><span class="muted" style="cursor:pointer;font-size:13px" onclick="go('probing')"><i class="ti ti-chevron-left"></i> 戻る</span><span class="logo" style="font-size:16px">表示設定・検査順</span><span class="chip lav">この検査に適用</span><span class="spacer"></span><span class="muted" style="font-size:12px">衛生士A ・ 前回設定を引継ぎ</span></div>
             <div class="body" style="padding:18px">
-              <div class="grid" style="grid-template-columns:1.1fr 1fr;gap:20px;align-items:start;max-width:920px">
+              <div class="grid" style="grid-template-columns:1.05fr 1fr;gap:24px;align-items:start;max-width:980px">
                 <div>
                   <div class="label" style="font-weight:500;margin-bottom:8px">検査順<span class="qh" onclick="showHelp(event,this)" data-help="4つの区画をまわる順番と、それぞれ右から進むか左から進むかを決めます。この2つの指定だけで現場の8パターンを表現できます。設定は検査担当者ごとに保存され、次回以降も引き継がれます。端まで入力すると自動で次の区画へ移ります。">?</span></div>
                   <div class="hint" style="margin-bottom:8px;line-height:1.7">区画をまわる順番（↑↓で並べ替え）と、進む向きを指定します。医院で1つ決めて全員で使うのが基本です。</div>
                   <div id="ordset" style="margin-bottom:10px"></div>
                   <div class="hint" id="ordsum" style="margin-bottom:14px;padding:8px 11px;background:var(--lav2);border-radius:8px;line-height:1.8"></div>
+                  <div class="label" style="font-weight:500;margin-bottom:8px">設定中の流れ</div>
+                  <div id="ordfig" style="background:#fff;border:0.5px solid var(--border2);border-radius:12px;padding:8px;display:flex;justify-content:center"></div>
+                </div>
+                <div>
                   <div class="label" style="font-weight:500;margin-bottom:6px">検査の種別</div>
-                  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px"><span class="pill on">6点法</span><span class="pill">4点法</span><span class="pill">1点法</span></div>
-                  <div class="label" style="font-weight:500;margin-bottom:6px">表示する検査項目<span class="qh" onclick="showHelp(event,this)" data-help="複数選択できます。選んだ項目が検査画面に反映されます。">?</span></div>
-                  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px"><span class="pill multi on" onclick="toggleExamRow(this,'mob')">動揺度</span><span class="pill multi" onclick="toggleExamRow(this,'fur')">根分岐部</span><span class="pill multi on" onclick="toggleExamRow(this,'pla')">プラーク</span><span class="pill multi on" onclick="toggleExamRow(this,'pkt')">ポケット</span><span class="pill multi on" onclick="toggleExamRow(this,'bop')">出血</span><span class="pill multi on" onclick="toggleExamRow(this,'pus')">排膿</span><span class="pill multi" onclick="toggleExamRow(this,'rec')">歯肉退縮量</span></div>
-                  <div class="card" style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div style="flex:1"><div style="font-size:13px;font-weight:500">測定方向の自動送り<span class="qh" onclick="showHelp(event,this)" data-help="近心→中央→遠心 の順に、入力後カーソルが自動で進みます。">?</span></div></div><span class="toggle on"><span class="knob"></span></span></div>
-                  <div class="card" style="display:flex;align-items:center;gap:8px"><div style="flex:1"><div style="font-size:13px;font-weight:500">前回値を参照表示<span class="qh" onclick="showHelp(event,this)" data-help="検査表に前回値を薄く表示し、今回値と比較できます。">?</span></div></div><span class="toggle on"><span class="knob"></span></span></div>
+                  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px"><span class="pill on">6点法</span><span class="pill">4点法</span><span class="pill">1点法</span></div>
+                  <div class="label" style="font-weight:500;margin-bottom:6px">表示する検査項目<span class="qh" onclick="showHelp(event,this)" data-help="複数選択できます。選んだ項目が検査画面に反映されます。医院全体の設定が既定値になり、担当者ごとにさらに変更できます。">?</span></div>
+                  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px"><span class="pill multi on" onclick="toggleExamRow(this,'mob')">動揺度</span><span class="pill multi" onclick="toggleExamRow(this,'fur')">根分岐部</span><span class="pill multi on" onclick="toggleExamRow(this,'pla')">プラーク</span><span class="pill multi on" onclick="toggleExamRow(this,'pkt')">ポケット</span><span class="pill multi on" onclick="toggleExamRow(this,'bop')">出血</span><span class="pill multi on" onclick="toggleExamRow(this,'pus')">排膿</span><span class="pill multi" onclick="toggleExamRow(this,'rec')">歯肉退縮量</span></div>
+                  <div class="card" style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div style="flex:1"><div style="font-size:13px;font-weight:500">測定方向の自動送り<span class="qh" onclick="showHelp(event,this)" data-help="ONにすると、入力後に次の規定位置へカーソルが移動します。OFFならタップした位置に留まります。">?</span></div></div><span class="toggle on"><span class="knob"></span></span></div>
+                  <div class="card" style="display:flex;align-items:center;gap:8px"><div style="flex:1"><div style="font-size:13px;font-weight:500">前回値を参照表示<span class="qh" onclick="showHelp(event,this)" data-help="検査表に前回値を薄く表示し、今回値と比較しながら入力できます。既定はONです。">?</span></div></div><span class="toggle on"><span class="knob"></span></span></div>
                 </div>
               </div>
             </div>
@@ -1182,13 +1190,17 @@ body.phase-p1 #fabrec{display:none!important}
               <div class="grid" style="grid-template-columns:1.3fr 1fr;align-items:start">
                 <div>
                   <div class="card" style="margin-bottom:14px;border:1.5px solid var(--purple)">
-                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><span class="chip lav">現在のプラン</span><span style="font-weight:700;font-size:17px;color:var(--purple-d)">スタンダード</span><span class="chip green">有効</span><span class="spacer"></span><div style="text-align:right"><div style="font-weight:700;font-size:18px">¥19,800<span class="hint">/月</span></div></div></div>
-                    <div style="display:flex;gap:24px;font-size:13px;flex-wrap:wrap"><div><div class="hint">契約状況</div>自動更新（月額）</div><div><div class="hint">次回請求日</div>2026/07/01</div><div><div class="hint">登録スタッフ</div>5 / 8名</div><div><div class="hint">お支払い方法</div>Visa •••• 4242</div></div>
+                    <div class="p1-only" style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><span class="chip lav">現在のプラン</span><span style="font-weight:700;font-size:17px;color:var(--purple-d)">ベータ版</span><span class="chip green">有効</span><span class="spacer"></span><div style="text-align:right"><div style="font-weight:700;font-size:18px">¥0<span class="hint">/月</span></div><div class="hint">ベータ期間中は無料</div></div></div>
+                    <div class="full-only" style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><span class="chip lav">現在のプラン</span><span style="font-weight:700;font-size:17px;color:var(--purple-d)">スタンダード</span><span class="chip green">有効</span><span class="spacer"></span><div style="text-align:right"><div style="font-weight:700;font-size:18px">¥19,800<span class="hint">/月</span></div></div></div>
+                    <div class="p1-only" style="display:flex;gap:24px;font-size:13px;flex-wrap:wrap"><div><div class="hint">契約状況</div>ベータ版（基本料金なし）</div><div><div class="hint">登録スタッフ</div>5名</div><div><div class="hint">AIクレジット</div>使った分のみ実費</div></div>
+                    <div class="full-only" style="display:flex;gap:24px;font-size:13px;flex-wrap:wrap"><div><div class="hint">契約状況</div>自動更新（月額）</div><div><div class="hint">次回請求日</div>2026/07/01</div><div><div class="hint">登録スタッフ</div>5 / 8名</div><div><div class="hint">お支払い方法</div>Visa •••• 4242</div></div>
                   </div>
                   <div class="label" style="font-weight:500;margin-bottom:8px">プランに含まれるもの</div>
-                  <div class="card" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px"><div><i class="ti ti-circle-check" style="color:var(--green)"></i> AIクレジット 月5,000pt付与</div><div><i class="ti ti-circle-check" style="color:var(--green)"></i> ストレージ 200GB</div><div><i class="ti ti-circle-check" style="color:var(--green)"></i> プロービング音声操作</div><div><i class="ti ti-circle-check" style="color:var(--green)"></i> レポート/書類自動生成</div><div><i class="ti ti-circle-check" style="color:var(--green)"></i> NAS・クラウド連携</div><div><i class="ti ti-circle-check" style="color:var(--green)"></i> テンプレマーケット</div></div>
+                  <div class="card p1-only" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px"><div><i class="ti ti-circle-check" style="color:var(--green)"></i> AIクレジット 月1,000pt付与</div><div><i class="ti ti-circle-check" style="color:var(--green)"></i> プロービング音声操作 <span class="chip lav">ベータ</span></div></div>
+                  <div class="card full-only" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px"><div><i class="ti ti-circle-check" style="color:var(--green)"></i> AIクレジット 月5,000pt付与</div><div><i class="ti ti-circle-check" style="color:var(--green)"></i> ストレージ 200GB</div><div><i class="ti ti-circle-check" style="color:var(--green)"></i> プロービング音声操作</div><div><i class="ti ti-circle-check" style="color:var(--green)"></i> レポート/書類自動生成</div><div><i class="ti ti-circle-check" style="color:var(--green)"></i> NAS・クラウド連携</div><div><i class="ti ti-circle-check" style="color:var(--green)"></i> テンプレマーケット</div></div>
                   <div class="label" style="font-weight:500;margin:16px 0 8px">お支払い履歴</div>
-                  <div class="card" style="padding:0;overflow:hidden">
+                  <div class="card p1-only"><div class="hint">ベータ期間中は基本料金が発生しないため、お支払い履歴はありません。AIクレジットのチャージ履歴はAIクレジット画面でご確認いただけます。</div></div>
+                  <div class="card full-only" style="padding:0;overflow:hidden">
                     <div style="display:flex;padding:9px 14px;border-bottom:0.5px solid var(--border);font-size:13px"><span>2026/06/01</span><span class="spacer"></span><span>¥19,800</span><span class="chip green" style="margin-left:10px">支払済</span><span class="muted" style="margin-left:10px;cursor:pointer;font-size:12px"><i class="ti ti-download"></i> 領収書</span></div>
                     <div style="display:flex;padding:9px 14px;border-bottom:0.5px solid var(--border);font-size:13px"><span>2026/05/01</span><span class="spacer"></span><span>¥19,800</span><span class="chip green" style="margin-left:10px">支払済</span><span class="muted" style="margin-left:10px;cursor:pointer;font-size:12px"><i class="ti ti-download"></i> 領収書</span></div>
                     <div style="display:flex;padding:9px 14px;font-size:13px"><span>2026/04/01</span><span class="spacer"></span><span>¥19,800</span><span class="chip green" style="margin-left:10px">支払済</span><span class="muted" style="margin-left:10px;cursor:pointer;font-size:12px"><i class="ti ti-download"></i> 領収書</span></div>
@@ -1200,8 +1212,9 @@ body.phase-p1 #fabrec{display:none!important}
                     <button class="btn sm" style="width:100%;margin-top:10px"><i class="ti ti-edit"></i> 医院情報を変更</button>
                   </div>
                   <div class="card" style="margin-bottom:12px"><div class="label" style="font-weight:500;margin-bottom:10px">プラン変更<span class="qh" onclick="showHelp(event,this)" data-help="プランはストレージ容量ベースです（例: 200GB→500GB）。picmoR連携メディアは容量に含みません。">?</span></div>
-                    <button class="btn primary sm" style="width:100%;margin-bottom:6px">プレミアム（500GB）にアップグレード</button>
-                    <button class="btn sm" style="width:100%">支払い方法を変更</button>
+                    <div class="p1-only"><div class="hint" style="line-height:1.8;margin-bottom:8px">現在はベータ版のみのご提供です。上位プラン（書類生成・患者説明を含む完全版）は、提供開始時にこちらからお申し込みいただけます。</div><button class="btn sm" style="width:100%;opacity:.5;cursor:default" disabled>アップグレードできるプランはありません</button></div>
+                    <div class="full-only"><button class="btn primary sm" style="width:100%;margin-bottom:6px">プレミアム（500GB）にアップグレード</button>
+                    <button class="btn sm" style="width:100%">支払い方法を変更</button></div>
                   </div>
                   <div class="card" style="border-color:#f0c5b5"><div class="label" style="font-weight:500;margin-bottom:10px;color:var(--red)">解約<span class="qh" onclick="showHelp(event,this)" data-help="解約すると、次回更新日以降はデータの閲覧のみ可能となり、新規記録はできなくなります。">?</span></div><button class="btn sm" style="width:100%;color:var(--red);border-color:#f0c5b5">解約手続きへ</button></div>
                 </div>
@@ -1253,7 +1266,7 @@ body.phase-p1 #fabrec{display:none!important}
 
           <!-- SETTINGS 設定（衛生士・歯状態） -->
           <section class="screen" data-id="settings">
-            <div class="bar" style="flex-wrap:nowrap;overflow-x:auto;gap:6px"><i class="ti ti-settings" style="color:var(--purple-d);flex:none"></i><span class="logo" style="font-size:16px;flex:none">設定</span><span class="spacer"></span><span class="seg" style="flex:none"><span class="pill on" id="tab-staff" onclick="setTab('staff')">衛生士・検査</span><span class="pill" id="tab-tags" onclick="setTab('tags')">タグ</span><span class="pill" id="tab-docs" onclick="setTab('docs')">必須書類</span><span class="pill" id="tab-patient" onclick="setTab('patient')">患者画面</span><span class="pill" id="tab-link" onclick="setTab('link')">連携</span><span class="pill owner-only" id="tab-perm" onclick="setTab('perm')">スタッフ・権限</span></span></div>
+            <div class="bar" style="flex-wrap:nowrap;overflow-x:auto;gap:6px"><i class="ti ti-settings" style="color:var(--purple-d);flex:none"></i><span class="logo" style="font-size:16px;flex:none">設定</span><span class="spacer"></span><span class="seg" style="flex:none"><span class="pill on" id="tab-staff" onclick="setTab('staff')">衛生士・検査</span><span class="pill full-only" id="tab-tags" onclick="setTab('tags')">タグ</span><span class="pill full-only" id="tab-docs" onclick="setTab('docs')">必須書類</span><span class="pill full-only" id="tab-patient" onclick="setTab('patient')">患者画面</span><span class="pill full-only" id="tab-link" onclick="setTab('link')">連携</span><span class="pill owner-only" id="tab-perm" onclick="setTab('perm')">スタッフ・権限</span></span></div>
             <div class="body" id="set-staff" style="padding:18px">
               <div class="grid" style="grid-template-columns:1.3fr 1fr;align-items:start">
                 <div>
@@ -1637,9 +1650,10 @@ function svgFur(k){
   return "";
 }
 var PLAPTS=["5,7 35,7 20,20","35,7 35,33 20,20","5,33 35,33 20,20","5,7 5,33 20,20"];
+var PLAOLD='<defs><pattern id="plold" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="5" stroke="#A8E3CB" stroke-width="1.6"/></pattern></defs>';
 function plaCell(t){
   var d=DEMO[t],h=SV;
-  if(d)for(var i=0;i<4;i++){var n=+d.l[i],o=+d.lp[i];if(n)h+='<polygon points="'+PLAPTS[i]+'" fill="'+((n&&!o)?"#4FD1A5":"#D4EFE4")+'"/>';}
+  if(d){h+=PLAOLD;for(var i=0;i<4;i++){var n=+d.l[i],o=+d.lp[i];if(n)h+='<polygon points="'+PLAPTS[i]+'" fill="'+((n&&!o)?"#4FD1A5":"url(#plold)")+'"/>';}}
   return h+'<line x1="5" y1="7" x2="35" y2="33" stroke="#d3d3db"/><line x1="35" y1="7" x2="5" y2="33" stroke="#d3d3db"/></svg>';
 }
 function pktCell(t){
@@ -1674,11 +1688,11 @@ var DEMO={
  6:{p:"354332",pp:"334332",b:"011000",bp:"010000",u:"010000",up:"000000",r:"221111",rp:"211111",m:1,mp:0,l:"1100",lp:"1000"},
  5:{p:"223222",pp:"223222",b:"000000",bp:"000000",u:"001000",up:"001000",r:"000000",rp:"000000",m:0,mp:0,l:"0000",lp:"0000"},
  4:{p:"232222",pp:"272222",b:"000000",bp:"010000",u:"000000",up:"000000",r:"110000",rp:"110000",m:0,mp:0,l:"0010",lp:"0000"},
- 3:{p:"222223",pp:"222223",b:"000100",bp:"000100",u:"000000",up:"000000",r:"000000",rp:"000000",m:0,mp:0,l:"0000",lp:"0000"},
+ 3:{p:"222223",pp:"222223",b:"000100",bp:"000100",u:"000010",up:"000010",r:"000000",rp:"000000",m:0,mp:0,l:"0000",lp:"0000"},
  2:{p:"222222",pp:"222222",b:"000000",bp:"000000",u:"000000",up:"000000",r:"000000",rp:"000000",m:0,mp:0,l:"1000",lp:"1000"},
  1:{p:"232222",pp:"232222",b:"000000",bp:"000000",u:"000000",up:"000000",r:"000000",rp:"000000",m:1,mp:1,l:"0000",lp:"0000"}
 };
-function rng(v){return v>=7?3:(v>=4?2:1);} /* 1〜3mm=1 / 4〜6mm=2 / 7mm以上=3 */
+function rng(v){return v>=6?3:(v>=4?2:1);} /* 軽度=1〜3mm / 中等度=4〜5mm / 重度=6mm以上（歯周病学会の区分に準拠） */
 function furKind(t,lower){ if(lower)return t>=6?"h":""; return t>=6?"y":(t>=4?"v":""); }
 /* 現在表示中の1/4顎での歯の状態を引く */
 function toothStateOf(t){
@@ -1736,7 +1750,7 @@ function rlab(rk){
 function toothnoCell(t){
   var st=toothStateOf(t),lab=(st==="baby")?"ABCDE".charAt(t-1):String(t);
   var imp=(st==="imp")?'<span class="impmk">IMP</span>':"";
-  return '<div class="toothno">'+lab+imp+' <span class="mn" onclick="openToothMenu(event,'+t+')"><i class="ti ti-menu-2 hint"></i></span></div>';
+  return '<div class="toothno">'+lab+imp+'</div>';
 }
 function setExamMode(m){
   examMode=m;
@@ -1848,9 +1862,45 @@ function buildOrd(){
   });
   el.innerHTML=h;
   var sum=document.getElementById("ordsum");
+  buildArchFig();
   if(sum)sum.innerHTML=ORD.map(function(o,i){return "<b>"+(i+1)+"</b> "+o.n+"（"+(o.d==="r"?"右→左":"左→右")+"）";}).join(" → ")+"<br>端まで入力すると自動で次の区画へ移ります。この設定は検査担当者ごとに保存されます。";
 }
 function ordDir(i,d){ORD[i].d=d;buildOrd();}
+/* 設定中の検査順を上下顎のイラストで表示（矢印の向きと番号が設定に連動） */
+var ORDCOL=["#E8546B","#F2A33C","#7FC241","#39BFD3"];
+var ARCPATH={
+  ub:["M50,138 A104,104 0 0 1 270,138","M270,138 A104,104 0 0 0 50,138"],
+  up:["M88,138 A68,68 0 0 1 232,138","M232,138 A68,68 0 0 0 88,138"],
+  lb:["M50,162 A104,104 0 0 0 270,162","M270,162 A104,104 0 0 1 50,162"],
+  ll:["M88,162 A68,68 0 0 0 232,162","M232,162 A68,68 0 0 1 88,162"]
+};
+var BADGE={ub:[160,18],up:[160,72],ll:[160,228],lb:[160,282]};
+function archTeeth(cy,up){
+  var h="",cx=160,rx=88,ry=86;
+  for(var i=0;i<14;i++){
+    var t=Math.PI*(i+0.5)/14;
+    var x=cx-rx*Math.cos(t), y=up?(cy-ry*Math.sin(t)):(cy+ry*Math.sin(t));
+    h+='<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="5.4" fill="#fff" stroke="#cdcdda" stroke-width="1.1"/>';
+  }
+  return h;
+}
+function buildArchFig(){
+  var el=document.getElementById("ordfig");if(!el)return;
+  var defs="",arcs="",badges="";
+  ORD.forEach(function(o,i){
+    var c=ORDCOL[i];
+    defs+='<marker id="arw'+i+'" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="'+c+'"/></marker>';
+    arcs+='<path d="'+ARCPATH[o.k][o.d==="r"?0:1]+'" fill="none" stroke="'+c+'" stroke-width="3.2" stroke-linecap="round" marker-end="url(#arw'+i+')"/>';
+    var b=BADGE[o.k];
+    badges+='<circle cx="'+b[0]+'" cy="'+b[1]+'" r="13" fill="'+c+'"/><text x="'+b[0]+'" y="'+(b[1]+4.5)+'" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">'+(i+1)+'</text>';
+  });
+  el.innerHTML='<svg viewBox="0 0 320 300" width="100%" style="max-width:250px">'+
+    '<defs>'+defs+'</defs>'+
+    archTeeth(138,true)+archTeeth(162,false)+arcs+badges+
+    '<text x="14" y="143" font-size="10" fill="#9a9aa2">右</text><text x="296" y="143" font-size="10" fill="#9a9aa2">左</text>'+
+    '<text x="160" y="132" text-anchor="middle" font-size="9.5" fill="#9a9aa2">上顎</text>'+
+    '<text x="160" y="176" text-anchor="middle" font-size="9.5" fill="#9a9aa2">下顎</text></svg>';
+}
 function ordMove(i,d){var j=i+d;if(j<0||j>3)return;var t=ORD[i];ORD[i]=ORD[j];ORD[j]=t;buildOrd();}
 
 /* ===== ストリーム: 各来院に検査表の一部を出す ===== */
@@ -1864,8 +1914,8 @@ function miniStrip(idx){
       h+='<span class="mst">';
       for(var i=0;i<6;i++){
         var v=+d.p[i]+((idx+ar+i)%3===0?idx:0); if(v>9)v=9;
-        var bl=(+d.b[i]&&((i+ar)%2===0));
-        h+='<i class="'+(bl?"bl ":"")+(v>=4?"hi":"")+'">'+v+'</i>';
+        var bl=(+d.b[i]&&((i+ar)%2===0)),pu=(+d.u[i]&&((i+ar)%2===0));
+        h+='<i class="'+(bl?"bl ":"")+(v>=4?"hi":"")+'">'+(pu?'<b class="pu6">'+v+'</b>':v)+'</i>';
       }
       h+='</span>';
     });
@@ -1876,8 +1926,8 @@ function miniStrip(idx){
 function buildStreamCharts(){
   var vs=document.querySelectorAll("#ststream .stvisit");
   [].forEach.call(vs,function(v,idx){
-    var sum=v.querySelector(".stsum");
-    if(sum&&!v.querySelector(".mstrip")){var d=document.createElement("div");d.innerHTML=miniStrip(idx);sum.parentNode.insertBefore(d.firstChild,sum.nextSibling);}
+    var ct=v.querySelector(".stblk.k-probing .ct");
+    if(ct&&!ct.querySelector(".mstrip")){var d=document.createElement("div");d.innerHTML=miniStrip(idx);ct.appendChild(d.firstChild);}
     var dt=v.querySelector(".stdate");
     if(dt&&!dt.querySelector(".stchk")){
       var c=document.createElement("span");c.className="stchk";c.onclick=function(e){e.stopPropagation();cmpToggle(v);};
@@ -2208,7 +2258,7 @@ function stLens(l,el){var s=document.getElementById("ststream");if(!s)return;s.s
   document.querySelectorAll("#stlens .pill").forEach(function(p){if(p.parentNode.id!=="stdens")p.classList.toggle("on",p===el);});
   if(l!=="all"){s.querySelectorAll(".stvisit").forEach(function(v){v.classList.add("open");});}}
 function stDensity(m,el){var vs=document.querySelectorAll("#ststream .stvisit");
-  vs.forEach(function(v,i){v.classList.toggle("open",m==="all"||i===0);});
+  vs.forEach(function(v){v.classList.toggle("open",m==="all");});
   document.querySelectorAll("#stdens .pill").forEach(function(p){p.classList.toggle("on",p===el);});}
 function stMark(id){document.querySelectorAll("#stmap .tick").forEach(function(t){t.classList.toggle("on",t.dataset.v===id);});}
 function stJump(id){var v=document.getElementById(id),s=document.getElementById("ststream");if(!v||!s)return;v.classList.add("open");s.scrollTo({top:Math.max(0,v.offsetTop-6),behavior:"smooth"});stMark(id);}
