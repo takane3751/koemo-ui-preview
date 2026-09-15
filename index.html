@@ -233,11 +233,16 @@ body.phase-p1 #fabrec{display:none!important}
 .chartwrap{overflow:auto;padding:6px 2px}
 .chart{display:grid;grid-template-columns:128px repeat(8,1fr);gap:0;min-width:780px}
 .chart .rlab{display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted)}
-.chart .rlab{padding:0 4px}
+.chart .rlab{padding:3px 4px}
 .chart .rlab .pillab{background:#fff;border:0.5px solid var(--border2);color:var(--text);border-radius:999px;padding:8px 6px;width:100%;text-align:center;font-size:12px}
 .chart .rlab .nolab{font-size:12px;color:var(--muted)}
 .chart .rlab .pktlab{display:flex;flex-wrap:wrap;gap:4px;align-items:center;justify-content:center;width:100%}
 .chart .rlab .pktlab .pillab{width:auto;flex:0 1 auto;padding:8px 10px;white-space:nowrap}
+/* 切替ボタン（ポケット・出血・排膿／歯肉退縮量）は行の高さいっぱいに広げる */
+.chart .rlab.r-pkt,.chart .rlab.r-rec{align-items:stretch}
+.chart .rlab.r-pkt .pktlab{flex-wrap:nowrap;flex-direction:column;gap:5px;height:100%;justify-content:stretch}
+.chart .rlab.r-pkt .pktlab .pillab{width:100%;flex:1;display:flex;align-items:center;justify-content:center;padding:0 10px;min-height:30px}
+.chart .rlab.r-rec .pillab{height:100%;display:flex;align-items:center;justify-content:center;padding:0 10px}
 .chart .rlab .pillab.rsel{cursor:pointer}
 .chart .rlab .pillab.rsel.on{background:var(--purple);color:#fff;border-color:var(--purple)}
 .chart .rlab .pillab.sub{width:auto;flex:none;font-size:11px;padding:6px 8px;background:#fff;border:0.5px solid var(--border2);color:var(--text)}
@@ -288,17 +293,19 @@ body.phase-p1 #fabrec{display:none!important}
 [data-id="probing"] > .bar .visitnav .vn{padding:4px 7px}
 [data-id="probing"] .exstaff .qpill{font-size:11.5px;padding:5px 9px}
 /* 下部ドック: 左=音声 / 中央=テンキー（横に広く） / 右=検査部位 */
-.exdock{flex:none;display:grid;grid-template-columns:minmax(190px,0.9fr) minmax(320px,2.1fr) auto;gap:16px;align-items:start;padding:10px 14px 12px;border-top:0.5px solid var(--border)}
-.exdock .exdk{min-width:0}
-.exdock .exdk.pad{align-self:stretch}
-.exdock .aivoice{width:100%;justify-content:center;padding:11px 12px;font-size:13.5px}
-.exdock .aifield{margin-top:7px;font-size:12.5px;padding:9px 12px;min-height:38px;display:flex;align-items:center}
+.exdock{flex:none;display:grid;grid-template-columns:minmax(200px,1fr) minmax(320px,2.1fr) minmax(190px,0.8fr);gap:16px;align-items:stretch;padding:10px 14px 12px;border-top:0.5px solid var(--border)}
+.exdock .exdk{min-width:0;display:flex;flex-direction:column}
+.exdock .aivoice{width:100%;justify-content:center;padding:11px 12px;font-size:13.5px;flex:none}
+/* 認識したテキストの表示欄はテキストエリアのように高さを出す */
+.exdock .aifield{margin-top:7px;font-size:12.5px;padding:9px 12px;flex:1;min-height:76px;display:block;line-height:1.7;overflow:auto}
+/* 検査部位は2×2で下まで伸ばす */
+.exdock .exdk.quad .qgrid{flex:1;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:7px;min-height:76px}
+.exdock .exdk.quad .qgrid .qpill{width:100%;height:100%;min-width:0;border-radius:12px;font-size:13.5px}
 .numpad2{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
 .numkey2{height:40px;border-radius:10px;border:none;background:#F1F0F5;font-family:inherit;font-size:19px;color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px}
 .numkey2:hover{background:#E7E5EE}
 .numkey2.del{grid-column:span 2;font-size:13px;color:var(--muted)}
-.exdock .exdk.quad .exrow{gap:7px;margin-bottom:7px}
-.exdock .exdk.quad .qpill{min-width:78px}
+
 /* フロート録音ボタンと重ならないようフッターに余白 */
 [data-id="explain"] .barfoot,[data-id="layout"] .barfoot,[data-id="explain2"] .barfoot,[data-id="video"] .barfoot,[data-id="radiograph"] .barfoot{padding-right:190px}
 /* レントゲンフィルム（FMXマウント） */
@@ -765,11 +772,9 @@ body.phase-p1 #fabrec{display:none!important}
               </div>
               <div class="exdk quad">
                 <div class="exlab">検査部位<span class="qh" onclick="showHelp(event,this)" data-help="進む向きと区画をまわる順番は「表示設定・検査順」で決めます。端まで入力すると自動で次の区画へ移ります。">?</span></div>
-                <div class="exrow">
+                <div class="qgrid">
                   <span class="pill amber qpill" id="q-ru" onclick="setQuad('ru')">右上<i class="qmk tr"></i></span>
                   <span class="pill amberline qpill" id="q-lu" onclick="setQuad('lu')"><i class="qmk tl"></i>左上</span>
-                </div>
-                <div class="exrow">
                   <span class="pill amberline qpill" id="q-rl" onclick="setQuad('rl')">右下<i class="qmk br"></i></span>
                   <span class="pill amberline qpill" id="q-ll" onclick="setQuad('ll')"><i class="qmk bl"></i>左下</span>
                 </div>
@@ -1749,10 +1754,10 @@ function pickStaff(name){var e=document.getElementById("examstaff");if(e)e.inner
 function openMemo(){document.getElementById("memoModal").classList.add("show");}
 function closeMemo(){document.getElementById("memoModal").classList.remove("show");}
 function rlab(rk){
-  if(rk==="no")return '<div class="rlab"><span class="nolab">歯番号</span></div>';
-  if(rk==="pkt")return '<div class="rlab"><div class="pktlab"><span class="pillab rsel'+(inputType==="pkt"?" on":"")+'" onclick="setInputType(\'pkt\')">ポケット</span><span class="pillab sub rsel'+(inputType==="bop"?" on":"")+'" onclick="setInputType(\'bop\')">出血</span>'+(EXAM_ROWS.pus?'<span class="pillab sub rsel'+(inputType==="pus"?" on":"")+'" onclick="setInputType(\'pus\')">排膿</span>':'')+'</div></div>';
-  if(rk==="rec")return '<div class="rlab"><span class="pillab rsel'+(inputType==="rec"?" on":"")+'" onclick="setInputType(\'rec\')">歯肉退縮量</span></div>';
-  return '<div class="rlab"><span class="pillab flat" title="モード選択は不要です。値を直接タップして入力します">'+ROWLABEL[rk]+'</span></div>';
+  if(rk==="no")return '<div class="rlab r-no"><span class="nolab">歯番号</span></div>';
+  if(rk==="pkt")return '<div class="rlab r-pkt"><div class="pktlab"><span class="pillab rsel'+(inputType==="pkt"?" on":"")+'" onclick="setInputType(\'pkt\')">ポケット</span><span class="pillab sub rsel'+(inputType==="bop"?" on":"")+'" onclick="setInputType(\'bop\')">出血</span>'+(EXAM_ROWS.pus?'<span class="pillab sub rsel'+(inputType==="pus"?" on":"")+'" onclick="setInputType(\'pus\')">排膿</span>':'')+'</div></div>';
+  if(rk==="rec")return '<div class="rlab r-rec"><span class="pillab rsel'+(inputType==="rec"?" on":"")+'" onclick="setInputType(\'rec\')">歯肉退縮量</span></div>';
+  return '<div class="rlab r-'+rk+'"><span class="pillab flat" title="モード選択は不要です。値を直接タップして入力します">'+ROWLABEL[rk]+'</span></div>';
 }
 function toothnoCell(t){
   var st=toothStateOf(t),lab=(st==="baby")?"ABCDE".charAt(t-1):String(t);
