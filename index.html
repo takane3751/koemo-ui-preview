@@ -752,19 +752,21 @@ body.phase-p1 #fabrec{display:none!important}
               <div class="chartwrap"><div class="chart" id="chart"></div></div>
             </div>
 
+            <div class="exfill"></div>
+
             <!-- テンキー -->
             <div class="numpad" style="flex:none">
               <button class="numkey">0</button><button class="numkey">1</button><button class="numkey">2</button><button class="numkey">3</button><button class="numkey">4</button><button class="numkey">5</button><button class="numkey">6</button><button class="numkey">7</button><button class="numkey">8</button><button class="numkey">9</button>
               <button class="numkey" style="font-size:13px"><i class="ti ti-backspace"></i></button>
             </div>
 
-            <!-- 集計バー（実機と同じく最下部） -->
+            <!-- 集計バー（実機と同じく最下部・画面下端に固定） -->
             <div class="bar barfoot" style="padding:8px 14px;background:var(--lav2)">
               <div class="examstat">
                 <span class="seg2"><span class="lab">対象歯</span><b>28本</b></span>
                 <span class="seg2 sep"><span class="lab">PPD平均</span><b>2.6 mm</b></span>
-                <span class="seg2"><b class="lv1">1〜3mm 72%</b></span>
-                <span class="seg2"><b class="lv2">4〜5mm 22%</b></span>
+                <span class="seg2"><b class="lv1">4mm未満 72%</b></span>
+                <span class="seg2"><b class="lv2">4〜6mm未満 22%</b></span>
                 <span class="seg2"><b class="lv3">6mm以上 6%</b></span>
                 <span class="seg2"><span class="lab">BOP</span><b>22%</b></span>
                 <span class="seg2"><span class="lab">PCR</span><b>35%</b></span>
@@ -772,7 +774,6 @@ body.phase-p1 #fabrec{display:none!important}
                 <span class="seg2"><span class="lab">PISA</span><b>148 mm²</b></span>
               </div>
             </div>
-            <div class="exfill"></div>
           </section>
 
           <!-- EXAMSET プロービング検査の設定（probingから遷移） -->
@@ -1673,7 +1674,7 @@ var DEMO={
 };
 /* 前回のまま残っている排膿は「破線の丸」で示す（今回入力は実線の丸） */
 var PUSRING='<svg class="ring" viewBox="0 0 22 22"><circle cx="11" cy="11" r="9.2" fill="none" stroke="#A9A9BA" stroke-width="1.5" stroke-dasharray="3.2 2.6"/></svg>';
-function rng(v){return v>=6?3:(v>=4?2:1);} /* 軽度=1〜3mm / 中等度=4〜5mm / 重度=6mm以上（歯周病学会の区分に準拠） */
+function rng(v){return v>=6?3:(v>=4?2:1);} /* システム的な振り分け: 軽度=1〜3mm / 中等度=4〜5mm / 重度=6mm〜。画面上の表示ラベルは学会の規定値の表記（4mm未満 / 4〜6mm未満 / 6mm以上）を使う（表示と挙動は分けて管理する） */
 function furKind(t,lower){ if(lower)return t>=6?"h":""; return t>=6?"y":(t>=4?"v":""); }
 /* 現在表示中の1/4顎での歯の状態を引く */
 function toothStateOf(t){
