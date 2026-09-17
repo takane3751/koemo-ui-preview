@@ -300,14 +300,31 @@ body.phase-p1 .stside{display:none}
 .exdock .exdk{min-width:0;display:flex;flex-direction:column}
 .exdock .aivoice{width:100%;justify-content:center;padding:11px 12px;font-size:13.5px;flex:none}
 /* 認識したテキストの表示欄はテキストエリアのように高さを出す */
-.exdock .aifield{margin-top:7px;font-size:12.5px;padding:9px 12px;flex:1;min-height:76px;display:block;line-height:1.7;overflow:auto}
 /* 検査部位は2×2で下まで伸ばす */
 .exdock .exdk.quad .qgrid{flex:1;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:7px;min-height:76px}
 .exdock .exdk.quad .qgrid .qpill{width:100%;height:100%;min-width:0;border-radius:12px;font-size:13.5px}
-.numpad2{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
-.numkey2{height:40px;border-radius:10px;border:none;background:#F1F0F5;font-family:inherit;font-size:19px;color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px}
+.numpad2{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.numkey2{height:46px;border-radius:10px;border:none;background:#F1F0F5;font-family:inherit;font-size:19px;color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px}
 .numkey2:hover{background:#E7E5EE}
-.numkey2.del{grid-column:span 2;font-size:13px;color:var(--muted)}
+/* 8以上はあまり使わないので低くする */
+.numkey2.low{height:32px;font-size:16px}
+.numkey2.del{font-size:13px;color:var(--muted);height:34px;width:100%}
+/* ドック左（音声） */
+.exdock .exdk.voice{gap:7px}
+.ainote{font-size:10.5px;color:var(--muted);text-align:center;line-height:1.4}
+.voicerow{display:flex;gap:7px;margin-top:auto}
+.aisub{flex:1;min-width:0;display:inline-flex;align-items:center;justify-content:center;gap:5px;position:relative;font-family:inherit;font-size:12px;padding:8px 6px;border-radius:9px;border:0.5px solid var(--border2);background:#fff;color:var(--text);cursor:pointer;white-space:nowrap}
+.aisub:hover{background:var(--lav2)}
+.aisub.on{background:var(--red);border-color:var(--red);color:#fff}
+.aisub .mi{position:relative;display:inline-flex;align-items:center}
+.aisub .muteslash{display:none;position:absolute;left:-2px;top:50%;width:18px;height:1.6px;background:currentColor;transform:rotate(-45deg);border-radius:2px}
+.aisub.on .muteslash{display:block}
+/* 音声設定の入力レベル */
+.vmeter{display:inline-flex;align-items:flex-end;gap:3px;height:20px}
+.vmeter i{width:5px;height:6px;background:var(--border2);border-radius:2px;display:block}
+.vmeter.live i:nth-child(-n+6){background:var(--purple)}
+.vmeter.live i:nth-child(1){height:8px}.vmeter.live i:nth-child(2){height:13px}.vmeter.live i:nth-child(3){height:20px}
+.vmeter.live i:nth-child(4){height:15px}.vmeter.live i:nth-child(5){height:10px}.vmeter.live i:nth-child(6){height:7px}
 
 /* フロート録音ボタンと重ならないようフッターに余白 */
 [data-id="explain"] .barfoot,[data-id="layout"] .barfoot,[data-id="explain2"] .barfoot,[data-id="video"] .barfoot,[data-id="radiograph"] .barfoot{padding-right:190px}
@@ -345,6 +362,23 @@ body.phase-p1 .stside{display:none}
 .ordmv{display:flex;gap:4px}
 .ordbtn{width:24px;height:24px;border-radius:6px;border:0.5px solid var(--border2);background:#fff;color:var(--muted);cursor:pointer;font-family:inherit;font-size:12px}
 .ordbtn:disabled{opacity:.3;cursor:default}
+/* 歯の状態: 入力する状態は「色見本つきのカード」。他のピル型ボタンと見分けがつくようにする */
+.tsmodes{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.tsmode{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--border2);border-radius:9px;background:#fff;padding:9px 14px;font-size:13px;color:var(--text);cursor:pointer}
+.tsmode .sw{width:14px;height:14px;border-radius:4px;border:0.5px solid var(--border2);display:block;flex:none}
+.tsmode:hover{border-color:#c9c4ec}
+.tsmode.on{border-color:var(--purple);background:var(--lav);color:var(--purple-d);font-weight:600;box-shadow:0 0 0 3px rgba(127,119,221,.15)}
+/* 検査順: 進み方の4パターン */
+.ordpats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.ordpat{border:1.5px solid var(--border2);border-radius:10px;background:#fff;padding:9px 12px;cursor:pointer}
+.ordpat .nm{display:block;font-size:13px;font-weight:600}
+.ordpat .ds{display:block;font-size:11px;color:var(--muted);margin-top:2px;line-height:1.5}
+.ordpat:hover{border-color:#c9c4ec}
+.ordpat.on{border-color:var(--purple);background:var(--lav);box-shadow:0 0 0 3px rgba(127,119,221,.15)}
+.ordpat.on .nm{color:var(--purple-d)}
+.ordlist{display:flex;gap:6px;flex-wrap:wrap}
+.ordchip{display:inline-flex;align-items:center;gap:6px;border:0.5px solid var(--border2);border-radius:999px;background:#fff;padding:4px 11px;font-size:11.5px}
+.ordchip b{color:var(--purple-d)}
 /* ストリーム内の検査表ストリップ */
 /* 検査画面の .chart をそのまま読み取り専用で埋め込む（簡易表示にしない） */
 .mstrip{margin-top:8px;border:0.5px solid var(--border);border-radius:8px;overflow-x:auto;background:#fff;padding:0}
@@ -352,6 +386,34 @@ body.phase-p1 .stside{display:none}
 .mschart .rlab .pillab{background:none;border:none;color:var(--muted);font-size:11px;line-height:1.25;padding:0 6px;display:flex;align-items:center;justify-content:center;height:100%;width:100%}
 .mschart .rlab .nolab{font-size:11px}
 .mschart .cell,.mschart .toothno{cursor:default}
+/* 歯番号は1行。インプラントは上顎ぶんを上、下顎ぶんを下に出して区別する */
+.toothno.duo{position:relative}
+.toothno.duo.hasimp{padding-right:26px}
+.toothno.duo .impmk{position:absolute;right:2px;margin:0;font-size:7px;padding:0 3px;line-height:1.4}
+.toothno.duo .impmk.up{top:1px}
+.toothno.duo .impmk.dn{bottom:1px}
+/* 印刷プレビュー（仮） */
+.a4wrap{background:var(--lav2);border-radius:10px;padding:14px;max-height:62vh;overflow:auto}
+.a4{width:100%;max-width:940px;margin:0 auto;background:#fff;border:0.5px solid var(--border2);border-radius:4px;padding:22px 26px;box-shadow:0 2px 10px rgba(80,70,180,.10)}
+.a4 .a4head{display:flex;align-items:baseline;gap:12px;border-bottom:1.5px solid var(--purple);padding-bottom:8px;margin-bottom:14px}
+.a4 .a4head .ttl{font-size:16px;font-weight:700;color:var(--purple-d);white-space:nowrap}
+.a4 .a4head .pt{white-space:nowrap}
+.a4 .cmpchart{min-width:0}
+.a4 .a4head .pt{font-size:13px;font-weight:600}
+.a4 .a4blk{margin-bottom:16px}
+.a4 .a4blk .bh{display:flex;align-items:baseline;gap:10px;margin-bottom:5px}
+.a4 .a4blk .bh .d{font-weight:700;font-size:13.5px}
+.a4 .a4foot{display:flex;gap:14px;font-size:10.5px;color:var(--muted);border-top:0.5px solid var(--border);padding-top:7px}
+@media print{
+  body *{visibility:hidden!important}
+  #printModal,#printModal *{visibility:visible!important}
+  #printModal{position:absolute!important;inset:0!important;background:#fff!important;display:block!important;padding:0!important}
+  #printModal .modal{max-width:none!important;box-shadow:none!important;border:none!important;padding:0!important}
+  #printModal .modal>h3,#printModal .modal>.x,#printModal .modal>div:last-child{display:none!important}
+  .a4wrap{background:#fff!important;padding:0!important;max-height:none!important;overflow:visible!important}
+  .a4{width:auto!important;border:none!important;box-shadow:none!important;padding:0!important}
+  @page{size:A4 landscape;margin:10mm}
+}
 .mschart .toothno{font-size:11px;gap:4px}
 .mschart .mini6 .m6{font-size:11px}
 .mschart .mini6 .pus{min-width:14px;height:14px;border-width:1px}
@@ -567,7 +629,6 @@ body.phase-p1 .stside{display:none}
           <section class="screen" data-id="stream">
             <div class="sthead">
               <span class="muted" style="cursor:pointer;font-size:13px" onclick="go('search')"><i class="ti ti-chevron-left"></i> 戻る</span>
-              <div style="width:34px;height:34px;border-radius:50%;background:var(--lav);color:var(--purple-d);display:flex;align-items:center;justify-content:center;font-size:14px">田</div>
               <div style="line-height:1.3"><div style="display:flex;align-items:baseline;gap:8px"><span style="font-weight:800;font-size:17px;letter-spacing:.02em;color:var(--purple-d)">001</span><span style="font-weight:600;font-size:12.5px">田中 花子 様</span></div><div class="hint" style="font-size:11px">45歳 女性 ・ 初診 2026/01/15 ・ 来院 6回</div></div>
               <span class="stwarn full-only"><i class="ti ti-alert-circle" style="font-size:12px"></i> 高血圧・降圧薬</span>
               <span class="chip green full-only"><i class="ti ti-circle-check" style="font-size:11px"></i> 録音同意</span>
@@ -700,7 +761,7 @@ body.phase-p1 .stside{display:none}
               <span style="display:flex;align-items:baseline;gap:7px"><span style="font-weight:800;font-size:17px;letter-spacing:.02em;color:var(--purple-d)">001</span><span style="font-weight:600;font-size:12.5px">田中 花子 様</span></span>
               <span class="spacer"></span>
               <span class="qh" onclick="showHelp(event,this)" data-help="選んだ2回の検査を上下に並べます。表が横長のため左右ではなく上下に配置し、患者さんへの説明にそのまま使えるようにしています。">?</span>
-              <button class="btn primary sm"><i class="ti ti-printer"></i> 印刷</button>
+              <button class="btn primary sm" onclick="openPrint()"><i class="ti ti-printer"></i> 印刷</button>
             </div>
             <div class="stitems" id="cmpitems">
               <span class="hint" style="margin-right:2px">表示する検査項目</span>
@@ -713,17 +774,24 @@ body.phase-p1 .stside{display:none}
             </div>
             <div class="body" style="padding:14px 16px">
               <div class="cmpblk">
-                <div class="cmphead"><span class="d" id="cmp-a-date">2026/04/09</span><span class="hint" id="cmp-a-sub">歯周治療（SRP）</span><span class="spacer" style="flex:1"></span><span class="cmpkv">PPD平均<b>2.8</b></span><span class="cmpkv">BOP<b>26%</b></span><span class="cmpkv">4mm以上<b>18%</b></span></div>
+                <div class="cmphead"><span class="d" id="cmp-a-date">2026/04/09</span><span class="hint full-only" id="cmp-a-sub">歯周治療（SRP）</span><span class="spacer" style="flex:1"></span><span class="cmpkv">PPD平均<b>2.8</b></span><span class="cmpkv">BOP<b>26%</b></span><span class="cmpkv">4mm以上<b>18%</b></span></div>
                 <div class="chartwrap"><div class="chart cmpchart" id="cmp-a"></div></div>
               </div>
               <div class="cmpgap"></div>
               <div class="cmpblk">
-                <div class="cmphead"><span class="d" id="cmp-b-date">2026/06/21</span><span class="hint" id="cmp-b-sub">定期検診・SRP</span><span class="spacer" style="flex:1"></span><span class="cmpkv">PPD平均<b>2.6</b></span><span class="cmpkv">BOP<b>22%</b></span><span class="cmpkv">4mm以上<b>12%</b></span></div>
+                <div class="cmphead"><span class="d" id="cmp-b-date">2026/06/21</span><span class="hint full-only" id="cmp-b-sub">定期検診・SRP</span><span class="spacer" style="flex:1"></span><span class="cmpkv">PPD平均<b>2.6</b></span><span class="cmpkv">BOP<b>22%</b></span><span class="cmpkv">4mm以上<b>12%</b></span></div>
                 <div class="chartwrap"><div class="chart cmpchart" id="cmp-b"></div></div>
               </div>
-              <div class="hint" style="margin-top:12px;line-height:1.8"><span class="cmplg bl"></span> 出血　<span class="cmplg ci">3</span> 排膿　<span class="cmplg hi">4</span> 4mm以上</div>
             </div>
           </section>
+
+          <!-- 比較の印刷プレビュー（仮レイアウト・A4横） -->
+          <div class="modal-ov" id="printModal" onclick="if(event.target===this)closePrint()"><div class="modal" style="width:94%;max-width:1040px">
+            <span class="x" onclick="closePrint()"><i class="ti ti-x"></i></span>
+            <h3 style="font-size:15px">印刷プレビュー <span class="hint" style="font-weight:400">A4 横 ・ レイアウトは仮</span></h3>
+            <div class="a4wrap"><div class="a4" id="printSheet"></div></div>
+            <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:14px"><button class="btn" onclick="closePrint()">閉じる</button><button class="btn primary" onclick="window.print()"><i class="ti ti-printer"></i> 印刷する</button></div>
+          </div></div>
 
           <!-- HUB -->
           <section class="screen" data-id="hub">
@@ -769,7 +837,7 @@ body.phase-p1 .stside{display:none}
                 <span class="vn dis">次回</span>
               </span>
               <span class="spacer"></span>
-              <span class="exstaff"><span class="lab">検査担当</span><span class="pill amberline qpill" id="examstaff" onclick="openStaffPick()"><i class="ti ti-user" style="font-size:13px"></i> 大野 美咲</span><span class="qh" onclick="showHelp(event,this)" data-help="検査を始める前に担当を選びます。PINなどの認証は行いません（2要素認証は法施行後に対応）。途中で交代した場合も、あとから検査の詳細画面で担当を変更できます。">?</span></span>
+              <span class="exstaff"><span class="lab">検査担当</span><span class="pill amberline qpill" id="examstaff" onclick="openStaffPick()"><i class="ti ti-user" style="font-size:13px"></i> 大野 美咲</span><span class="qh" style="display:none" onclick="showHelp(event,this)" data-help="検査を始める前に担当を選びます。PINなどの認証は行いません（2要素認証は法施行後に対応）。途中で交代した場合も、あとから検査の詳細画面で担当を変更できます。">?</span></span>
               <button class="btn sm" onclick="openMemo()"><i class="ti ti-notes"></i> 診療メモ</button>
               <button class="btn sm" onclick="go('toothstate')"><i class="ti ti-dental"></i> 歯の状態</button>
               <button class="btn sm" onclick="go('examset')"><i class="ti ti-settings"></i> 表示設定</button>
@@ -783,29 +851,49 @@ body.phase-p1 .stside{display:none}
 
             <!-- 下部ドック: 左=AI音声入力 / 中央=テンキー / 右=検査部位 -->
             <div class="exdock">
-              <div class="exdk">
-                <div class="exlab">AI音声入力 <span class="hint">ポケット・歯肉退縮量のみ</span><span class="spacer"></span><span class="qh" onclick="showHelp(event,this)" data-help="標準はタップ入力です。声で入れたいときだけ「AI音声入力」を押します。ポケットは「3, 2, 3」、歯を指定するときは「6番 3, 2, 3」、1点だけ直すときは「6番の遠心頬側に 3」。入力は復唱せず、効果音と画面表示で確認します。">?</span></div>
+              <div class="exdk voice">
                 <button class="aivoice" id="aivoice" onclick="toggleVoice()"><i class="ti ti-microphone"></i> AI音声入力</button>
-                <div class="aifield" id="aifield">タップで入力中（音声はオフ）</div>
+                <div class="ainote">※ポケット・歯肉退縮量のみ対応</div>
+                <div class="voicerow">
+                  <button class="aisub" id="aimute" onclick="toggleMute()"><span class="mi"><i class="ti ti-microphone"></i><i class="muteslash"></i></span> ミュート</button>
+                  <button class="aisub" onclick="openVoiceCfg()"><i class="ti ti-settings"></i> 音声設定</button>
+                </div>
+                <button class="numkey2 del" onclick="void 0"><i class="ti ti-backspace"></i> 削除</button>
               </div>
               <div class="exdk pad">
                 <div class="numpad2">
-                  <button class="numkey2">1</button><button class="numkey2">2</button><button class="numkey2">3</button>
-                  <button class="numkey2">4</button><button class="numkey2">5</button><button class="numkey2">6</button>
-                  <button class="numkey2">7</button><button class="numkey2">8</button><button class="numkey2">9</button>
-                  <button class="numkey2">0</button><button class="numkey2 del"><i class="ti ti-backspace"></i> 削除</button>
+                  <button class="numkey2">0</button><button class="numkey2">1</button><button class="numkey2">2</button><button class="numkey2">3</button>
+                  <button class="numkey2">4</button><button class="numkey2">5</button><button class="numkey2">6</button><button class="numkey2">7</button>
+                  <button class="numkey2 low">8</button><button class="numkey2 low">9</button><button class="numkey2 low">10</button><button class="numkey2 low">11</button>
                 </div>
               </div>
               <div class="exdk quad">
                 <div class="exlab">検査部位<span class="qh" onclick="showHelp(event,this)" data-help="進む向きと区画をまわる順番は「表示設定・検査順」で決めます。端まで入力すると自動で次の区画へ移ります。">?</span></div>
                 <div class="qgrid">
-                  <span class="pill amber qpill" id="q-ru" onclick="setQuad('ru')">右上<i class="qmk tr"></i></span>
-                  <span class="pill amberline qpill" id="q-lu" onclick="setQuad('lu')"><i class="qmk tl"></i>左上</span>
-                  <span class="pill amberline qpill" id="q-rl" onclick="setQuad('rl')">右下<i class="qmk br"></i></span>
-                  <span class="pill amberline qpill" id="q-ll" onclick="setQuad('ll')"><i class="qmk bl"></i>左下</span>
+                  <span class="pill amber qpill" id="q-ru" onclick="setQuad('ru')">右上<i class="qmk tl"></i></span>
+                  <span class="pill amberline qpill" id="q-lu" onclick="setQuad('lu')"><i class="qmk tr"></i>左上</span>
+                  <span class="pill amberline qpill" id="q-rl" onclick="setQuad('rl')">右下<i class="qmk bl"></i></span>
+                  <span class="pill amberline qpill" id="q-ll" onclick="setQuad('ll')"><i class="qmk br"></i>左下</span>
                 </div>
               </div>
             </div>
+
+            <!-- 音声設定（マイク選択・入力テスト） -->
+            <div class="modal-ov" id="voiceCfg" onclick="if(event.target===this)closeVoiceCfg()"><div class="modal">
+              <span class="x" onclick="closeVoiceCfg()"><i class="ti ti-x"></i></span>
+              <h3 style="font-size:15px">音声設定</h3>
+              <div class="label" style="margin:12px 0 5px">マイク</div>
+              <div class="field" data-opts="内蔵マイク（iPad）|外部マイク（USB-C）|Bluetooth ヘッドセット">内蔵マイク（iPad）<i class="ti ti-chevron-down" style="margin-left:auto"></i></div>
+              <div class="label" style="margin:14px 0 5px">入力テスト</div>
+              <div class="card" style="padding:12px">
+                <div style="display:flex;align-items:center;gap:10px">
+                  <button class="btn sm" id="vtestbtn" onclick="voiceTest()"><i class="ti ti-microphone"></i> テスト開始</button>
+                  <span class="vmeter"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+                </div>
+                <div class="hint" id="vtestmsg" style="margin-top:9px">「右上6番 3・2・3」と話しかけてください。認識結果がここに出ます。</div>
+              </div>
+              <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:16px"><button class="btn" onclick="closeVoiceCfg()">閉じる</button><button class="btn primary" onclick="closeVoiceCfg()">保存</button></div>
+            </div></div>
 
             <!-- 集計バー（実機と同じく最下部・画面下端に固定） -->
             <div class="bar barfoot" style="padding:8px 14px;background:var(--lav2)">
@@ -825,27 +913,25 @@ body.phase-p1 .stside{display:none}
 
           <!-- EXAMSET プロービング検査の設定（probingから遷移） -->
           <section class="screen" data-id="examset">
-            <div class="bar"><span class="muted" style="cursor:pointer;font-size:13px" onclick="go('probing')"><i class="ti ti-chevron-left"></i> 戻る</span><span class="logo" style="font-size:16px">表示設定・検査順</span><span class="chip lav">この検査に適用</span><span class="spacer"></span><span class="muted" style="font-size:12px">衛生士A ・ 前回設定を引継ぎ</span></div>
+            <div class="bar"><span class="muted" style="cursor:pointer;font-size:13px" onclick="go('probing')"><i class="ti ti-chevron-left"></i> 戻る</span><span class="logo" style="font-size:16px">表示設定・検査順</span><button class="btn primary sm" onclick="go('probing')"><i class="ti ti-device-floppy"></i> 保存して検査へ</button><span class="spacer"></span></div>
             <div class="body" style="padding:18px">
               <div class="grid" style="grid-template-columns:1.05fr 1fr;gap:24px;align-items:start;max-width:980px">
                 <div>
                   <div class="label" style="font-weight:500;margin-bottom:8px">検査順<span class="qh" onclick="showHelp(event,this)" data-help="4つの区画をまわる順番と、それぞれ右から進むか左から進むかを決めます。この2つの指定だけで現場の8パターンを表現できます。設定は検査担当者ごとに保存され、次回以降も引き継がれます。端まで入力すると自動で次の区画へ移ります。">?</span></div>
-                  <div class="hint" style="margin-bottom:8px;line-height:1.7">区画をまわる順番（↑↓で並べ替え）と、進む向きを指定します。医院で1つ決めて全員で使うのが基本です。</div>
+                  <div class="hint" style="margin-bottom:8px;line-height:1.7">上顎と下顎のどちらから始めるかと、進み方のパターンを選びます。医院で1つ決めて全員で使うのが基本です。</div>
                   <div class="ordset" style="margin-bottom:10px"></div>
                   <div class="label" style="font-weight:500;margin-bottom:8px">設定中の流れ</div>
                   <div class="ordfig" style="background:#fff;border:0.5px solid var(--border2);border-radius:12px;padding:8px;display:flex;justify-content:center"></div>
                 </div>
                 <div>
-                  <div class="label" style="font-weight:500;margin-bottom:6px">検査の種別</div>
+                  <div class="label" style="font-weight:500;margin-bottom:6px">ポケット検査の種別</div>
                   <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px"><span class="pill on">6点法</span><span class="pill">4点法</span><span class="pill">1点法</span></div>
                   <div class="label" style="font-weight:500;margin-bottom:6px">表示する検査項目<span class="qh" onclick="showHelp(event,this)" data-help="複数選択できます。選んだ項目が検査画面に反映されます。医院全体の設定が既定値になり、担当者ごとにさらに変更できます。">?</span></div>
-                  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px"><span class="pill multi on" data-row="mob" onclick="toggleExamRow(this,'mob')">動揺度</span><span class="pill multi" data-row="fur" onclick="toggleExamRow(this,'fur')">根分岐部</span><span class="pill multi on" data-row="pla" onclick="toggleExamRow(this,'pla')">プラーク</span><span class="pill multi on" data-row="pkt" onclick="toggleExamRow(this,'pkt')">ポケット</span><span class="pill multi on" data-row="bop" onclick="toggleExamRow(this,'bop')">出血</span><span class="pill multi on" data-row="pus" onclick="toggleExamRow(this,'pus')">排膿</span><span class="pill multi" data-row="rec" onclick="toggleExamRow(this,'rec')">歯肉退縮量</span></div>
-                  <div class="card" style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div style="flex:1"><div style="font-size:13px;font-weight:500">測定方向の自動送り<span class="qh" onclick="showHelp(event,this)" data-help="ONにすると、入力後に次の規定位置へカーソルが移動します。OFFならタップした位置に留まります。">?</span></div></div><span class="toggle on"><span class="knob"></span></span></div>
+                  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px"><span class="pill multi on" data-row="pkt" onclick="toggleExamRow(this,'pkt')">ポケット・出血・排膿</span><span class="pill multi on" data-row="pla" onclick="toggleExamRow(this,'pla')">プラーク</span><span class="pill multi on" data-row="mob" onclick="toggleExamRow(this,'mob')">動揺度</span><span class="pill multi" data-row="fur" onclick="toggleExamRow(this,'fur')">根分岐部</span><span class="pill multi" data-row="rec" onclick="toggleExamRow(this,'rec')">歯肉退縮量</span></div>
                   <div class="card" style="display:flex;align-items:center;gap:8px"><div style="flex:1"><div style="font-size:13px;font-weight:500">前回値を参照表示<span class="qh" onclick="showHelp(event,this)" data-help="検査表に前回値を薄く表示し、今回値と比較しながら入力できます。既定はONです。">?</span></div></div><span class="toggle on"><span class="knob"></span></span></div>
                 </div>
               </div>
             </div>
-            <div class="bar barfoot" style="justify-content:center;gap:10px"><button class="btn" onclick="go('probing')">戻る</button><button class="btn primary sm" onclick="go('probing')">保存して検査へ</button></div>
           </section>
 
           <!-- EXPLAIN: 全メディア一覧 -->
@@ -1300,17 +1386,16 @@ body.phase-p1 .stside{display:none}
               <div class="grid" style="grid-template-columns:1.05fr 1fr;gap:24px;align-items:start;max-width:980px">
                 <div>
                   <div class="label" style="font-weight:500;margin-bottom:8px">検査順<span class="qh" onclick="showHelp(event,this)" data-help="4つの区画をまわる順番と、それぞれ右から進むか左から進むかを決めます。この2つの指定だけで現場の8パターンを表現できます。端まで入力すると自動で次の区画へ移ります。">?</span></div>
-                  <div class="hint" style="margin-bottom:8px;line-height:1.7">区画をまわる順番（↑↓で並べ替え）と、進む向きを指定します。医院で1つ決めて全員で使うのが基本です。</div>
+                  <div class="hint" style="margin-bottom:8px;line-height:1.7">上顎と下顎のどちらから始めるかと、進み方のパターンを選びます。医院で1つ決めて全員で使うのが基本です。</div>
                   <div class="ordset" style="margin-bottom:10px"></div>
                   <div class="label" style="font-weight:500;margin-bottom:8px">設定中の流れ</div>
                   <div class="ordfig" style="background:#fff;border:0.5px solid var(--border2);border-radius:12px;padding:8px;display:flex;justify-content:center"></div>
                 </div>
                 <div>
-                  <div class="label" style="font-weight:500;margin-bottom:6px">検査の種別</div>
+                  <div class="label" style="font-weight:500;margin-bottom:6px">ポケット検査の種別</div>
                   <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px"><span class="pill on">6点法</span><span class="pill">4点法</span><span class="pill">1点法</span></div>
                   <div class="label" style="font-weight:500;margin-bottom:6px">表示する検査項目<span class="qh" onclick="showHelp(event,this)" data-help="複数選択できます。選んだ項目が検査画面に反映されます。">?</span></div>
-                  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px"><span class="pill multi on" data-row="mob" onclick="toggleExamRow(this,'mob')">動揺度</span><span class="pill multi" data-row="fur" onclick="toggleExamRow(this,'fur')">根分岐部</span><span class="pill multi on" data-row="pla" onclick="toggleExamRow(this,'pla')">プラーク</span><span class="pill multi on" data-row="pkt" onclick="toggleExamRow(this,'pkt')">ポケット</span><span class="pill multi on" data-row="bop" onclick="toggleExamRow(this,'bop')">出血</span><span class="pill multi on" data-row="pus" onclick="toggleExamRow(this,'pus')">排膿</span><span class="pill multi" data-row="rec" onclick="toggleExamRow(this,'rec')">歯肉退縮量</span></div>
-                  <div class="card" style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div style="flex:1"><div style="font-size:13px;font-weight:500">測定方向の自動送り<span class="qh" onclick="showHelp(event,this)" data-help="ONにすると、入力後に次の規定位置へカーソルが移動します。OFFならタップした位置に留まります。">?</span></div></div><span class="toggle on"><span class="knob"></span></span></div>
+                  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px"><span class="pill multi on" data-row="pkt" onclick="toggleExamRow(this,'pkt')">ポケット・出血・排膿</span><span class="pill multi on" data-row="pla" onclick="toggleExamRow(this,'pla')">プラーク</span><span class="pill multi on" data-row="mob" onclick="toggleExamRow(this,'mob')">動揺度</span><span class="pill multi" data-row="fur" onclick="toggleExamRow(this,'fur')">根分岐部</span><span class="pill multi" data-row="rec" onclick="toggleExamRow(this,'rec')">歯肉退縮量</span></div>
                   <div class="card" style="display:flex;align-items:center;gap:8px;margin-bottom:18px"><div style="flex:1"><div style="font-size:13px;font-weight:500">前回値を参照表示<span class="qh" onclick="showHelp(event,this)" data-help="検査表に前回値を薄く表示し、今回値と比較しながら入力できます。既定はONです。">?</span></div></div><span class="toggle on"><span class="knob"></span></span></div>
                   <div class="full-only">
                     <div class="label" style="font-weight:500;margin-bottom:6px">書類の自動生成</div>
@@ -1386,15 +1471,14 @@ body.phase-p1 .stside{display:none}
 
           <!-- TOOTHSTATE 歯の状態（患者ごと・プロービングから遷移） -->
           <section class="screen" data-id="toothstate">
-            <div class="bar"><span class="muted" style="cursor:pointer;font-size:13px" onclick="go('probing')"><i class="ti ti-chevron-left"></i> 戻る</span><span class="logo" style="font-size:16px">歯の状態</span><span class="chip lav">患者ごとの設定</span><span class="spacer"></span><span class="hint">初回に設定すれば、以降は変化があったときだけ直します</span></div>
+            <div class="bar"><span class="muted" style="cursor:pointer;font-size:13px" onclick="go('probing')"><i class="ti ti-chevron-left"></i> 戻る</span><span class="logo" style="font-size:16px">歯の状態</span><button class="btn primary sm" onclick="go('probing')"><i class="ti ti-device-floppy"></i> 保存して戻る</button><span class="spacer"></span></div>
             <div class="body" style="padding:18px">
-              <div style="max-width:820px;padding:10px 14px;border-radius:10px;background:var(--lav2);font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:16px"><i class="ti ti-info-circle"></i> 初期状態は<b>1番〜8番すべて「通常」</b>です。<b>入力する状態を選んでから、歯番号を続けてタップ</b>してください（もう一度タップすると戻ります）。検査表の出血・排膿と同じ操作です。<br>補綴（クラウン・インレー）と健全の区別は歯周検査に影響しないため設定しません。</div>
-              <div class="label" style="font-weight:500;margin-bottom:8px">入力する状態<span class="qh" onclick="showHelp(event,this)" data-help="「欠損」を選んで歯をタップすると欠損になります。続けてタップすれば連続で設定できます。乳歯は1〜5番のみ対象で、A〜Eの表記に変わります。">?</span></div>
-              <div class="tsmodes" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px">
-                <span class="pill" data-m="" onclick="tsSetMode('',this)">通常</span>
-                <span class="pill on" data-m="none" onclick="tsSetMode('none',this)">欠損</span>
-                <span class="pill" data-m="baby" onclick="tsSetMode('baby',this)">乳歯（1〜5番）</span>
-                <span class="pill" data-m="imp" onclick="tsSetMode('imp',this)">インプラント</span>
+              <div class="label" style="font-weight:500;margin-bottom:8px">入力する状態 <span class="hint" style="font-weight:400">状態を選択して歯番号をタップ</span><span class="qh" onclick="showHelp(event,this)" data-help="「欠損」を選んで歯をタップすると欠損になります。続けてタップすれば連続で設定できます。乳歯は1〜5番のみ対象で、A〜Eの表記に変わります。">?</span></div>
+              <div class="tsmodes">
+                <span class="tsmode" data-m="" onclick="tsSetMode('',this)"><i class="sw" style="background:#fff"></i>通常</span>
+                <span class="tsmode on" data-m="none" onclick="tsSetMode('none',this)"><i class="sw" style="background:#ececf1"></i>欠損</span>
+                <span class="tsmode" data-m="baby" onclick="tsSetMode('baby',this)"><i class="sw" style="background:#FDF0E1"></i>乳歯（1〜5番）</span>
+                <span class="tsmode" data-m="imp" onclick="tsSetMode('imp',this)"><i class="sw" style="background:var(--green-bg)"></i>インプラント</span>
               </div>
               <div class="label" style="font-weight:500;margin-bottom:8px">上顎（右8 → 左8）</div>
               <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:18px" id="arch-upper"></div>
@@ -1402,7 +1486,6 @@ body.phase-p1 .stside{display:none}
               <div style="display:flex;gap:4px;flex-wrap:wrap" id="arch-lower"></div>
               <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:18px;font-size:11.5px;color:var(--muted)"><span><span class="tsleg" style="background:#fff"></span> 通常</span><span><span class="tsleg" style="background:#ececf1"></span> 欠損（✕・検査表では入力不可）</span><span><span class="tsleg" style="background:#FDF0E1"></span> 乳歯（A〜E表記）</span><span><span class="tsleg" style="background:var(--green-bg)"></span> インプラント（検査表に IMP）</span></div>
             </div>
-            <div class="bar barfoot" style="justify-content:center;gap:10px"><button class="btn" onclick="go('probing')">検査に戻る</button><button class="btn primary sm" onclick="go('probing')">保存して戻る</button></div>
           </section>
 
           <!-- ============ 患者用アプリ（スマートフォン）============ -->
@@ -1773,9 +1856,19 @@ function exToggle(el){var on=el.classList.contains("amber");el.classList.toggle(
 var voiceOn=false;
 function toggleVoice(){
   voiceOn=!voiceOn;
-  var b=document.getElementById("aivoice"),f=document.getElementById("aifield");
+  var b=document.getElementById("aivoice");
   if(b)b.classList.toggle("on",voiceOn);
-  if(f)f.textContent=voiceOn?"右上6番 頬側 3・2・3":"タップで入力中（音声はオフ）";
+}
+var muted=false;
+function toggleMute(){muted=!muted;var b=document.getElementById("aimute");if(b)b.classList.toggle("on",muted);}
+function openVoiceCfg(){document.getElementById("voiceCfg").classList.add("show");}
+function closeVoiceCfg(){document.getElementById("voiceCfg").classList.remove("show");}
+function voiceTest(){
+  var m=document.querySelector("#voiceCfg .vmeter"),t=document.getElementById("vtestmsg"),b=document.getElementById("vtestbtn");
+  if(!m)return;
+  var on=m.classList.toggle("live");
+  if(b)b.innerHTML=on?'<i class="ti ti-player-stop"></i> テスト停止':'<i class="ti ti-microphone"></i> テスト開始';
+  if(t)t.textContent=on?"認識中… 「右上6番 頬側 3・2・3」":"「右上6番 3・2・3」と話しかけてください。認識結果がここに出ます。";
 }
 function openStaffPick(){document.getElementById("staffModal").classList.add("show");}
 function closeStaffPick(){document.getElementById("staffModal").classList.remove("show");}
@@ -1869,7 +1962,7 @@ document.addEventListener("click",function(e){if(!e.target.closest("#toothStateM
 /* 歯の状態: u/l + 位置0〜15（右8→左8）。"" 通常 / none 欠損 / baby 乳歯 / imp インプラント */
 var TSTATE={u0:"none",u1:"imp",l0:"none",l15:"none"};
 var tsMode="none";
-function tsSetMode(m,el){tsMode=m;document.querySelectorAll(".tsmodes .pill").forEach(function(x){x.classList.toggle("on",x===el);});}
+function tsSetMode(m,el){tsMode=m;document.querySelectorAll(".tsmodes .tsmode").forEach(function(x){x.classList.toggle("on",x===el);});}
 function tsLabel(st,n){return st==="none"?"✕":(st==="baby"?"ABCDE".charAt(n-1):String(n));}
 function tsTap(a,i,n){
   if(tsMode==="baby"&&n>5)return;
@@ -1894,21 +1987,36 @@ function buildArch(){
   up.innerHTML=u;lo.innerHTML=l;
 }
 /* ===== 検査順の設定（区画の順番＋進む向き） ===== */
-var ORD=[{k:"ub",n:"上顎 頬側",d:"r"},{k:"up",n:"上顎 口蓋側",d:"l"},{k:"lb",n:"下顎 頬側",d:"r"},{k:"ll",n:"下顎 舌側",d:"l"}];
+/* 検査順は「上顎/下顎どちらから始めるか」＋「進み方4パターン」だけで決める（旧方式は384通りで多すぎた） */
+var ORDNAME={ub:"上顎 頬側",up:"上顎 口蓋側",lb:"下顎 頬側",ll:"下顎 舌側"};
+var ORDPATS=[
+  {n:"右まわり（折り返し）",d:["r","l","r","l"],s:"外側は右から、内側は左から戻る"},
+  {n:"右からで統一",d:["r","r","r","r"],s:"どの区画もつねに右から左へ"},
+  {n:"左まわり（折り返し）",d:["l","r","l","r"],s:"外側は左から、内側は右から戻る"},
+  {n:"左からで統一",d:["l","l","l","l"],s:"どの区画もつねに左から右へ"}
+];
+var ORDSTART="u",ORDPAT=0,ORD=[];
+function ordApply(){
+  var q=(ORDSTART==="u")?["ub","up","lb","ll"]:["lb","ll","ub","up"],d=ORDPATS[ORDPAT].d;
+  ORD=q.map(function(k,i){return {k:k,n:ORDNAME[k],d:d[i]};});
+}
+function setOrdStart(v){ORDSTART=v;buildOrd();}
+function setOrdPat(i){ORDPAT=i;buildOrd();}
 function buildOrd(){
+  ordApply();
   var els=document.querySelectorAll(".ordset");if(!els.length)return;
-  var h="";
-  ORD.forEach(function(o,i){
-    h+='<div class="ordrow"><span class="ordno">'+(i+1)+'</span><span class="ordnm">'+o.n+'</span>'+
-       '<span class="seg" style="padding:3px"><span class="pill'+(o.d==="r"?" on":"")+'" onclick="ordDir('+i+',\'r\')">右から</span><span class="pill'+(o.d==="l"?" on":"")+'" onclick="ordDir('+i+',\'l\')">左から</span></span>'+
-       '<span class="ordmv"><button class="ordbtn" onclick="ordMove('+i+',-1)" '+(i===0?"disabled":"")+'>↑</button><button class="ordbtn" onclick="ordMove('+i+',1)" '+(i===3?"disabled":"")+'>↓</button></span></div>';
+  var h='<div class="seg" style="padding:3px;margin-bottom:10px">'+
+    '<span class="pill'+(ORDSTART==="u"?" on":"")+'" onclick="setOrdStart(\'u\')">上顎スタート</span>'+
+    '<span class="pill'+(ORDSTART==="l"?" on":"")+'" onclick="setOrdStart(\'l\')">下顎スタート</span></div><div class="ordpats">';
+  ORDPATS.forEach(function(p,i){
+    h+='<div class="ordpat'+(i===ORDPAT?" on":"")+'" onclick="setOrdPat('+i+')"><span class="nm">'+p.n+'</span><span class="ds">'+p.s+'</span></div>';
   });
+  h+='</div><div class="ordlist">'+ORD.map(function(o,i){
+    return '<span class="ordchip"><b>'+(i+1)+'</b>'+o.n+'<span class="hint">'+(o.d==="r"?"右→左":"左→右")+'</span></span>';
+  }).join("")+'</div>';
   [].forEach.call(els,function(el){el.innerHTML=h;});
   buildArchFig();
-  var sum=ORD.map(function(o,i){return "<b>"+(i+1)+"</b> "+o.n+"（"+(o.d==="r"?"右→左":"左→右")+"）";}).join(" → ")+"<br>端まで入力すると自動で次の区画へ移ります。この設定は検査担当者ごとに保存されます。";
-  [].forEach.call(document.querySelectorAll(".ordsum"),function(e){e.innerHTML=sum;});
 }
-function ordDir(i,d){ORD[i].d=d;buildOrd();}
 /* 設定中の検査順を上下顎のイラストで表示（矢印の向きと番号が設定に連動） */
 var ORDCOL=["#E8546B","#F2A33C","#7FC241","#39BFD3"];
 var ARCPATH={
@@ -1947,17 +2055,33 @@ function buildArchFig(){
       '<text x="160" y="176" text-anchor="middle" font-size="9.5" fill="#9a9aa2">下顎</text></svg>';
   });
 }
-function ordMove(i,d){var j=i+d;if(j<0||j>3)return;var t=ORD[i];ORD[i]=ORD[j];ORD[j]=t;buildOrd();}
 
 /* ===== ストリーム: 各来院に検査表の一部を出す ===== */
 /* 患者詳細で出す検査表の行。ポケット・出血・排膿は同じ行に出るのでひとまとめ（既定ON） */
 var ST_ITEMS={pkt:true,pla:false,mob:false,fur:false,rec:false};
 function stToggleItem(el,k){ST_ITEMS[k]=!ST_ITEMS[k];el.classList.toggle("on",!!ST_ITEMS[k]);stRebuildCharts();}
-function stRowKeys(lower){
-  var ks=["mob","fur","pla","pkt","rec"].filter(function(k){return ST_ITEMS[k];});
-  if(!ks.length)return [];   /* 1つも選ばれていなければ歯番号も出さず、表ごと消す */
-  ks.push("no");
-  return lower?ks.slice().reverse():ks;
+function stRowKeys(){
+  return ["mob","fur","pla","pkt","rec"].filter(function(k){return ST_ITEMS[k];});
+}
+/* 巻物・比較の歯番号は1行にまとめる。インプラントだけは上顎ぶんを上、下顎ぶんを下に出して区別する */
+function fullToothnoCell(t,i){
+  var su=TSTATE["u"+i]||"",sl=TSTATE["l"+i]||"";
+  var lab=(su==="baby"||sl==="baby")?"ABCDE".charAt(t-1):String(t);
+  var b="";
+  if(su==="imp")b+='<span class="impmk up">IMP</span>';
+  if(sl==="imp")b+='<span class="impmk dn">IMP</span>';
+  return '<div class="toothno duo'+(b?" hasimp":"")+'">'+lab+b+'</div>';
+}
+/* 上顎ぶん → 歯番号 → 下顎ぶん（逆順）の行を1枚のチャートとして組む */
+function fullChartHTML(keys,rowTrackFn){
+  var full=[8,7,6,5,4,3,2,1,1,2,3,4,5,6,7,8];
+  var rows=keys.concat(["no"],keys.slice().reverse()),h="";
+  rows.forEach(function(rk,n){
+    var lower=(n>keys.length);
+    h+=stRlab(rk);
+    full.forEach(function(t,i){h+=(rk==="no")?fullToothnoCell(t,i):rowCell(rk,t,lower);});
+  });
+  return {html:h,tracks:rows.map(rowTrackFn).join(" ")};
 }
 /* 行ラベルは検査画面と同じ位置・同じ名前。ただし読み取り専用なのでモード選択はしない */
 function stRlab(rk){
@@ -1967,7 +2091,7 @@ function stRlab(rk){
 }
 /* 一覧に出すときの行の高さ。検査画面は入力しやすいように縦に伸ばすが、巻物では詰める */
 function stRowTrack(rk){
-  if(rk==="no")return "22px";
+  if(rk==="no")return "26px";
   if(rk==="pkt")return "44px";
   if(rk==="rec")return "34px";
   return "30px";
@@ -1987,19 +2111,12 @@ function demoVariant(idx){
   return o;
 }
 function miniStrip(idx){
-  var full=[8,7,6,5,4,3,2,1,1,2,3,4,5,6,7,8];
-  var up=stRowKeys(false),lo=stRowKeys(true),rows=up.concat(lo),h="";
-  if(!rows.length)return "";
-  var save=DEMO;
+  var keys=stRowKeys();
+  if(!keys.length)return "";
+  var save=DEMO,r;
   DEMO=demoVariant(idx);
-  try{
-    rows.forEach(function(rk,n){
-      var lower=(n>=up.length);
-      h+=stRlab(rk);
-      full.forEach(function(t){h+=(rk==="no")?toothnoCell(t):rowCell(rk,t,lower);});
-    });
-  }finally{ DEMO=save; }
-  return '<div class="mstrip"><div class="chart full mschart" style="grid-template-rows:'+rows.map(stRowTrack).join(" ")+'">'+h+'</div></div>';
+  try{ r=fullChartHTML(keys,stRowTrack); }finally{ DEMO=save; }
+  return '<div class="mstrip"><div class="chart full mschart" style="grid-template-rows:'+r.tracks+'">'+r.html+'</div></div>';
 }
 function stRebuildCharts(){
   [].forEach.call(document.querySelectorAll("#ststream .stvisit"),function(v,idx){
@@ -2065,18 +2182,15 @@ function cmpGo(){
 /* ===== 比較画面の描画（ポケット・出血・排膿のみ） ===== */
 /* 比較画面で出す検査項目。患者詳細（巻物）の設定を引き継いで開き、ここでの変更は持ち帰らない */
 var CMP_ITEMS={pkt:true,pla:false,mob:false,fur:false,rec:false};
-function cmpRowKeys(lower){
-  var ks=["mob","fur","pla","pkt","rec"].filter(function(k){return CMP_ITEMS[k];});
-  if(!ks.length)return [];   /* 1つも選ばれていなければ歯番号も出さず、表ごと消す */
-  ks.push("no");
-  return lower?ks.slice().reverse():ks;
+function cmpRowKeys(){
+  return ["mob","fur","pla","pkt","rec"].filter(function(k){return CMP_ITEMS[k];});
 }
 function cmpToggleItem(el,k){CMP_ITEMS[k]=!CMP_ITEMS[k];el.classList.toggle("on",!!CMP_ITEMS[k]);renderCompare();}
 function cmpSyncPills(){[].forEach.call(document.querySelectorAll("#cmpitems .pill"),function(p){p.classList.toggle("on",!!CMP_ITEMS[p.dataset.cmprow]);});}
 function cmpAdoptItems(){Object.keys(CMP_ITEMS).forEach(function(k){CMP_ITEMS[k]=!!ST_ITEMS[k];});cmpSyncPills();renderCompare();}
 /* 比較は横に2枚並べるので、巻物よりさらに行を詰める */
 function cmpRowTrack(rk){
-  if(rk==="no")return "20px";
+  if(rk==="no")return "24px";
   if(rk==="pkt")return "38px";
   if(rk==="rec")return "28px";
   return "24px";
@@ -2090,26 +2204,39 @@ function cmpVariant(which){
   });
   return o;
 }
+/* 比較の1回ぶんのチャートを組む（前回との濃淡は出さない） */
+function cmpChart(which,keys){
+  var save=DEMO,r;
+  DEMO=cmpVariant(which);CMP_FLAT=true;
+  try{ r=fullChartHTML(keys,cmpRowTrack); }finally{ DEMO=save;CMP_FLAT=false; }
+  return r;
+}
 function renderCompare(){
-  var full=[8,7,6,5,4,3,2,1,1,2,3,4,5,6,7,8];
-  var up=cmpRowKeys(false),lo=cmpRowKeys(true),rows=up.concat(lo);
+  var keys=cmpRowKeys();
   [["cmp-a","prev"],["cmp-b","now"]].forEach(function(x){
     var el=document.getElementById(x[0]);if(!el)return;
-    if(el.parentNode)el.parentNode.style.display=rows.length?"":"none";
-    if(!rows.length){el.innerHTML="";return;}
-    var save=DEMO,h="";
-    DEMO=cmpVariant(x[1]);CMP_FLAT=true;
-    try{
-      rows.forEach(function(rk,n){
-        var lower=(n>=up.length);
-        h+=stRlab(rk);
-        full.forEach(function(t){h+=(rk==="no")?toothnoCell(t):rowCell(rk,t,lower);});
-      });
-    }finally{DEMO=save;CMP_FLAT=false;}
+    if(el.parentNode)el.parentNode.style.display=keys.length?"":"none";
+    if(!keys.length){el.innerHTML="";return;}
+    var r=cmpChart(x[1],keys);
     el.style.gridTemplateColumns="96px repeat(16,1fr)";
-    el.style.gridTemplateRows=rows.map(cmpRowTrack).join(" ");
-    el.innerHTML=h;
+    el.style.gridTemplateRows=r.tracks;
+    el.innerHTML=r.html;
   });
+}
+/* 印刷プレビュー（仮レイアウト） */
+function openPrint(){renderPrint();document.getElementById("printModal").classList.add("show");}
+function closePrint(){document.getElementById("printModal").classList.remove("show");}
+function renderPrint(){
+  var sheet=document.getElementById("printSheet");if(!sheet)return;
+  var keys=cmpRowKeys();
+  var blocks=[{id:"cmp-a",w:"prev",stat:"PPD平均 2.8 ／ BOP 26% ／ 4mm以上 18%"},{id:"cmp-b",w:"now",stat:"PPD平均 2.6 ／ BOP 22% ／ 4mm以上 12%"}].map(function(b){
+    var date=document.getElementById(b.id+"-date"),head=date?date.textContent:"";
+    var r=keys.length?cmpChart(b.w,keys):{html:"",tracks:""};
+    return '<div class="a4blk"><div class="bh"><span class="d">'+head+'</span><span class="hint">'+b.stat+'</span></div>'+
+      (keys.length?'<div class="chart full cmpchart" style="grid-template-columns:96px repeat(16,1fr);grid-template-rows:'+r.tracks+'">'+r.html+'</div>':'<div class="hint">表示する検査項目が選ばれていません</div>')+'</div>';
+  }).join("");
+  sheet.innerHTML='<div class="a4head"><span class="ttl">歯周検査 比較</span><span class="pt">001 田中 花子 様</span><span class="spacer" style="flex:1"></span><span class="hint">gtech歯科クリニック</span></div>'+
+    blocks+'<div class="a4foot"><span>出力日 2026/06/21</span><span>検査担当 大野 美咲</span></div>';
 }
 /* ===== #1 画面比率切替 ===== */
 function setRatio(r){
