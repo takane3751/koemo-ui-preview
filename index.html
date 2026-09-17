@@ -207,6 +207,9 @@ body.role-staff .owner-only{display:none!important}
 body.phase-p1 .full-only{display:none!important}
 body:not(.phase-p1) .p1-only{display:none!important}
 body.phase-p1 #fabrec{display:none!important}
+/* プロービング版: 患者詳細は検査記録だけに絞る（PROBING見出し・右の指標は完全版のみ） */
+body.phase-p1 .stblk.k-probing .lb{display:none}
+body.phase-p1 .stside{display:none}
 .lockchip{font-size:10px;color:var(--warn);background:var(--yellow-bg);border-radius:999px;padding:1px 7px;display:inline-flex;align-items:center;gap:3px}
 /* フロート録音ボタン */
 .fabrec{position:absolute;right:16px;bottom:16px;z-index:30;display:none;align-items:center;gap:8px;background:var(--red);color:#fff;border:none;border-radius:999px;padding:11px 18px;font-family:inherit;font-size:13px;font-weight:500;box-shadow:0 6px 18px rgba(216,90,48,.4);cursor:pointer}
@@ -343,15 +346,20 @@ body.phase-p1 #fabrec{display:none!important}
 .ordbtn{width:24px;height:24px;border-radius:6px;border:0.5px solid var(--border2);background:#fff;color:var(--muted);cursor:pointer;font-family:inherit;font-size:12px}
 .ordbtn:disabled{opacity:.3;cursor:default}
 /* ストリーム内の検査表ストリップ */
-.mstrip{margin-top:8px;border:0.5px solid var(--border);border-radius:8px;overflow:hidden;background:#fff}
-.mslab{font-size:9.5px;color:var(--muted);background:var(--lav2);padding:2px 6px}
-.msrow{display:grid;grid-template-columns:repeat(16,1fr)}
-.mst{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr;border-right:0.5px solid var(--border);min-height:26px}
-.mst.dis{background:#ececf1}
-.mst i{font-style:normal;font-size:8.5px;color:var(--hint);display:flex;align-items:center;justify-content:center;border-bottom:0.5px solid var(--border)}
-.mst i.hi{color:var(--text);font-weight:600}
-.mst i.bl{background:#F7C9C9}
-.mst .pu6{display:inline-flex;align-items:center;justify-content:center;width:11px;height:11px;border:1px solid var(--text);border-radius:50%;font-weight:400;font-size:7.5px;line-height:1}
+/* 検査画面の .chart をそのまま読み取り専用で埋め込む（簡易表示にしない） */
+.mstrip{margin-top:8px;border:0.5px solid var(--border);border-radius:8px;overflow-x:auto;background:#fff;padding:0}
+.mschart .rlab{padding:3px 4px}
+.mschart .rlab .pillab{background:none;border:none;color:var(--muted);font-size:11px;line-height:1.25;padding:0 6px;display:flex;align-items:center;justify-content:center;height:100%;width:100%}
+.mschart .rlab .nolab{font-size:11px}
+.mschart .cell,.mschart .toothno{cursor:default}
+.mschart .toothno{font-size:11px;gap:4px}
+.mschart .mini6 .m6{font-size:11px}
+.mschart .mini6 .pus{min-width:14px;height:14px;border-width:1px}
+.mschart .mini6 .pus.old .ring{width:16px;height:16px}
+.mschart .mobv{font-size:11px}
+.stitems{display:flex;gap:6px;padding:7px 14px;border-bottom:1px solid var(--border);background:#fff;flex:none;align-items:center;flex-wrap:nowrap;overflow-x:auto}
+.stitems>*{flex:none}
+.stnew{display:flex;align-items:center;gap:10px;padding:12px 0 2px}
 /* 比較の選択モード */
 .cmpbar{display:none;align-items:center;gap:7px;margin:0 0 10px;padding:9px 13px;border-radius:9px;background:var(--lav);color:var(--purple-d);font-size:12.5px}
 .ststream.cmpmode .cmpbar{display:flex}
@@ -558,27 +566,35 @@ body.phase-p1 #fabrec{display:none!important}
             <div class="sthead">
               <span class="muted" style="cursor:pointer;font-size:13px" onclick="go('search')"><i class="ti ti-chevron-left"></i> 戻る</span>
               <div style="width:34px;height:34px;border-radius:50%;background:var(--lav);color:var(--purple-d);display:flex;align-items:center;justify-content:center;font-size:14px">田</div>
-              <div style="line-height:1.35"><div style="font-weight:700;font-size:14.5px">田中 花子 様 <span class="hint" style="font-weight:400">001 ・ 45歳 女性</span></div><div class="hint" style="font-size:11px">初診 2026/01/15 ・ 来院 6回</div></div>
+              <div style="line-height:1.3"><div style="display:flex;align-items:baseline;gap:8px"><span style="font-weight:800;font-size:20px;letter-spacing:.02em;color:var(--purple-d)">001</span><span style="font-weight:600;font-size:13px">田中 花子 様</span></div><div class="hint" style="font-size:11px">45歳 女性 ・ 初診 2026/01/15 ・ 来院 6回</div></div>
               <span class="stwarn full-only"><i class="ti ti-alert-circle" style="font-size:12px"></i> 高血圧・降圧薬</span>
               <span class="chip green full-only"><i class="ti ti-circle-check" style="font-size:11px"></i> 録音同意</span>
               <i class="ti ti-dots-vertical muted" style="cursor:pointer" onclick="openPatient()" title="患者情報"></i>
               <span class="spacer" style="flex:1"></span>
-              <button class="btn sm" id="cmpbtn" onclick="cmpStart()"><i class="ti ti-columns-2"></i> 比較</button>
-              <span id="cmpctl" style="display:none;align-items:center;gap:8px"><button class="btn sm" onclick="cmpCancel()">キャンセル</button><button class="btn primary sm" id="cmpgo" onclick="cmpGo()" disabled style="opacity:.45">比較画面へ</button></span>
-              <button class="btn primary sm" onclick="startSession()"><i class="ti ti-plus"></i> 新規セッション</button>
             </div>
-            <div class="stlens" id="stlens">
-              <span class="hint full-only" style="margin-right:2px">見え方</span>
-              <span class="pill full-only on" onclick="stLens('all',this)">すべて</span>
-              <span class="pill full-only" onclick="stLens('probing',this)"><i class="ti ti-dental" style="font-size:12px"></i> プロービング</span>
-              <span class="pill full-only" onclick="stLens('media',this)"><i class="ti ti-photo" style="font-size:12px"></i> メディア</span>
-              <span class="pill full-only" onclick="stLens('docs',this)"><i class="ti ti-file-text" style="font-size:12px"></i> 書類</span>
-              <span class="pill full-only" onclick="stLens('talk',this)"><i class="ti ti-microphone" style="font-size:12px"></i> 説明記録</span>
-              <span class="hint p1-only" style="margin-right:2px">表示</span>
+            <div class="stlens full-only" id="stlens">
+              <span class="hint" style="margin-right:2px">見え方</span>
+              <span class="pill on" onclick="stLens('all',this)">すべて</span>
+              <span class="pill" onclick="stLens('probing',this)"><i class="ti ti-dental" style="font-size:12px"></i> プロービング</span>
+              <span class="pill" onclick="stLens('media',this)"><i class="ti ti-photo" style="font-size:12px"></i> メディア</span>
+              <span class="pill" onclick="stLens('docs',this)"><i class="ti ti-file-text" style="font-size:12px"></i> 書類</span>
+              <span class="pill" onclick="stLens('talk',this)"><i class="ti ti-microphone" style="font-size:12px"></i> 説明記録</span>
               <span class="spacer" style="flex:1"></span>
               <span class="seg" id="stdens" style="padding:3px"><span class="pill" onclick="stDensity('over',this)">概要</span><span class="pill on" onclick="stDensity('all',this)">すべて展開</span></span>
-              <span class="stsearch full-only" onclick="stSearchDemo()"><i class="ti ti-search" style="font-size:12px"></i> この患者の記録を検索</span>
-              <span class="qh" onclick="showHelp(event,this)" data-help="来院ごとの記録が1本につながって並びます。最新は展開、過去は要約で表示。日付をタップでその場で展開でき、左の目盛りからジャンプ、上の「見え方」で種類を絞れます。">?</span>
+              <span class="stsearch" onclick="stSearchDemo()"><i class="ti ti-search" style="font-size:12px"></i> この患者の記録を検索</span>
+              <span class="qh" onclick="showHelp(event,this)" data-help="来院ごとの記録が1本につながって並びます。日付をタップでその場で開閉でき、左の目盛りからジャンプ、ここで記録の種類を絞れます。">?</span>
+            </div>
+            <div class="stitems" id="stitems">
+              <span class="hint" style="margin-right:2px">表示する検査項目</span>
+              <span class="pill multi on" data-strow="pkt" onclick="stToggleItem(this,'pkt')">ポケット・出血・排膿</span>
+              <span class="pill multi" data-strow="pla" onclick="stToggleItem(this,'pla')">プラーク</span>
+              <span class="pill multi" data-strow="mob" onclick="stToggleItem(this,'mob')">動揺度</span>
+              <span class="pill multi" data-strow="fur" onclick="stToggleItem(this,'fur')">根分岐部</span>
+              <span class="pill multi" data-strow="rec" onclick="stToggleItem(this,'rec')">歯肉退縮量</span>
+              <span class="qh" onclick="showHelp(event,this)" data-help="各来院の検査表に出す行を選びます。出血・排膿はポケットと同じ行に出るのでひとまとめです。プラークや動揺度などはチェックすると行が増えます。担当者ごとに保存されます。">?</span>
+              <span class="spacer" style="flex:1"></span>
+              <button class="btn sm" id="cmpbtn" onclick="cmpStart()"><i class="ti ti-columns-2"></i> 比較</button>
+              <span id="cmpctl" style="display:none;align-items:center;gap:8px"><button class="btn sm" onclick="cmpCancel()">キャンセル</button><button class="btn primary sm" id="cmpgo" onclick="cmpGo()" disabled style="opacity:.45">比較画面へ</button></span>
             </div>
             <div class="stbody">
               <div class="stmap" id="stmap">
@@ -593,32 +609,33 @@ body.phase-p1 #fabrec{display:none!important}
               </div>
               <div class="ststream" id="ststream" data-lens="all">
                 <div class="cmpbar" id="cmpbar"><i class="ti ti-columns-2"></i> <span id="cmpmsg">比較する検査を2件選んでください</span></div>
+                <div class="stnew"><button class="btn primary sm" onclick="startSession()"><i class="ti ti-plus"></i> 新規セッション</button><span class="hint">今日の記録はここに追加されます</span></div>
                 <div class="styear">2026</div>
               <div class="stvisit open" id="v260621">
-                <div class="stdate" onclick="stToggle(this.parentNode)"><span class="car">›</span><span class="d">2026/06/21</span><span class="pu full-only">10:30 ・ 定期検診・SRP</span><span class="tg"><span class="chip lav">記録中</span><button class="btn sm" onclick="go('hub')" style="padding:3px 10px">続きから</button></span></div>
+                <div class="stdate" onclick="stToggle(this.parentNode)"><span class="car">›</span><span class="d">2026/06/21</span><span class="pu full-only">10:30 ・ 定期検診・SRP</span><span class="tg"><span class="stdoc" onclick="event.stopPropagation();go('probing')"><i class="ti ti-dental" style="font-size:12px"></i>検査表を開く</span></span></div>
                 <div class="stsum"><span class="kv">PPD平均<b>2.6</b></span><span class="kv">BOP<b>22%</b></span><span class="kv">PCR<b>35%</b></span><span class="kv">4mm以上<b>22%</b></span><span class="cnt full-only"><span><i class="ti ti-photo" style="font-size:12px"></i> 4</span><span><i class="ti ti-file-text" style="font-size:12px"></i> 3</span></span></div>
                 <div class="stdetail">
-                  <div class="stblk k-probing"><div class="lb">PROBING</div><div class="ct"><div class="ststat"><span>PPD平均<b>2.6<small style="font-size:10px">mm</small></b></span><span>BOP<b>22%</b></span><span>PCR<b>35%</b></span><span>4mm以上<b>22%</b></span></div><div style="margin-top:8px"><span class="stdoc" onclick="go('probing')"><i class="ti ti-dental" style="font-size:12px"></i>検査表を開く</span></div></div></div>
+                  <div class="stblk k-probing"><div class="lb">PROBING</div><div class="ct"><div class="ststat"><span>PPD平均<b>2.6<small style="font-size:10px">mm</small></b></span><span>BOP<b>22%</b></span><span>PCR<b>35%</b></span><span>4mm以上<b>22%</b></span></div></div></div>
                   <div class="stblk k-media full-only"><div class="lb">MEDIA</div><div class="ct"><div class="stmedia"><div class="tile" onclick="openDocPrev('正面')"><i class="ti ti-dental" style="font-size:20px"></i><span class="badge">口腔内</span><span class="cap">正面</span></div><div class="tile" onclick="openDocPrev('上顎')"><i class="ti ti-dental" style="font-size:20px"></i><span class="badge">口腔内</span><span class="cap">上顎</span></div><div class="tile lb169" onclick="openDocPrev('マイクロ動画')"><i class="ti ti-player-play" style="font-size:20px"></i><span class="badge">動画</span><span class="cap">マイクロ動画</span></div><div class="tile lbport" onclick="openDocPrev('デンタル')"><i class="ti ti-radioactive" style="font-size:20px"></i><span class="badge">X線</span><span class="cap">デンタル</span></div></div></div></div>
                   <div class="stblk k-docs full-only"><div class="lb">DOCS</div><div class="ct"><div class="stdocs"><span class="stdoc" onclick="openDocPrev('歯科衛生実地指導書')"><i class="ti ti-file-text" style="font-size:12px"></i>歯科衛生実地指導書</span><span class="stdoc" onclick="openDocPrev('歯科疾患管理に関する文書')"><i class="ti ti-file-text" style="font-size:12px"></i>歯科疾患管理に関する文書</span><span class="stdoc" onclick="openDocPrev('歯周検査サマリー')"><i class="ti ti-file-text" style="font-size:12px"></i>歯周検査サマリー</span></div></div></div>
                   <div class="stblk k-talk full-only"><div class="lb">説明記録</div><div class="ct"><div class="stquote"><span class="who">患者</span>「右下の奥歯がしみる。歯ぐきから血が出ることがある」<br><span class="who">説明</span>歯周病の現状（右下臼歯部に4mm以上のポケット）を口腔内写真で説明。フロス併用のTBIを実施。<span class="hint" style="margin-left:6px">録音 12:34</span></div></div></div>
                 </div>
               </div>
               <div class="stvisit open" id="v260409">
-                <div class="stdate" onclick="stToggle(this.parentNode)"><span class="car">›</span><span class="d">2026/04/09</span><span class="pu full-only">09:50 ・ 歯周治療（SRP）</span><span class="tg"><span class="chip green">完了</span></span></div>
+                <div class="stdate" onclick="stToggle(this.parentNode)"><span class="car">›</span><span class="d">2026/04/09</span><span class="pu full-only">09:50 ・ 歯周治療（SRP）</span><span class="tg"><span class="stdoc" onclick="event.stopPropagation();go('probing')"><i class="ti ti-dental" style="font-size:12px"></i>検査表を開く</span></span></div>
                 <div class="stsum"><span class="kv">PPD平均<b>2.8</b></span><span class="kv">BOP<b>26%</b></span><span class="kv">PCR<b>41%</b></span><span class="kv">4mm以上<b>31%</b></span><span class="cnt full-only"><span><i class="ti ti-photo" style="font-size:12px"></i> 2</span><span><i class="ti ti-file-text" style="font-size:12px"></i> 2</span></span></div>
                 <div class="stdetail">
-                  <div class="stblk k-probing"><div class="lb">PROBING</div><div class="ct"><div class="ststat"><span>PPD平均<b>2.8<small style="font-size:10px">mm</small></b></span><span>BOP<b>26%</b></span><span>PCR<b>41%</b></span><span>4mm以上<b>31%</b></span></div><div style="margin-top:8px"><span class="stdoc" onclick="go('probing')"><i class="ti ti-dental" style="font-size:12px"></i>検査表を開く</span></div></div></div>
+                  <div class="stblk k-probing"><div class="lb">PROBING</div><div class="ct"><div class="ststat"><span>PPD平均<b>2.8<small style="font-size:10px">mm</small></b></span><span>BOP<b>26%</b></span><span>PCR<b>41%</b></span><span>4mm以上<b>31%</b></span></div></div></div>
                   <div class="stblk k-media full-only"><div class="lb">MEDIA</div><div class="ct"><div class="stmedia"><div class="tile lbport" onclick="openDocPrev('デンタル')"><i class="ti ti-radioactive" style="font-size:20px"></i><span class="badge">X線</span><span class="cap">デンタル</span></div><div class="tile lbwide" onclick="openDocPrev('パノラマ')"><i class="ti ti-radioactive" style="font-size:20px"></i><span class="badge">X線</span><span class="cap">パノラマ</span></div></div></div></div>
                   <div class="stblk k-docs full-only"><div class="lb">DOCS</div><div class="ct"><div class="stdocs"><span class="stdoc" onclick="openDocPrev('サブカルテ')"><i class="ti ti-file-text" style="font-size:12px"></i>サブカルテ</span><span class="stdoc" onclick="openDocPrev('SRP・処置記録')"><i class="ti ti-file-text" style="font-size:12px"></i>SRP・処置記録</span></div></div></div>
                   <div class="stblk k-talk full-only"><div class="lb">説明記録</div><div class="ct"><div class="stquote"><span class="who">処置</span>右下6番のSRPを実施。冷水痛の原因（根面露出）を画像で説明し、知覚過敏の経過観察を提案。</div></div></div>
                 </div>
               </div>
               <div class="stvisit open" id="v260115">
-                <div class="stdate" onclick="stToggle(this.parentNode)"><span class="car">›</span><span class="d">2026/01/15</span><span class="pu full-only">14:10 ・ 初診</span><span class="tg"><span class="chip green">完了</span></span></div>
+                <div class="stdate" onclick="stToggle(this.parentNode)"><span class="car">›</span><span class="d">2026/01/15</span><span class="pu full-only">14:10 ・ 初診</span><span class="tg"><span class="stdoc" onclick="event.stopPropagation();go('probing')"><i class="ti ti-dental" style="font-size:12px"></i>検査表を開く</span></span></div>
                 <div class="stsum"><span class="kv">PPD平均<b>3.1</b></span><span class="kv">BOP<b>34%</b></span><span class="kv">PCR<b>52%</b></span><span class="kv">4mm以上<b>31%</b></span><span class="cnt full-only"><span><i class="ti ti-photo" style="font-size:12px"></i> 5</span><span><i class="ti ti-file-text" style="font-size:12px"></i> 2</span></span></div>
                 <div class="stdetail">
-                  <div class="stblk k-probing"><div class="lb">PROBING</div><div class="ct"><div class="ststat"><span>PPD平均<b>3.1<small style="font-size:10px">mm</small></b></span><span>BOP<b>34%</b></span><span>PCR<b>52%</b></span><span>4mm以上<b>31%</b></span></div><div style="margin-top:8px"><span class="stdoc" onclick="go('probing')"><i class="ti ti-dental" style="font-size:12px"></i>検査表を開く</span></div></div></div>
+                  <div class="stblk k-probing"><div class="lb">PROBING</div><div class="ct"><div class="ststat"><span>PPD平均<b>3.1<small style="font-size:10px">mm</small></b></span><span>BOP<b>34%</b></span><span>PCR<b>52%</b></span><span>4mm以上<b>31%</b></span></div></div></div>
                   <div class="stblk k-media full-only"><div class="lb">MEDIA</div><div class="ct"><div class="stmedia"><div class="tile" onclick="openDocPrev('正面')"><i class="ti ti-dental" style="font-size:20px"></i><span class="badge">口腔内</span><span class="cap">正面</span></div><div class="tile" onclick="openDocPrev('上顎')"><i class="ti ti-dental" style="font-size:20px"></i><span class="badge">口腔内</span><span class="cap">上顎</span></div><div class="tile" onclick="openDocPrev('下顎')"><i class="ti ti-dental" style="font-size:20px"></i><span class="badge">口腔内</span><span class="cap">下顎</span></div><div class="tile" onclick="openDocPrev('右側')"><i class="ti ti-dental" style="font-size:20px"></i><span class="badge">口腔内</span><span class="cap">右側</span></div><div class="tile" onclick="openDocPrev('左側')"><i class="ti ti-dental" style="font-size:20px"></i><span class="badge">口腔内</span><span class="cap">左側</span></div></div></div></div>
                   <div class="stblk k-docs full-only"><div class="lb">DOCS</div><div class="ct"><div class="stdocs"><span class="stdoc" onclick="openDocPrev('問診票')"><i class="ti ti-file-text" style="font-size:12px"></i>問診票</span><span class="stdoc" onclick="openDocPrev('歯科疾患管理に関する文書')"><i class="ti ti-file-text" style="font-size:12px"></i>歯科疾患管理に関する文書</span></div></div></div>
                   <div class="stblk k-talk full-only"><div class="lb">説明記録</div><div class="ct"><div class="stquote"><span class="who">主訴</span>右下のしみ・歯ぐき出血。既往に高血圧（降圧薬）。<br><span class="who">説明</span>歯周病のリスクと治療の流れを5枚法の写真で説明。録音同意を取得。</div></div></div>
@@ -626,30 +643,30 @@ body.phase-p1 #fabrec{display:none!important}
               </div>
                 <div class="styear">2025</div>
               <div class="stvisit open" id="v251003">
-                <div class="stdate" onclick="stToggle(this.parentNode)"><span class="car">›</span><span class="d">2025/10/03</span><span class="pu full-only">11:00 ・ メインテナンス</span><span class="tg"><span class="chip green">完了</span></span></div>
+                <div class="stdate" onclick="stToggle(this.parentNode)"><span class="car">›</span><span class="d">2025/10/03</span><span class="pu full-only">11:00 ・ メインテナンス</span><span class="tg"><span class="stdoc" onclick="event.stopPropagation();go('probing')"><i class="ti ti-dental" style="font-size:12px"></i>検査表を開く</span></span></div>
                 <div class="stsum"><span class="kv">PPD平均<b>2.9</b></span><span class="kv">BOP<b>28%</b></span><span class="kv">PCR<b>39%</b></span><span class="kv">4mm以上<b>31%</b></span><span class="cnt full-only"><span><i class="ti ti-photo" style="font-size:12px"></i> 2</span><span><i class="ti ti-file-text" style="font-size:12px"></i> 1</span></span></div>
                 <div class="stdetail">
-                  <div class="stblk k-probing"><div class="lb">PROBING</div><div class="ct"><div class="ststat"><span>PPD平均<b>2.9<small style="font-size:10px">mm</small></b></span><span>BOP<b>28%</b></span><span>PCR<b>39%</b></span><span>4mm以上<b>31%</b></span></div><div style="margin-top:8px"><span class="stdoc" onclick="go('probing')"><i class="ti ti-dental" style="font-size:12px"></i>検査表を開く</span></div></div></div>
+                  <div class="stblk k-probing"><div class="lb">PROBING</div><div class="ct"><div class="ststat"><span>PPD平均<b>2.9<small style="font-size:10px">mm</small></b></span><span>BOP<b>28%</b></span><span>PCR<b>39%</b></span><span>4mm以上<b>31%</b></span></div></div></div>
                   <div class="stblk k-media full-only"><div class="lb">MEDIA</div><div class="ct"><div class="stmedia"><div class="tile" onclick="openDocPrev('正面')"><i class="ti ti-dental" style="font-size:20px"></i><span class="badge">口腔内</span><span class="cap">正面</span></div><div class="tile lb169" onclick="openDocPrev('説明動画')"><i class="ti ti-player-play" style="font-size:20px"></i><span class="badge">動画</span><span class="cap">説明動画</span></div></div></div></div>
                   <div class="stblk k-docs full-only"><div class="lb">DOCS</div><div class="ct"><div class="stdocs"><span class="stdoc" onclick="openDocPrev('歯科衛生実地指導書')"><i class="ti ti-file-text" style="font-size:12px"></i>歯科衛生実地指導書</span></div></div></div>
                   <div class="stblk k-talk full-only"><div class="lb">説明記録</div><div class="ct"><div class="stquote"><span class="who">説明</span>前回より出血部位が減少。セルフケアの継続を確認。</div></div></div>
                 </div>
               </div>
               <div class="stvisit open" id="v250711">
-                <div class="stdate" onclick="stToggle(this.parentNode)"><span class="car">›</span><span class="d">2025/07/11</span><span class="pu full-only">15:20 ・ SRP（左下）</span><span class="tg"><span class="chip green">完了</span></span></div>
+                <div class="stdate" onclick="stToggle(this.parentNode)"><span class="car">›</span><span class="d">2025/07/11</span><span class="pu full-only">15:20 ・ SRP（左下）</span><span class="tg"><span class="stdoc" onclick="event.stopPropagation();go('probing')"><i class="ti ti-dental" style="font-size:12px"></i>検査表を開く</span></span></div>
                 <div class="stsum"><span class="kv">PPD平均<b>3.0</b></span><span class="kv">BOP<b>31%</b></span><span class="kv">PCR<b>44%</b></span><span class="kv">4mm以上<b>31%</b></span><span class="cnt full-only"><span><i class="ti ti-photo" style="font-size:12px"></i> 0</span><span><i class="ti ti-file-text" style="font-size:12px"></i> 1</span></span></div>
                 <div class="stdetail">
-                  <div class="stblk k-probing"><div class="lb">PROBING</div><div class="ct"><div class="ststat"><span>PPD平均<b>3.0<small style="font-size:10px">mm</small></b></span><span>BOP<b>31%</b></span><span>PCR<b>44%</b></span><span>4mm以上<b>31%</b></span></div><div style="margin-top:8px"><span class="stdoc" onclick="go('probing')"><i class="ti ti-dental" style="font-size:12px"></i>検査表を開く</span></div></div></div>
+                  <div class="stblk k-probing"><div class="lb">PROBING</div><div class="ct"><div class="ststat"><span>PPD平均<b>3.0<small style="font-size:10px">mm</small></b></span><span>BOP<b>31%</b></span><span>PCR<b>44%</b></span><span>4mm以上<b>31%</b></span></div></div></div>
                   <div class="stblk k-media full-only"><div class="lb">MEDIA</div><div class="ct"><div class="stmedia"></div></div></div>
                   <div class="stblk k-docs full-only"><div class="lb">DOCS</div><div class="ct"><div class="stdocs"><span class="stdoc" onclick="openDocPrev('SRP・処置記録')"><i class="ti ti-file-text" style="font-size:12px"></i>SRP・処置記録</span></div></div></div>
                   <div class="stblk k-talk full-only"><div class="lb">説明記録</div><div class="ct"><div class="stquote"><span class="who">処置</span>左下4〜7のSRP。次回右下を予定。</div></div></div>
                 </div>
               </div>
               <div class="stvisit open" id="v250418">
-                <div class="stdate" onclick="stToggle(this.parentNode)"><span class="car">›</span><span class="d">2025/04/18</span><span class="pu full-only">10:00 ・ 歯周基本検査</span><span class="tg"><span class="chip green">完了</span></span></div>
+                <div class="stdate" onclick="stToggle(this.parentNode)"><span class="car">›</span><span class="d">2025/04/18</span><span class="pu full-only">10:00 ・ 歯周基本検査</span><span class="tg"><span class="stdoc" onclick="event.stopPropagation();go('probing')"><i class="ti ti-dental" style="font-size:12px"></i>検査表を開く</span></span></div>
                 <div class="stsum"><span class="kv">PPD平均<b>3.3</b></span><span class="kv">BOP<b>38%</b></span><span class="kv">PCR<b>55%</b></span><span class="kv">4mm以上<b>31%</b></span><span class="cnt full-only"><span><i class="ti ti-photo" style="font-size:12px"></i> 1</span><span><i class="ti ti-file-text" style="font-size:12px"></i> 1</span></span></div>
                 <div class="stdetail">
-                  <div class="stblk k-probing"><div class="lb">PROBING</div><div class="ct"><div class="ststat"><span>PPD平均<b>3.3<small style="font-size:10px">mm</small></b></span><span>BOP<b>38%</b></span><span>PCR<b>55%</b></span><span>4mm以上<b>31%</b></span></div><div style="margin-top:8px"><span class="stdoc" onclick="go('probing')"><i class="ti ti-dental" style="font-size:12px"></i>検査表を開く</span></div></div></div>
+                  <div class="stblk k-probing"><div class="lb">PROBING</div><div class="ct"><div class="ststat"><span>PPD平均<b>3.3<small style="font-size:10px">mm</small></b></span><span>BOP<b>38%</b></span><span>PCR<b>55%</b></span><span>4mm以上<b>31%</b></span></div></div></div>
                   <div class="stblk k-media full-only"><div class="lb">MEDIA</div><div class="ct"><div class="stmedia"><div class="tile lbwide" onclick="openDocPrev('パノラマ')"><i class="ti ti-radioactive" style="font-size:20px"></i><span class="badge">X線</span><span class="cap">パノラマ</span></div></div></div></div>
                   <div class="stblk k-docs full-only"><div class="lb">DOCS</div><div class="ct"><div class="stdocs"><span class="stdoc" onclick="openDocPrev('歯科疾患管理に関する文書')"><i class="ti ti-file-text" style="font-size:12px"></i>歯科疾患管理に関する文書</span></div></div></div>
                   <div class="stblk k-talk full-only"><div class="lb">説明記録</div><div class="ct"><div class="stquote"><span class="who">説明</span>初回検査。全顎的な歯周炎の状態を説明し、治療計画（SRP→再評価）を提示。</div></div></div>
@@ -1921,36 +1938,72 @@ function buildArchFig(){
 function ordMove(i,d){var j=i+d;if(j<0||j>3)return;var t=ORD[i];ORD[i]=ORD[j];ORD[j]=t;buildOrd();}
 
 /* ===== ストリーム: 各来院に検査表の一部を出す ===== */
-function miniStrip(idx){
-  var teeth=[8,7,6,5,4,3,2,1,1,2,3,4,5,6,7,8],h='<div class="mstrip">';
-  ["上顎","下顎"].forEach(function(lab,ar){
-    h+='<div class="mslab">'+lab+'</div><div class="msrow">';
-    teeth.forEach(function(t){
-      var d=DEMO[t];
-      if(!d){h+='<span class="mst dis"></span>';return;}
-      h+='<span class="mst">';
-      for(var i=0;i<6;i++){
-        var v=+d.p[i]+((idx+ar+i)%3===0?idx:0); if(v>9)v=9;
-        var bl=(+d.b[i]&&((i+ar)%2===0)),pu=(+d.u[i]&&((i+ar)%2===0));
-        h+='<i class="'+(bl?"bl ":"")+(v>=4?"hi":"")+'">'+(pu?'<b class="pu6">'+v+'</b>':v)+'</i>';
-      }
-      h+='</span>';
-    });
-    h+='</div>';
+/* 患者詳細で出す検査表の行。ポケット・出血・排膿は同じ行に出るのでひとまとめ（既定ON） */
+var ST_ITEMS={pkt:true,pla:false,mob:false,fur:false,rec:false};
+function stToggleItem(el,k){ST_ITEMS[k]=!ST_ITEMS[k];el.classList.toggle("on",!!ST_ITEMS[k]);stRebuildCharts();}
+function stRowKeys(lower){
+  var ks=["mob","fur","pla","pkt","rec"].filter(function(k){return ST_ITEMS[k];});
+  ks.push("no");
+  return lower?ks.slice().reverse():ks;
+}
+/* 行ラベルは検査画面と同じ位置・同じ名前。ただし読み取り専用なのでモード選択はしない */
+function stRlab(rk){
+  if(rk==="no")return '<div class="rlab r-no"><span class="nolab">歯番号</span></div>';
+  if(rk==="pkt")return '<div class="rlab r-pkt"><span class="pillab">ポケット<br>（出血・排膿）</span></div>';
+  return '<div class="rlab r-'+rk+'"><span class="pillab">'+ROWLABEL[rk]+'</span></div>';
+}
+/* 一覧に出すときの行の高さ。検査画面は入力しやすいように縦に伸ばすが、巻物では詰める */
+function stRowTrack(rk){
+  if(rk==="no")return "22px";
+  if(rk==="pkt")return "44px";
+  if(rk==="rec")return "34px";
+  return "30px";
+}
+/* 来院ごとに値を変える（新しいほど良い値）。セルの描画は検査画面と同じ関数を使う */
+function demoVariant(idx){
+  var o={};
+  Object.keys(DEMO).forEach(function(t){
+    var d=DEMO[t],p="",pp="";
+    for(var i=0;i<6;i++){
+      var add=(((idx+i)%3===0)?idx:0);
+      p+=Math.min(9,+d.p[i]+add);
+      pp+=Math.min(9,+d.pp[i]+add);
+    }
+    o[t]={p:p,pp:pp,b:d.b,bp:d.bp,u:d.u,up:d.up,r:d.r,rp:d.rp,m:d.m,mp:d.mp,l:d.l,lp:d.lp};
   });
-  return h+'</div>';
+  return o;
+}
+function miniStrip(idx){
+  var full=[8,7,6,5,4,3,2,1,1,2,3,4,5,6,7,8];
+  var up=stRowKeys(false),lo=stRowKeys(true),rows=up.concat(lo),h="";
+  var save=DEMO;
+  DEMO=demoVariant(idx);
+  try{
+    rows.forEach(function(rk,n){
+      var lower=(n>=up.length);
+      h+=stRlab(rk);
+      full.forEach(function(t){h+=(rk==="no")?toothnoCell(t):rowCell(rk,t,lower);});
+    });
+  }finally{ DEMO=save; }
+  return '<div class="mstrip"><div class="chart full mschart" style="grid-template-rows:'+rows.map(stRowTrack).join(" ")+'">'+h+'</div></div>';
+}
+function stRebuildCharts(){
+  [].forEach.call(document.querySelectorAll("#ststream .stvisit"),function(v,idx){
+    var ct=v.querySelector(".stblk.k-probing .ct");if(!ct)return;
+    var old=ct.querySelector(".mstrip"),d=document.createElement("div");
+    d.innerHTML=miniStrip(idx);
+    if(old)ct.replaceChild(d.firstChild,old); else ct.appendChild(d.firstChild);
+  });
 }
 function buildStreamCharts(){
-  var vs=document.querySelectorAll("#ststream .stvisit");
-  [].forEach.call(vs,function(v,idx){
-    var ct=v.querySelector(".stblk.k-probing .ct");
-    if(ct&&!ct.querySelector(".mstrip")){var d=document.createElement("div");d.innerHTML=miniStrip(idx);ct.appendChild(d.firstChild);}
+  [].forEach.call(document.querySelectorAll("#ststream .stvisit"),function(v){
     var dt=v.querySelector(".stdate");
     if(dt&&!dt.querySelector(".stchk")){
       var c=document.createElement("span");c.className="stchk";c.onclick=function(e){e.stopPropagation();cmpToggle(v);};
       dt.insertBefore(c,dt.firstChild);
     }
   });
+  stRebuildCharts();
 }
 /* ===== 比較モード ===== */
 var cmpSel=[];
