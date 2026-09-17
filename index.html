@@ -697,7 +697,7 @@ body.phase-p1 .stside{display:none}
             <div class="bar">
               <span class="muted" style="cursor:pointer;font-size:13px" onclick="go('stream')"><i class="ti ti-chevron-left"></i> 戻る</span>
               <span class="logo" style="font-size:16px">検査の比較</span>
-              <span style="font-weight:500;font-size:13px">001 田中 花子 様</span>
+              <span style="display:flex;align-items:baseline;gap:7px"><span style="font-weight:800;font-size:17px;letter-spacing:.02em;color:var(--purple-d)">001</span><span style="font-weight:600;font-size:12.5px">田中 花子 様</span></span>
               <span class="spacer"></span>
               <span class="qh" onclick="showHelp(event,this)" data-help="選んだ2回の検査を上下に並べます。表が横長のため左右ではなく上下に配置し、患者さんへの説明にそのまま使えるようにしています。">?</span>
               <button class="btn primary sm"><i class="ti ti-printer"></i> 印刷</button>
@@ -1955,6 +1955,7 @@ var ST_ITEMS={pkt:true,pla:false,mob:false,fur:false,rec:false};
 function stToggleItem(el,k){ST_ITEMS[k]=!ST_ITEMS[k];el.classList.toggle("on",!!ST_ITEMS[k]);stRebuildCharts();}
 function stRowKeys(lower){
   var ks=["mob","fur","pla","pkt","rec"].filter(function(k){return ST_ITEMS[k];});
+  if(!ks.length)return [];   /* 1つも選ばれていなければ歯番号も出さず、表ごと消す */
   ks.push("no");
   return lower?ks.slice().reverse():ks;
 }
@@ -1988,6 +1989,7 @@ function demoVariant(idx){
 function miniStrip(idx){
   var full=[8,7,6,5,4,3,2,1,1,2,3,4,5,6,7,8];
   var up=stRowKeys(false),lo=stRowKeys(true),rows=up.concat(lo),h="";
+  if(!rows.length)return "";
   var save=DEMO;
   DEMO=demoVariant(idx);
   try{
@@ -2002,9 +2004,11 @@ function miniStrip(idx){
 function stRebuildCharts(){
   [].forEach.call(document.querySelectorAll("#ststream .stvisit"),function(v,idx){
     var ct=v.querySelector(".stblk.k-probing .ct");if(!ct)return;
-    var old=ct.querySelector(".mstrip"),d=document.createElement("div");
-    d.innerHTML=miniStrip(idx);
-    if(old)ct.replaceChild(d.firstChild,old); else ct.appendChild(d.firstChild);
+    var old=ct.querySelector(".mstrip");
+    if(old)old.parentNode.removeChild(old);
+    var html=miniStrip(idx);
+    if(!html)return;
+    var d=document.createElement("div");d.innerHTML=html;ct.appendChild(d.firstChild);
   });
 }
 function buildStreamCharts(){
@@ -2063,6 +2067,7 @@ function cmpGo(){
 var CMP_ITEMS={pkt:true,pla:false,mob:false,fur:false,rec:false};
 function cmpRowKeys(lower){
   var ks=["mob","fur","pla","pkt","rec"].filter(function(k){return CMP_ITEMS[k];});
+  if(!ks.length)return [];   /* 1つも選ばれていなければ歯番号も出さず、表ごと消す */
   ks.push("no");
   return lower?ks.slice().reverse():ks;
 }
@@ -2090,6 +2095,8 @@ function renderCompare(){
   var up=cmpRowKeys(false),lo=cmpRowKeys(true),rows=up.concat(lo);
   [["cmp-a","prev"],["cmp-b","now"]].forEach(function(x){
     var el=document.getElementById(x[0]);if(!el)return;
+    if(el.parentNode)el.parentNode.style.display=rows.length?"":"none";
+    if(!rows.length){el.innerHTML="";return;}
     var save=DEMO,h="";
     DEMO=cmpVariant(x[1]);CMP_FLAT=true;
     try{
