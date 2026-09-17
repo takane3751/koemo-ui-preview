@@ -377,11 +377,13 @@ body.phase-p1 .stside{display:none}
 .cmpkv b{color:var(--text);font-size:13px;margin-left:3px}
 .cmpgap{height:14px}
 .cmpchart{min-width:0!important}
-.cmpchart .cell{height:38px}
 .cmpchart .mini6 .m6{font-size:9.5px}
 .cmpchart .mini6 .pus{min-width:13px;height:13px;font-size:9px}
-.cmpchart .toothno{height:22px;font-size:11px}
-.cmpchart .rlab .pillab{font-size:11px;padding:5px 4px}
+.cmpchart .toothno{font-size:10.5px;gap:4px}
+.cmpchart .rlab{padding:2px 4px}
+.cmpchart .rlab .pillab{background:none;border:none;color:var(--muted);font-size:10.5px;line-height:1.2;padding:0 4px;display:flex;align-items:center;justify-content:center;height:100%;width:100%}
+.cmpchart .rlab .nolab{font-size:10.5px}
+.cmpchart .cell,.cmpchart .toothno{cursor:default}
 .cmplg{display:inline-flex;align-items:center;justify-content:center;width:16px;height:14px;border-radius:3px;vertical-align:-2px;font-size:9px}
 .cmplg.bl{background:#F7B3B3}
 .cmplg.ci{border:1.2px solid var(--text);border-radius:50%;width:15px;height:15px}
@@ -566,7 +568,7 @@ body.phase-p1 .stside{display:none}
             <div class="sthead">
               <span class="muted" style="cursor:pointer;font-size:13px" onclick="go('search')"><i class="ti ti-chevron-left"></i> 戻る</span>
               <div style="width:34px;height:34px;border-radius:50%;background:var(--lav);color:var(--purple-d);display:flex;align-items:center;justify-content:center;font-size:14px">田</div>
-              <div style="line-height:1.3"><div style="display:flex;align-items:baseline;gap:8px"><span style="font-weight:800;font-size:20px;letter-spacing:.02em;color:var(--purple-d)">001</span><span style="font-weight:600;font-size:13px">田中 花子 様</span></div><div class="hint" style="font-size:11px">45歳 女性 ・ 初診 2026/01/15 ・ 来院 6回</div></div>
+              <div style="line-height:1.3"><div style="display:flex;align-items:baseline;gap:8px"><span style="font-weight:800;font-size:17px;letter-spacing:.02em;color:var(--purple-d)">001</span><span style="font-weight:600;font-size:12.5px">田中 花子 様</span></div><div class="hint" style="font-size:11px">45歳 女性 ・ 初診 2026/01/15 ・ 来院 6回</div></div>
               <span class="stwarn full-only"><i class="ti ti-alert-circle" style="font-size:12px"></i> 高血圧・降圧薬</span>
               <span class="chip green full-only"><i class="ti ti-circle-check" style="font-size:11px"></i> 録音同意</span>
               <i class="ti ti-dots-vertical muted" style="cursor:pointer" onclick="openPatient()" title="患者情報"></i>
@@ -697,9 +699,17 @@ body.phase-p1 .stside{display:none}
               <span class="logo" style="font-size:16px">検査の比較</span>
               <span style="font-weight:500;font-size:13px">001 田中 花子 様</span>
               <span class="spacer"></span>
-              <span class="hint">表示: ポケット・出血・排膿</span>
-              <span class="qh" onclick="showHelp(event,this)" data-help="選んだ2回の検査を上下に並べます。表が横長のため左右ではなく上下に配置し、患者さんへの説明にそのまま使えるようにしています。比較に出すのはポケット・出血・排膿の3つだけです。">?</span>
+              <span class="qh" onclick="showHelp(event,this)" data-help="選んだ2回の検査を上下に並べます。表が横長のため左右ではなく上下に配置し、患者さんへの説明にそのまま使えるようにしています。">?</span>
               <button class="btn primary sm"><i class="ti ti-printer"></i> 印刷</button>
+            </div>
+            <div class="stitems" id="cmpitems">
+              <span class="hint" style="margin-right:2px">表示する検査項目</span>
+              <span class="pill multi on" data-cmprow="pkt" onclick="cmpToggleItem(this,'pkt')">ポケット・出血・排膿</span>
+              <span class="pill multi" data-cmprow="pla" onclick="cmpToggleItem(this,'pla')">プラーク</span>
+              <span class="pill multi" data-cmprow="mob" onclick="cmpToggleItem(this,'mob')">動揺度</span>
+              <span class="pill multi" data-cmprow="fur" onclick="cmpToggleItem(this,'fur')">根分岐部</span>
+              <span class="pill multi" data-cmprow="rec" onclick="cmpToggleItem(this,'rec')">歯肉退縮量</span>
+              <span class="qh" onclick="showHelp(event,this)" data-help="患者詳細で選んでいた項目を引き継いで開きます。ここで変えた分は比較画面のあいだだけで、患者詳細に戻ると元の設定のままです。">?</span>
             </div>
             <div class="body" style="padding:14px 16px">
               <div class="cmpblk">
@@ -750,8 +760,7 @@ body.phase-p1 .stside{display:none}
             <!-- 上部バー（実機 ver0.1.9 準拠: 戻る/保存/患者名 … 日付移動 … 診療メモ/歯の状態/表示設定/PDF作成） -->
             <div class="bar">
               <span class="muted" style="cursor:pointer;font-size:13px" onclick="go('hub')"><i class="ti ti-chevron-left"></i> 戻る</span>
-              <button class="btn sm save"><i class="ti ti-device-floppy"></i> 保存</button>
-              <span style="font-weight:600;font-size:14px;cursor:pointer" onclick="openPatient()">001 田中 <span style="font-weight:400">様</span></span>
+              <span style="cursor:pointer;display:flex;align-items:baseline;gap:7px" onclick="openPatient()"><span style="font-weight:800;font-size:17px;letter-spacing:.02em;color:var(--purple-d)">001</span><span style="font-weight:600;font-size:12.5px">田中 花子 様</span></span>
               <i class="ti ti-dots-vertical muted" style="cursor:pointer;font-size:15px" onclick="openPatient()" title="患者情報"></i>
               <span class="spacer"></span>
               <span class="visitnav" title="過去の検査に移動">
@@ -1611,6 +1620,7 @@ function go(id){
   if(typeof closePartPop==="function")closePartPop();
   if(typeof refreshSel==="function")refreshSel();
   if(typeof reflectAuto==="function")reflectAuto();
+  if(id==="compare"&&typeof cmpAdoptItems==="function")cmpAdoptItems();
 }
 function step(d){var i=order.indexOf(cur);i=Math.max(0,Math.min(order.length-1,i+d));go(order[i]);}
 function setPhase(p){
@@ -1671,17 +1681,19 @@ var PLAPTS=["5,7 35,7 20,20","35,7 35,33 20,20","5,33 35,33 20,20","5,7 5,33 20,
 var PLAOLD='<defs><pattern id="plold" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="5" stroke="#A8E3CB" stroke-width="1.6"/></pattern></defs>';
 function plaCell(t){
   var d=DEMO[t],h=SV;
-  if(d){h+=PLAOLD;for(var i=0;i<4;i++){var n=+d.l[i],o=+d.lp[i];if(n)h+='<polygon points="'+PLAPTS[i]+'" fill="'+((n&&!o)?"#4FD1A5":"url(#plold)")+'"/>';}}
+  if(d){h+=PLAOLD;for(var i=0;i<4;i++){var n=+d.l[i],o=(!CMP_FLAT&&+d.lp[i]);if(n)h+='<polygon points="'+PLAPTS[i]+'" fill="'+((n&&!o)?"#4FD1A5":"url(#plold)")+'"/>';}}
   return h+'<line x1="5" y1="7" x2="35" y2="33" stroke="#d3d3db"/><line x1="35" y1="7" x2="5" y2="33" stroke="#d3d3db"/></svg>';
 }
+/* 比較画面はその日の結果だけを見せるので、前回との濃淡・レンジ移動マークを出さない */
+var CMP_FLAT=false;
 function pktCell(t){
   var d=DEMO[t];if(!d)return '<div class="mini6"></div>';
   var h='<div class="mini6">';
   for(var i=0;i<6;i++){
-    var v=+d.p[i],pv=+d.pp[i],nw=(v!==pv),b=+d.b[i],bo=+d.bp[i],u=+d.u[i],uo=+d.up[i];
+    var v=+d.p[i],pv=+d.pp[i],nw=CMP_FLAT||(v!==pv),b=+d.b[i],bo=(!CMP_FLAT&&+d.bp[i]),u=+d.u[i],uo=(!CMP_FLAT&&+d.up[i]);
     var cls="m6"+(nw?" nw":"")+(b?(bo?" bopold":" bop"):"");
     var mk="";
-    if(nw&&rng(v)!==rng(pv))mk='<i class="mk '+(rng(v)<rng(pv)?"up":"dn")+'"></i>';
+    if(!CMP_FLAT&&nw&&rng(v)!==rng(pv))mk='<i class="mk '+(rng(v)<rng(pv)?"up":"dn")+'"></i>';
     var num=v?(u?(uo?'<span class="pus old">'+PUSRING+v+'</span>':'<span class="pus">'+v+'</span>'):String(v)):"";
     h+='<span class="'+cls+'">'+mk+num+'</span>';
   }
@@ -1690,12 +1702,12 @@ function pktCell(t){
 function recCell(t){
   var d=DEMO[t];if(!d)return '<div class="mini6"></div>';
   var h='<div class="mini6">';
-  for(var i=0;i<6;i++){var v=+d.r[i],pv=+d.rp[i];h+='<span class="m6'+((v!==pv)?" nw":"")+'">'+(v?v:"")+'</span>';}
+  for(var i=0;i<6;i++){var v=+d.r[i],pv=+d.rp[i];h+='<span class="m6'+((CMP_FLAT||v!==pv)?" nw":"")+'">'+(v?v:"")+'</span>';}
   return h+'</div>';
 }
 function mobCell(t){
   var d=DEMO[t];if(!d||!d.m)return '';
-  return '<span class="mobv'+((d.m!==d.mp)?" nw":"")+'">'+d.m+'</span>';
+  return '<span class="mobv'+((CMP_FLAT||d.m!==d.mp)?" nw":"")+'">'+d.m+'</span>';
 }
 var ROWLABEL={mob:"動揺度",fur:"根分岐部",pla:"プラーク",pkt:"ポケット",rec:"歯肉退縮量"};
 /* ===== デモ用サンプル値（1/4顎・歯7〜1／8番は欠損） =====
@@ -2047,28 +2059,48 @@ function cmpGo(){
   go("compare");
 }
 /* ===== 比較画面の描画（ポケット・出血・排膿のみ） ===== */
-function cmpCell(t,which){
-  var d=DEMO[t];
-  if(!d)return '<div class="cell dis"></div>';
-  var P=(which==="now")?d.p:d.pp,B=(which==="now")?d.b:d.bp,U=(which==="now")?d.u:d.up;
-  var h='<div class="cell"><div class="mini6">';
-  for(var i=0;i<6;i++){
-    var v=+P[i],b=+B[i],u=+U[i];
-    h+='<span class="m6 nw'+(b?" bop":"")+'">'+(u?'<span class="pus">'+v+'</span>':(v||""))+'</span>';
-  }
-  return h+'</div></div>';
+/* 比較画面で出す検査項目。患者詳細（巻物）の設定を引き継いで開き、ここでの変更は持ち帰らない */
+var CMP_ITEMS={pkt:true,pla:false,mob:false,fur:false,rec:false};
+function cmpRowKeys(lower){
+  var ks=["mob","fur","pla","pkt","rec"].filter(function(k){return CMP_ITEMS[k];});
+  ks.push("no");
+  return lower?ks.slice().reverse():ks;
+}
+function cmpToggleItem(el,k){CMP_ITEMS[k]=!CMP_ITEMS[k];el.classList.toggle("on",!!CMP_ITEMS[k]);renderCompare();}
+function cmpSyncPills(){[].forEach.call(document.querySelectorAll("#cmpitems .pill"),function(p){p.classList.toggle("on",!!CMP_ITEMS[p.dataset.cmprow]);});}
+function cmpAdoptItems(){Object.keys(CMP_ITEMS).forEach(function(k){CMP_ITEMS[k]=!!ST_ITEMS[k];});cmpSyncPills();renderCompare();}
+/* 比較は横に2枚並べるので、巻物よりさらに行を詰める */
+function cmpRowTrack(rk){
+  if(rk==="no")return "20px";
+  if(rk==="pkt")return "38px";
+  if(rk==="rec")return "28px";
+  return "24px";
+}
+/* その回の値だけを p/b/u 側に入れた DEMO を作る（前回列は使わない） */
+function cmpVariant(which){
+  var o={};
+  Object.keys(DEMO).forEach(function(t){
+    var d=DEMO[t];
+    o[t]=(which==="now")?d:{p:d.pp,pp:d.pp,b:d.bp,bp:d.bp,u:d.up,up:d.up,r:d.rp,rp:d.rp,m:d.mp,mp:d.mp,l:d.lp,lp:d.lp};
+  });
+  return o;
 }
 function renderCompare(){
+  var full=[8,7,6,5,4,3,2,1,1,2,3,4,5,6,7,8];
+  var up=cmpRowKeys(false),lo=cmpRowKeys(true),rows=up.concat(lo);
   [["cmp-a","prev"],["cmp-b","now"]].forEach(function(x){
     var el=document.getElementById(x[0]);if(!el)return;
-    var teeth=[8,7,6,5,4,3,2,1,1,2,3,4,5,6,7,8],h="";
-    el.style.gridTemplateColumns="72px repeat(16,1fr)";
-    h+='<div class="rlab"><span class="pillab flat">上顎</span></div>';
-    teeth.forEach(function(t){h+=cmpCell(t,x[1]);});
-    h+='<div class="rlab"><span class="nolab">歯番号</span></div>';
-    teeth.forEach(function(t){h+='<div class="toothno">'+t+'</div>';});
-    h+='<div class="rlab"><span class="pillab flat">下顎</span></div>';
-    teeth.forEach(function(t){h+=cmpCell(t,x[1]);});
+    var save=DEMO,h="";
+    DEMO=cmpVariant(x[1]);CMP_FLAT=true;
+    try{
+      rows.forEach(function(rk,n){
+        var lower=(n>=up.length);
+        h+=stRlab(rk);
+        full.forEach(function(t){h+=(rk==="no")?toothnoCell(t):rowCell(rk,t,lower);});
+      });
+    }finally{DEMO=save;CMP_FLAT=false;}
+    el.style.gridTemplateColumns="96px repeat(16,1fr)";
+    el.style.gridTemplateRows=rows.map(cmpRowTrack).join(" ");
     el.innerHTML=h;
   });
 }
