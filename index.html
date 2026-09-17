@@ -306,10 +306,9 @@ body.phase-p1 .stside{display:none}
 .numpad2{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
 .numkey2{height:46px;border-radius:10px;border:none;background:#F1F0F5;font-family:inherit;font-size:19px;color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px}
 .numkey2:hover{background:#E7E5EE}
-/* 8以上はあまり使わないので低く、4〜6の3列ぶんに2個ずつ並べる。7の下は削除 */
+/* 8以上はあまり使わないので低く、4〜6の3列ぶんに2個ずつ並べる（8〜13）。7の下は削除 */
 .numsub{grid-column:span 3;display:grid;grid-template-columns:repeat(6,1fr);gap:7px}
 .numkey2.low{height:32px;font-size:16px}
-.numkey2.low.wide{grid-column:span 2}
 .numkey2.del{font-size:12.5px;color:var(--muted);width:100%}
 /* ドック左（音声） */
 .exdock .exdk.voice{gap:7px}
@@ -866,7 +865,7 @@ body.phase-p1 .stside{display:none}
                 <div class="numpad2">
                   <button class="numkey2">0</button><button class="numkey2">1</button><button class="numkey2">2</button><button class="numkey2">3</button>
                   <button class="numkey2">4</button><button class="numkey2">5</button><button class="numkey2">6</button><button class="numkey2">7</button>
-                  <div class="numsub"><button class="numkey2 low">8</button><button class="numkey2 low">9</button><button class="numkey2 low">10</button><button class="numkey2 low">11</button><button class="numkey2 low wide">12</button></div>
+                  <div class="numsub"><button class="numkey2 low">8</button><button class="numkey2 low">9</button><button class="numkey2 low">10</button><button class="numkey2 low">11</button><button class="numkey2 low">12</button><button class="numkey2 low">13</button></div>
                   <button class="numkey2 low del"><i class="ti ti-backspace"></i> 削除</button>
                 </div>
               </div>
