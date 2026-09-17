@@ -298,7 +298,7 @@ body.phase-p1 .stside{display:none}
 /* 下部ドック: 左=音声 / 中央=テンキー（横に広く） / 右=検査部位 */
 .exdock{flex:none;display:grid;grid-template-columns:minmax(200px,1fr) minmax(320px,2.1fr) minmax(190px,0.8fr);gap:16px;align-items:stretch;padding:10px 14px 12px;border-top:0.5px solid var(--border)}
 .exdock .exdk{min-width:0;display:flex;flex-direction:column}
-.exdock .aivoice{width:100%;justify-content:center;padding:11px 12px;font-size:13.5px;flex:none}
+.exdock .aivoice{width:100%;justify-content:center;padding:11px 12px;font-size:14px;flex:1;min-height:60px}
 /* 認識したテキストの表示欄はテキストエリアのように高さを出す */
 /* 検査部位は2×2で下まで伸ばす */
 .exdock .exdk.quad .qgrid{flex:1;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:7px;min-height:76px}
@@ -306,9 +306,11 @@ body.phase-p1 .stside{display:none}
 .numpad2{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
 .numkey2{height:46px;border-radius:10px;border:none;background:#F1F0F5;font-family:inherit;font-size:19px;color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px}
 .numkey2:hover{background:#E7E5EE}
-/* 8以上はあまり使わないので低くする */
+/* 8以上はあまり使わないので低く、4〜6の3列ぶんに2個ずつ並べる。7の下は削除 */
+.numsub{grid-column:span 3;display:grid;grid-template-columns:repeat(6,1fr);gap:7px}
 .numkey2.low{height:32px;font-size:16px}
-.numkey2.del{font-size:13px;color:var(--muted);height:34px;width:100%}
+.numkey2.low.wide{grid-column:span 2}
+.numkey2.del{font-size:12.5px;color:var(--muted);width:100%}
 /* ドック左（音声） */
 .exdock .exdk.voice{gap:7px}
 .ainote{font-size:10.5px;color:var(--muted);text-align:center;line-height:1.4}
@@ -376,8 +378,9 @@ body.phase-p1 .stside{display:none}
 .ordpat:hover{border-color:#c9c4ec}
 .ordpat.on{border-color:var(--purple);background:var(--lav);box-shadow:0 0 0 3px rgba(127,119,221,.15)}
 .ordpat.on .nm{color:var(--purple-d)}
-.ordlist{display:flex;gap:6px;flex-wrap:wrap}
-.ordchip{display:inline-flex;align-items:center;gap:6px;border:0.5px solid var(--border2);border-radius:999px;background:#fff;padding:4px 11px;font-size:11.5px}
+.ordlist{display:flex;gap:5px;flex-wrap:nowrap}
+.ordchip{display:inline-flex;align-items:center;gap:4px;border:0.5px solid var(--border2);border-radius:999px;background:#fff;padding:3px 8px;font-size:10.5px;white-space:nowrap;min-width:0}
+.ordchip .hint{font-size:9.5px}
 .ordchip b{color:var(--purple-d)}
 /* ストリーム内の検査表ストリップ */
 /* 検査画面の .chart をそのまま読み取り専用で埋め込む（簡易表示にしない） */
@@ -858,17 +861,16 @@ body.phase-p1 .stside{display:none}
                   <button class="aisub" id="aimute" onclick="toggleMute()"><span class="mi"><i class="ti ti-microphone"></i><i class="muteslash"></i></span> ミュート</button>
                   <button class="aisub" onclick="openVoiceCfg()"><i class="ti ti-settings"></i> 音声設定</button>
                 </div>
-                <button class="numkey2 del" onclick="void 0"><i class="ti ti-backspace"></i> 削除</button>
               </div>
               <div class="exdk pad">
                 <div class="numpad2">
                   <button class="numkey2">0</button><button class="numkey2">1</button><button class="numkey2">2</button><button class="numkey2">3</button>
                   <button class="numkey2">4</button><button class="numkey2">5</button><button class="numkey2">6</button><button class="numkey2">7</button>
-                  <button class="numkey2 low">8</button><button class="numkey2 low">9</button><button class="numkey2 low">10</button><button class="numkey2 low">11</button>
+                  <div class="numsub"><button class="numkey2 low">8</button><button class="numkey2 low">9</button><button class="numkey2 low">10</button><button class="numkey2 low">11</button><button class="numkey2 low wide">12</button></div>
+                  <button class="numkey2 low del"><i class="ti ti-backspace"></i> 削除</button>
                 </div>
               </div>
               <div class="exdk quad">
-                <div class="exlab">検査部位<span class="qh" onclick="showHelp(event,this)" data-help="進む向きと区画をまわる順番は「表示設定・検査順」で決めます。端まで入力すると自動で次の区画へ移ります。">?</span></div>
                 <div class="qgrid">
                   <span class="pill amber qpill" id="q-ru" onclick="setQuad('ru')">右上<i class="qmk tl"></i></span>
                   <span class="pill amberline qpill" id="q-lu" onclick="setQuad('lu')"><i class="qmk tr"></i>左上</span>
@@ -913,7 +915,7 @@ body.phase-p1 .stside{display:none}
 
           <!-- EXAMSET プロービング検査の設定（probingから遷移） -->
           <section class="screen" data-id="examset">
-            <div class="bar"><span class="muted" style="cursor:pointer;font-size:13px" onclick="go('probing')"><i class="ti ti-chevron-left"></i> 戻る</span><span class="logo" style="font-size:16px">表示設定・検査順</span><button class="btn primary sm" onclick="go('probing')"><i class="ti ti-device-floppy"></i> 保存して検査へ</button><span class="spacer"></span></div>
+            <div class="bar"><span class="muted" style="cursor:pointer;font-size:13px" onclick="go('probing')"><i class="ti ti-chevron-left"></i> 戻る</span><span class="logo" style="font-size:16px">表示設定・検査順</span><span class="spacer"></span></div>
             <div class="body" style="padding:18px">
               <div class="grid" style="grid-template-columns:1.05fr 1fr;gap:24px;align-items:start;max-width:980px">
                 <div>
@@ -1471,7 +1473,7 @@ body.phase-p1 .stside{display:none}
 
           <!-- TOOTHSTATE 歯の状態（患者ごと・プロービングから遷移） -->
           <section class="screen" data-id="toothstate">
-            <div class="bar"><span class="muted" style="cursor:pointer;font-size:13px" onclick="go('probing')"><i class="ti ti-chevron-left"></i> 戻る</span><span class="logo" style="font-size:16px">歯の状態</span><button class="btn primary sm" onclick="go('probing')"><i class="ti ti-device-floppy"></i> 保存して戻る</button><span class="spacer"></span></div>
+            <div class="bar"><span class="muted" style="cursor:pointer;font-size:13px" onclick="go('probing')"><i class="ti ti-chevron-left"></i> 戻る</span><span class="logo" style="font-size:16px">歯の状態</span><span class="spacer"></span></div>
             <div class="body" style="padding:18px">
               <div class="label" style="font-weight:500;margin-bottom:8px">入力する状態 <span class="hint" style="font-weight:400">状態を選択して歯番号をタップ</span><span class="qh" onclick="showHelp(event,this)" data-help="「欠損」を選んで歯をタップすると欠損になります。続けてタップすれば連続で設定できます。乳歯は1〜5番のみ対象で、A〜Eの表記に変わります。">?</span></div>
               <div class="tsmodes">
