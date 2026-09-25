@@ -516,6 +516,17 @@ body.phase-p1 .stside{display:none}
 .calday.sel{background:var(--purple);color:#fff;font-weight:600}
 .btn.sm.on{background:var(--lav);border-color:var(--purple);color:var(--purple-d)}
 .btn.dis{opacity:.4;pointer-events:none;filter:grayscale(.3)}
+/* 9/25: 検査画面の入力モード切替（ポケット／出血／排膿／歯肉退縮量）。
+   .seg（上顎スタート／下顎スタート）を縦にした見た目。1つだけ選べる */
+.chart .modesw{display:flex;flex-direction:column;gap:3px;width:100%;height:100%;background:var(--lav2);border-radius:14px;padding:3px}
+.chart .modesw .msw{flex:1;min-height:26px;display:flex;align-items:center;justify-content:center;border-radius:11px;font-size:12px;color:var(--text);cursor:pointer;user-select:none;text-align:center;line-height:1.25;padding:0 4px}
+.chart .modesw .msw:hover{background:rgba(127,119,221,.12)}
+.chart .modesw .msw.on{background:var(--purple);color:#fff;font-weight:600}
+/* 隣り合う行のスイッチをつなげて1本に見せる（jb=下の行へ続く／jt=上の行から続く） */
+.chart .rlab.jb{padding-bottom:0}
+.chart .rlab.jt{padding-top:0}
+.chart .modesw.jb{border-bottom-left-radius:0;border-bottom-right-radius:0;padding-bottom:1.5px}
+.chart .modesw.jt{border-top-left-radius:0;border-top-right-radius:0;padding-top:1.5px}
 
 /* ===================================================================
    2026-09-24 会議（プロービング版）の反映
@@ -1995,10 +2006,20 @@ function closeStaffPick(){document.getElementById("staffModal").classList.remove
 function pickStaff(name){var e=document.getElementById("examstaff");if(e)e.innerHTML='<i class="ti ti-user" style="font-size:13px"></i> '+name;closeStaffPick();}
 function openMemo(){document.getElementById("memoModal").classList.add("show");}
 function closeMemo(){document.getElementById("memoModal").classList.remove("show");}
-function rlab(rk){
+function modeItem(t,lab){return '<span class="msw'+(inputType===t?" on":"")+'" onclick="setInputType(\''+t+'\')">'+lab+'</span>';}
+function rlab(rk,lower){
   if(rk==="no")return '<div class="rlab r-no"><span class="nolab">歯番号</span></div>';
-  if(rk==="pkt")return '<div class="rlab r-pkt"><div class="pktlab"><span class="pillab rsel'+(inputType==="pkt"?" on":"")+'" onclick="setInputType(\'pkt\')">ポケット</span><span class="pillab sub rsel'+(inputType==="bop"?" on":"")+'" onclick="setInputType(\'bop\')">出血</span>'+(EXAM_ROWS.pus?'<span class="pillab sub rsel'+(inputType==="pus"?" on":"")+'" onclick="setInputType(\'pus\')">排膿</span>':'')+'</div></div>';
-  if(rk==="rec")return '<div class="rlab r-rec"><span class="pillab rsel'+(inputType==="rec"?" on":"")+'" onclick="setInputType(\'rec\')">歯肉退縮量</span></div>';
+  /* 9/25: ポケット・出血・排膿・歯肉退縮量は「1つだけ選ぶ切替」（.seg と同じ見た目）を縦に並べる。
+     ポケットの行と歯肉退縮量の行は上下に隣り合うので、2行にまたがる1本のスイッチに見えるようにつなぐ
+     （上顎＝ポケットが上／下顎＝歯肉退縮量が上） */
+  if(rk==="pkt"){
+    var jp=EXAM_ROWS.rec?(lower?" jt":" jb"):"";
+    return '<div class="rlab r-pkt'+jp+'"><div class="modesw'+jp+'">'+modeItem("pkt","ポケット")+modeItem("bop","出血")+(EXAM_ROWS.pus?modeItem("pus","排膿"):"")+'</div></div>';
+  }
+  if(rk==="rec"){
+    var jr=EXAM_ROWS.pkt?(lower?" jb":" jt"):"";
+    return '<div class="rlab r-rec'+jr+'"><div class="modesw'+jr+'">'+modeItem("rec","歯肉退縮量")+'</div></div>';
+  }
   return '<div class="rlab r-'+rk+'"><span class="pillab flat" title="モード選択は不要です。値を直接タップして入力します">'+ROWLABEL[rk]+'</span></div>';
 }
 function toothnoCell(t){
@@ -2035,8 +2056,8 @@ function renderChartBody(){
     var full=[8,7,6,5,4,3,2,1,1,2,3,4,5,6,7,8];
     el.style.gridTemplateRows=examRowKeys(false).concat(examRowKeys(true)).map(rowTrack).join(" ");
     el.style.height="min(100%,"+sumMax(examRowKeys(false).concat(examRowKeys(true)),rowUnit(2))+"px)";
-    examRowKeys(false).forEach(function(rk){html+=rlab(rk);full.forEach(function(t){html+=(rk==="no")?toothnoCell(t):rowCell(rk,t,false);});});
-    examRowKeys(true).forEach(function(rk){html+=rlab(rk);full.forEach(function(t){html+=(rk==="no")?toothnoCell(t):rowCell(rk,t,true);});});
+    examRowKeys(false).forEach(function(rk){html+=rlab(rk,false);full.forEach(function(t){html+=(rk==="no")?toothnoCell(t):rowCell(rk,t,false);});});
+    examRowKeys(true).forEach(function(rk){html+=rlab(rk,true);full.forEach(function(t){html+=(rk==="no")?toothnoCell(t):rowCell(rk,t,true);});});
     el.innerHTML=html;return;
   }
   var lower=(examQuad==="rl"||examQuad==="ll");
@@ -2048,7 +2069,7 @@ function renderChartBody(){
   el.style.gridTemplateRows=rowKeys.map(rowTrack).join(" ");
   el.style.height="min(100%,"+sumMax(rowKeys,rowUnit(1))+"px)";
   rowKeys.forEach(function(rk){
-    var lab=rlab(rk),cells="";
+    var lab=rlab(rk,lower),cells="";
     teeth.forEach(function(t){cells+=(rk==="no")?toothnoCell(t):rowCell(rk,t,lower);});
     html+=labelsRight?(cells+lab):(lab+cells);
   });
