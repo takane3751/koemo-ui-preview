@@ -533,11 +533,14 @@ body.phase-p1 .stside{display:none}
 .stitems .chk{padding-top:5px;padding-bottom:5px}
 
 /* --- 患者検索: アイコンをやめてカルテ番号を主役に --- */
+/* 9/25: カルテ番号の桁数は医院ごとに違うので、幅をそろえる列にしない。
+   1行目＝カルテ番号（大）＋名前／2行目＝最終診療日・年齢・性別（年齢・性別は未登録があり得るので最終診療日を左端に） */
 .ptres{display:flex;align-items:center;gap:14px;cursor:pointer;margin-bottom:10px}
-.ptres .no{font-weight:800;font-size:20px;letter-spacing:.02em;color:var(--purple-d);min-width:50px;font-variant-numeric:tabular-nums}
+.ptres .ptmain{min-width:0}
+.ptres .ptl1{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.ptres .no{font-weight:800;font-size:20px;letter-spacing:.02em;color:var(--purple-d);font-variant-numeric:tabular-nums;line-height:1.2}
 .ptres .nm{font-weight:600;font-size:13px}
-.ptres.nono .nm{font-size:15px;font-weight:700}
-.ptres.nono .nolab{font-size:10.5px;color:var(--hint);margin-bottom:1px}
+.ptres .ptl2{font-size:11px;color:var(--hint);margin-top:3px}
 
 /* --- 巻物: 日付の左の丸を外す（プロービング版） --- */
 body.phase-p1 .stmap .tick i{display:none}
@@ -572,11 +575,17 @@ body.phase-p1 .stmap .tick{padding-left:13px}
 .numpad2.roman .numkey2.rom{grid-row:span 2;height:auto;font-size:25px;flex-direction:column;gap:1px}
 .numpad2.roman .numkey2.rom small{font-size:10.5px;color:var(--muted);font-weight:400}
 .numpad2.roman .numkey2.del{grid-column:span 4}
+.numpad2.roman.five{grid-template-columns:repeat(5,1fr)}
+.numpad2.roman.five .numkey2.del{grid-column:span 5}
 .numpad2.roman .numkey2.del .md{color:var(--purple-d);font-weight:600;margin-right:6px}
-.pluspop{position:absolute;z-index:45;background:#fff;border:0.5px solid var(--border2);border-radius:12px;box-shadow:0 10px 30px rgba(40,30,120,.22);padding:8px;display:none;grid-template-columns:repeat(4,46px);gap:6px}
-.pluspop.show{display:grid}
-.pluspop button{height:38px;border:none;border-radius:8px;background:#F1F0F5;font-family:inherit;font-size:16px;cursor:pointer;color:var(--text)}
-.pluspop button:hover{background:#E7E5EE}
+.pluspop{position:absolute;z-index:45;background:#fff;border:0.5px solid var(--border2);border-radius:12px;box-shadow:0 10px 30px rgba(40,30,120,.22);padding:6px 8px 8px;display:none;flex-direction:column;gap:4px}
+.pluspop.show{display:flex}
+.pluspop .pphead{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--muted);padding-left:2px}
+.pluspop .ppx{width:28px;height:28px;border:none;border-radius:8px;background:transparent;color:var(--muted);font-size:16px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+.pluspop .ppx:hover{background:#F1F0F5;color:var(--text)}
+.pluspop .ppgrid{display:grid;grid-template-columns:repeat(4,46px);gap:6px}
+.pluspop .ppgrid button{height:38px;border:none;border-radius:8px;background:#F1F0F5;font-family:inherit;font-size:16px;cursor:pointer;color:var(--text)}
+.pluspop .ppgrid button:hover{background:#E7E5EE}
 
 /* 保存ボタン: 変更がなければグレーで押せない */
 .btn.savebtn[disabled]{background:#E4E3EA;color:#A3A2AE;border-color:#E4E3EA;cursor:default}
@@ -718,11 +727,10 @@ body.phase-p1 .stmap .tick{padding-left:13px}
                   <div class="full-only" style="border-top:0.5px solid var(--border);margin-top:18px;padding-top:14px"><button class="btn" style="width:100%;background:var(--lav2);border:1.5px solid var(--purple);color:var(--purple-d);font-weight:600;padding:11px" onclick="go('library')"><i class="ti ti-photo"></i> 全患者のメディア・書類一覧 <span class="qh" onclick="showHelp(event,this)" data-help="患者を特定する情報を除いた、全患者横断の一覧です。タグ・部位・日付で検索できます。">?</span></button></div>
                 </div>
                 <div style="padding:18px">
-                  <div style="font-weight:500;margin-bottom:14px">検索結果 (3件)</div>
-                  <!-- 9/24: 患者アイコンを外し、カルテ番号を主役に。カルテ番号が未登録の患者は氏名を主役にする -->
-                  <div class="card ptres" onclick="go('stream')"><span class="no">001</span><div><div class="nm">田中 花子 様</div><div class="hint">45歳 女性 ・ 最終診療日 2026/06/21</div></div><span class="spacer"></span><i class="ti ti-chevron-right muted"></i></div>
-                  <div class="card ptres"><span class="no">002</span><div><div class="nm">佐藤 様</div><div class="hint">33歳 男性 ・ 最終診療日 2026/05/12</div></div><span class="spacer"></span><i class="ti ti-chevron-right muted"></i></div>
-                  <div class="card ptres nono"><div><div class="nolab">カルテ番号 未登録</div><div class="nm">鈴木 一郎 様</div><div class="hint">61歳 男性 ・ 最終診療日 2026/03/02</div></div><span class="spacer"></span><i class="ti ti-chevron-right muted"></i></div>
+                  <div style="font-weight:500;margin-bottom:14px">検索結果 (2件)</div>
+                  <!-- 9/25: 1行目＝カルテ番号（大）＋名前／2行目＝最終診療日・年齢・性別。カルテ番号は必須、名前・年齢・性別は未登録なら出さない -->
+                  <div class="card ptres" onclick="go('stream')"><div class="ptmain"><div class="ptl1"><span class="no">001</span><span class="nm">田中 花子 様</span></div><div class="ptl2">最終診療日 2026/06/21 ・ 45歳 ・ 女性</div></div><span class="spacer"></span><i class="ti ti-chevron-right muted"></i></div>
+                  <div class="card ptres"><div class="ptmain"><div class="ptl1"><span class="no">002</span><span class="nm">佐藤 様</span></div><div class="ptl2">最終診療日 2026/05/12 ・ 33歳 ・ 男性</div></div><span class="spacer"></span><i class="ti ti-chevron-right muted"></i></div>
                 </div>
               </div>
             </div>
@@ -1895,8 +1903,9 @@ function recCell(t){
 }
 function mobCell(t){
   var d=DEMO[t];if(!d)return '';
-  var m=EV("m",t,0,d.m);if(!m)return '';
-  return '<span class="mobv'+((CMP_FLAT||m!==d.mp||EDITED("m",t,0))?" nw":"")+'">'+m+'</span>';
+  var ed=EDITED("m",t,0),m=EV("m",t,0,d.m);
+  if(m===null||(!ed&&!m))return '';   /* 未入力・削除は空欄。今回「0」を入力したときは 0 と出す */
+  return '<span class="mobv'+((CMP_FLAT||ed||m!==d.mp)?" nw":"")+'">'+m+'</span>';
 }
 var ROWLABEL={mob:"動揺度",fur:"根分岐部",pla:"プラーク",pkt:"ポケット",rec:"歯肉退縮量"};
 /* ===== デモ用サンプル値（1/4顎・歯7〜1／8番は欠損） =====
@@ -2675,7 +2684,7 @@ function rowMax(rk,U){
   return 0.8*U;
 }
 function sumMax(keys,U){return Math.floor(keys.reduce(function(a,k){return a+rowMax(k,U);},0));}
-var ROMAN=["","Ⅰ","Ⅱ","Ⅲ"];
+var ROMAN=["","Ⅰ","Ⅱ","Ⅲ","Ⅳ"];
 /* 根分岐部の入力箇所: 上顎大臼歯=3か所（Y字）、上顎小臼歯=2か所（縦線の左右）、下顎大臼歯=2か所（横線の上下） */
 var FURZ={y:[[50,20],[18,68],[82,68]],v:[[25,50],[75,50]],h:[[50,24],[50,76]]};
 function furZones(k,t){
@@ -2685,17 +2694,24 @@ function furZones(k,t){
     return '<span class="furz'+(v?"":" empty")+(sel?" sel":"")+'" style="left:'+p[0]+'%;top:'+p[1]+'%" data-fz="'+t+','+z+'">'+(v?ROMAN[v]:"")+'</span>';
   }).join("");
 }
-function padMode(){return (SEL&&(SEL.rk==="mob"||SEL.rk==="fur"))?"roman":"num";}
+/* テンキーの種類: 動揺度=0〜3（算用数字）／根分岐部=0・Ⅰ〜Ⅳ／それ以外=数字 */
+function padMode(){return !SEL?"num":(SEL.rk==="mob"?"mob":(SEL.rk==="fur"?"fur":"num"));}
+function padMax(){var m=padMode();return m==="mob"?3:(m==="fur"?4:99);}
 function renderPad(){
   var el=document.getElementById("numpad");if(!el)return;
   var m=padMode();
-  el.classList.toggle("roman",m==="roman");
+  el.classList.toggle("roman",m!=="num");       /* 大きいキー（2段ぶん）＋削除の並び */
+  el.classList.toggle("five",m==="fur");
   var h="";
-  if(m==="roman"){
-    var lab=(SEL.rk==="mob")?"動揺度":"根分岐部";
-    h+='<button class="numkey2 rom" onclick="padKey(0)">0<small>なし</small></button>';
-    for(var r=1;r<=3;r++)h+='<button class="numkey2 rom" onclick="padKey('+r+')">'+ROMAN[r]+'</button>';
-    h+='<button class="numkey2 low del" onclick="padDel()"><span class="md">'+lab+'</span><i class="ti ti-backspace"></i> 削除</button>';
+  if(m==="mob"){
+    /* 動揺度: 0〜3。0 も「動揺なし」として入力される */
+    for(var r=0;r<=3;r++)h+='<button class="numkey2 rom" onclick="padKey('+r+')">'+r+'</button>';
+    h+='<button class="numkey2 low del" onclick="padDel()"><span class="md">動揺度</span><i class="ti ti-backspace"></i> 削除</button>';
+  }else if(m==="fur"){
+    /* 根分岐部: 0・Ⅰ〜Ⅳ。0 は空欄として入る */
+    h+='<button class="numkey2 rom" onclick="padKey(0)">0<small>空欄</small></button>';
+    for(var f=1;f<=4;f++)h+='<button class="numkey2 rom" onclick="padKey('+f+')">'+ROMAN[f]+'</button>';
+    h+='<button class="numkey2 low del" onclick="padDel()"><span class="md">根分岐部</span><i class="ti ti-backspace"></i> 削除</button>';
   }else{
     for(var n=0;n<=7;n++)h+='<button class="numkey2" onclick="padKey('+n+')">'+n+'</button>';
     h+='<div class="numsub">';
@@ -2725,21 +2741,22 @@ function padKey(n){
   }else if(SEL.rk==="mob"){
     if(n>3)return;EDIT[ekey("m",SEL.t,0)]=n;
   }else if(SEL.rk==="fur"){
-    if(n>3)return;EDIT[ekey("f",SEL.t,SEL.i)]=n;
+    if(n>4)return;EDIT[ekey("f",SEL.t,SEL.i)]=n;
   }
   closePlus();markDirty();renderChart();
 }
 function padDel(){
   if(!SEL)return;
   var f={pkt:"p",rec:"r",mob:"m",fur:"f"}[SEL.rk];
-  EDIT[ekey(f,SEL.t,SEL.rk==="mob"?0:SEL.i)]=0;
+  EDIT[ekey(f,SEL.t,SEL.rk==="mob"?0:SEL.i)]=(SEL.rk==="mob"||SEL.rk==="fur")?null:0;
   markDirty();renderChart();
 }
 function openPlus(ev){
   ev.stopPropagation();
   var pop=document.getElementById("pluspop"),key=document.getElementById("plusKey");if(!pop||!key)return;
-  var h="";for(var n=13;n<=20;n++)h+='<button onclick="padKey('+n+')">'+n+'</button>';
-  pop.innerHTML=h;pop.classList.add("show");
+  var h='<div class="pphead"><span>13mm以上</span><button class="ppx" title="閉じる" onclick="closePlus()"><i class="ti ti-x"></i></button></div><div class="ppgrid">';
+  for(var n=13;n<=20;n++)h+='<button onclick="padKey('+n+')">'+n+'</button>';
+  pop.innerHTML=h+'</div>';pop.classList.add("show");
   var sc=pop.parentElement.getBoundingClientRect(),r=key.getBoundingClientRect();
   pop.style.left=Math.max(8,Math.min(r.right-sc.left-pop.offsetWidth,sc.width-pop.offsetWidth-8))+"px";
   pop.style.top=(r.top-sc.top-pop.offsetHeight-8)+"px";
@@ -2776,7 +2793,7 @@ document.addEventListener("keydown",function(e){
   if(e.target&&(e.target.tagName==="INPUT"||e.target.tagName==="TEXTAREA"))return;
   if(/^[0-9]$/.test(e.key)){
     var n=+e.key;
-    if(padMode()==="roman"&&n>3)return;
+    if(n>padMax())return;
     e.preventDefault();padKey(n);
   }else if(e.key==="Backspace"||e.key==="Delete"){e.preventDefault();padDel();}
 });
