@@ -338,18 +338,18 @@ body.phase-p1 .stside{display:none}
 .chart .toothno{display:flex;align-items:center;justify-content:center;gap:6px;font-size:13px;color:var(--muted);height:100%;background:var(--lav2)}
 .chart .toothno .mn{font-size:13px}
 .mini6{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr;width:100%;height:100%}
-.mini6 .m6{position:relative;border-right:0.5px solid var(--border);border-bottom:0.5px solid var(--border);font-size:12px;display:flex;align-items:center;justify-content:center;color:#C6C6D0}
+.mini6 .m6{position:relative;border-right:0.5px solid var(--border);border-bottom:0.5px solid var(--border);font-size:18px;display:flex;align-items:center;justify-content:center;color:#C6C6D0}
 .mini6 .m6.nw{color:var(--text);font-weight:600}
 /* 10/6 改: 出血・排膿はポケットと同じマス。深さの色と反対側の辺（上顎＝下辺／下顎＝上辺）に帯を出す。
-   出血＝赤、排膿＝黄。前回のままは斜線。両方あるときは左右に半分ずつ */
+   出血＝赤、排膿＝黄。前回のままは斜線。両方あるときは斜めに半分ずつ */
 .mini6 .m6 .bb{position:absolute;left:0;right:0;bottom:0;height:24%;pointer-events:none}
 .mini6 .m6.lo .bb{top:0;bottom:auto}
 .mini6 .m6 .bb.b{background:#E5484D}
 .mini6 .m6 .bb.u{background:#E3AE12}
 .mini6 .m6 .bb.bo{background:repeating-linear-gradient(45deg,#EE8F93,#EE8F93 2px,transparent 2px,transparent 4px)}
 .mini6 .m6 .bb.uo{background:repeating-linear-gradient(45deg,#E6C25C,#E6C25C 2px,transparent 2px,transparent 4px)}
-.mini6 .m6 .bb.b.u{background:linear-gradient(90deg,#E5484D 50%,#E3AE12 50%)}
-.mini6 .m6 .bb.bo.u,.mini6 .m6 .bb.b.uo,.mini6 .m6 .bb.bo.uo{background:linear-gradient(90deg,#EE8F93 50%,#E6C25C 50%)}
+.mini6 .m6 .bb.b.u{background:linear-gradient(135deg,#E5484D 50%,#E3AE12 50%)}
+.mini6 .m6 .bb.bo.u,.mini6 .m6 .bb.b.uo,.mini6 .m6 .bb.bo.uo{background:linear-gradient(135deg,#EE8F93 50%,#E6C25C 50%)}
 /* 10/6 石原先生: ポケットの深さを色で。上顎は上辺から、下顎は下辺から、マスの1/3ほどをグラデーションで塗る（4〜6mm未満＝黄／6mm以上＝赤） */
 .mini6 .m6.d2{background-image:linear-gradient(to bottom,rgba(240,185,30,.62),rgba(240,185,30,0) 36%)}
 .mini6 .m6.d3{background-image:linear-gradient(to bottom,rgba(229,72,77,.58),rgba(229,72,77,0) 36%)}
@@ -379,7 +379,7 @@ body.phase-p1 .stside{display:none}
 .mini6 .mk.up{border-bottom:6px solid #12A5C4}
 .mini6 .mk.dn{border-top:6px solid #D33A28}
 .chart .cell.mobc{display:flex;align-items:center;justify-content:center}
-.mobv{font-size:13px;color:#C6C6D0}
+.mobv{font-size:18px;color:#C6C6D0}
 .mobv.nw{color:var(--text);font-weight:600}
 .chart .rlab .pillab.flat{color:var(--muted);background:none;border:none;cursor:default;font-size:12px}
 .impmk{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.02em;background:var(--green-bg);color:var(--green);border-radius:4px;padding:2px 5px;margin-left:4px;vertical-align:middle}
@@ -714,8 +714,10 @@ body:not(.plg-txplan) [data-plg="txplan"]{display:none!important}
 .chart.full.mschart{min-width:0;grid-template-columns:106px repeat(16,minmax(34px,1fr))}
 .mschart .rlab .pillab,.cmpchart .rlab .pillab{padding:0 2px}
 .mschart .toothno,.mschart .mini6 .m6,.mschart .mobv,.mschart .rlab .pillab,.mschart .rlab .nolab{font-size:12px}
+.chart.full.mschart .mini6 .m6,.chart.full.mschart .mobv{font-size:14px}
 .mschart .mini6 .pus{min-width:15px;height:15px}
 .cmpchart .toothno,.cmpchart .mini6 .m6,.cmpchart .rlab .pillab,.cmpchart .rlab .nolab{font-size:12px}
+.cmpchart .mini6 .m6,.cmpchart .mobv{font-size:13.5px}
 .cmpchart .mini6 .pus{min-width:15px;height:15px;font-size:12px}
 
 /* --- 検査画面: テンキーまでの下部はフッター扱いで高さ固定。
@@ -2159,9 +2161,10 @@ function svgFur(k){
   return "";
 }
 var PLAPTS=["5,7 35,7 20,20","35,7 35,33 20,20","5,33 35,33 20,20","5,7 5,33 20,20"];
-/* 10/6 プラーク6点: 4点のバッテンの真ん中に水平線。6つの面積が等しくなるよう、交点を上下に分けて（高さの1/3と2/3）縦の線でつなぐ。
-   並び＝上段（左・中・右）／下段（左・中・右）。データは l6（6桁）。無いデモ値は4点から作る */
-var PLAPTS6=["5,7 20,15.67 20,20 5,20","5,7 35,7 20,15.67","35,7 35,20 20,20 20,15.67","5,20 20,20 20,24.33 5,33","5,33 35,33 20,24.33","35,20 35,33 20,24.33 20,20"];
+/* 10/6 プラーク6点: 4点のバッテンの真ん中に水平線。バッテンの角度を急にして（上下の三角の底辺を左右5ずつ内側へ）、
+   左右4か所を広く取る（面積の比: 上下 各12%／左右 各19%。等分だと左右が狭く見えたためユーザー指示で調整）。
+   交点は上下に分けて縦の線でつなぐ。並び＝上段（左・中・右）／下段（左・中・右）。データは l6（6桁）。無いデモ値は4点から作る */
+var PLAPTS6=["5,7 10,7 20,16 20,20 5,20","10,7 30,7 20,16","30,7 35,7 35,20 20,20 20,16","5,20 20,20 20,24 10,33 5,33","10,33 30,33 20,24","20,20 35,20 35,33 30,33 20,24"];
 var PLA_N=4;
 function setPla(n,el){
   PLA_N=n;
@@ -2188,7 +2191,7 @@ function plaCell6(t){
     else if(EDIT_ON)h+='<polygon points="'+PLAPTS6[i]+'" fill="transparent" data-pl6="'+t+','+i+'"/>';
   }}
   var L='stroke="#d3d3db" pointer-events="none"';
-  return h+'<line x1="5" y1="7" x2="20" y2="15.67" '+L+'/><line x1="35" y1="7" x2="20" y2="15.67" '+L+'/><line x1="5" y1="33" x2="20" y2="24.33" '+L+'/><line x1="35" y1="33" x2="20" y2="24.33" '+L+'/><line x1="20" y1="15.67" x2="20" y2="24.33" '+L+'/><line x1="5" y1="20" x2="35" y2="20" '+L+'/></svg>';
+  return h+'<line x1="10" y1="7" x2="20" y2="16" '+L+'/><line x1="30" y1="7" x2="20" y2="16" '+L+'/><line x1="10" y1="33" x2="20" y2="24" '+L+'/><line x1="30" y1="33" x2="20" y2="24" '+L+'/><line x1="20" y1="16" x2="20" y2="24" '+L+'/><line x1="5" y1="20" x2="35" y2="20" '+L+'/></svg>';
 }
 /* 比較画面はその日の結果だけを見せるので、前回との濃淡・レンジ移動マークを出さない */
 var CMP_FLAT=false;
